@@ -1,0 +1,122 @@
+\documentclass{jarticle}
+\usepackage[dvipdfm,bookmarks=true,bookmarksnumbered=true,bookmarkstype=toc]{hyperref}
+\ifnum 42146=\euc"A4A2 \AtBeginDvi{\special{pdf:tounicode EUC-UCS2}}\else
+\AtBeginDvi{\special{pdf:tounicode 90ms-RKSJ-UCS2}}\fi
+
+%%% 余白の定義 %%%
+\paperwidth 597pt
+\paperheight 845pt
+\hoffset -14.0pt
+\voffset 14.5pt
+ \oddsidemargin 0.0pt
+ \evensidemargin 0.0pt
+ \topmargin 0.0pt
+ \headheight 0.0pt
+ \headsep 0.0pt
+\textheight 671.0pt
+\textwidth 480.5pt
+ \marginparsep 0.0pt
+ \marginparwidth 0.0pt
+ \footskip 15.0pt
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{ascmac}
+\usepackage{boites}
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{misc/jlisting}
+\usepackage{makeidx}
+\usepackage{multicol}
+\usepackage{pxrubrica}
+\usepackage{url}
+\usepackage{wrapfig}
+
+%%% 式番号に節番号を付与 %%%
+\makeatletter
+ \renewcommand{\theequation}{\thesection.\arabic{equation}}
+ \@addtoreset{equation}{section}
+\makeatother
+
+%%% 図番号に節番号を付与 %%%
+\makeatletter
+ \renewcommand{\thefigure}{\thesection.\arabic{figure}}
+ \@addtoreset{figure}{section}
+\makeatother
+
+%%% 表番号に節番号を付与 %%%
+\makeatletter
+ \renewcommand{\thetable}{\thesection.\arabic{table}}
+ \@addtoreset{table}{section}
+\makeatother
+
+%%% 注釈 %%%
+% \Notes{内容}
+\newcounter{notesNum}
+\newcommand{\Notes}[1]{\footnote [\arabic{notesNum}]{#1}\stepcounter{notesNum}}
+
+%%% 索引 %%%
+% \IND{項目}{こうもく}
+% \Ind{Item}
+\newcommand{\IND}[2]{\textbf{#1\index{#2@#1}}}
+\newcommand{\Ind}[1]{\IND{#1}{#1}}
+
+%%% theorem %%%
+\theoremstyle{definition}
+\newtheorem{prop}{命題}[section]
+\newtheorem{theo}[prop]{定理}
+\newtheorem{defi}[prop]{定義}
+\newtheorem{lemm}[prop]{補題}
+\newtheorem{coro}[prop]{系}
+\newtheorem{conj}[prop]{予想}
+\newtheorem{exam}[prop]{例}
+\newtheorem{algo}[prop]{アルゴリズム}
+\renewcommand{\qedsymbol}{(証明終)}
+\renewcommand{\proofname}{\bfseries 証明}
+
+% \begin{Prop}{Title}{label}
+\newenvironment{Prop}[2]{\begin{prop}[#1]\label{prop:#2}}{\end{prop}}
+\newenvironment{Theo}[2]{\begin{theo}[#1]\label{theo:#2}}{\end{theo}}
+\newenvironment{Defi}[2]{\begin{defi}[#1]\label{defi:#2}}{\end{defi}}
+\newenvironment{Lemm}[2]{\begin{lemm}[#1]\label{lemm:#2}}{\end{lemm}}
+\newenvironment{Coro}[2]{\begin{coro}[#1]\label{coro:#2}}{\end{coro}}
+\newenvironment{Conj}[2]{\begin{conj}[#1]\label{conj:#2}}{\end{conj}}
+\newenvironment{Exam}[2]{\begin{exam}[#1]\label{exam:#2}}{\end{exam}}
+
+%%% アルゴリズム %%%
+% \Algo{Title}{label}{fileName}
+\newcommand{\Algo}[3]{\begin{algo}[#1]\label{algo:#2}\footnotesize{#3}\end{algo}\vspace{-3.3mm}\lstinputlisting{src/#2.py}}
+
+% 参照
+\newcommand{\rProp}[1]{命題\ref{prop:#1}}
+\newcommand{\rTheo}[1]{定理\ref{theo:#1}}
+\newcommand{\rDefi}[1]{定義\ref{defi:#1}}
+\newcommand{\rLemm}[1]{補題\ref{lemm:#1}}
+\newcommand{\rCoro}[1]{系\ref{coro:#1}}
+\newcommand{\rExam}[1]{例\ref{exam:#1}}
+\newcommand{\rAlgo}[1]{アルゴリズム\ref{algo:#1}}
+
+% proof環境
+\newenvironment{prProof}[1]{\begin{proof}[\rProp{#1}の証明]}{\end{proof}}
+\newenvironment{thProof}[1]{\begin{proof}[\rTheo{#1}の証明]}{\end{proof}}
+\newenvironment{lmProof}[1]{\begin{proof}[\rLemm{#1}の証明]}{\end{proof}}
+\newenvironment{crProof}[1]{\begin{proof}[\rCoro{#1}の証明]}{\end{proof}}
+
+%プログラム挿入の設定
+\lstset{
+    language = Python,
+    breaklines = true,
+    breakindent = 10pt,
+    basicstyle = \ttfamily\footnotesize,
+    commentstyle = {\color[cmyk]{1,0.4,1,0}},
+    classoffset = 0,
+    keywordstyle = {\bfseries \color[cmyk]{0,1,0,0}},
+    stringstyle = {\ttfamily \color[rgb]{0,0,1}},
+    frame = single,
+    framesep = 5pt,
+    numberstyle = \tiny,
+    tabsize = 4,
+    showstringspaces=false,
+}

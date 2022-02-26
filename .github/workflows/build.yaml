@@ -1,0 +1,26 @@
+name: compile LaTeX and release PDF
+
+on:
+  push:
+    tags:
+      - '*.*.*'
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    container: texlive/texlive
+    steps:
+      - name: Set up Git repository
+        uses: actions/checkout@v2
+      - name: compile latex document
+        run: latexmk -pdfdvi main.tex
+      - name: Create Release & upload asset
+        id: create_release-upload_assets
+        uses: softprops/action-gh-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          files: ./main.pdf
+          draft: false
+          prerelease: false
