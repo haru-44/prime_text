@@ -1,0 +1,72 @@
+例えば、$n=9951$を素因数分解するとしよう。
+$x^2-y^2 = (x-y)(x+y)$という公式と、直感によって、
+\begin{align*}
+9951 &= 10000 - 49\\
+&= 100^2 - 7^2 = (100 - 7)(100 + 7)\\
+&= 93 \times 107
+\end{align*}
+を見つけるだろう。
+この原理を一般の合成数にも適用できないだろうか。
+実は、どんな奇数の合成数$n$でも$n=x^2-y^2$を満たす自然数$a,b$が存在することが知られている。
+つまり、この$x,y$を見つけられることができれば、素因数分解できたと言うことになる。
+$n=x^2-y^2$となる$x,y$を見つけることによって、$n$を素因数分解数しようとするアルゴリズムを一般に\IND{平方差法}{へいほうさほう}と呼ぶが、\IND{Fermat法}{Fermatほう}は、その中でも最も愚直な方法である。
+つまり、$x$を動かして$y=\sqrt{x^2-n}$が整数になれば良い。
+$x$を調べる範囲は、次の命題が教えてくれる。
+
+\begin{Prop}{}{fermat_factorization}
+$n$が奇数の合成数ならば$\left \lceil\sqrt{n}\right \rceil\le x \le (n + 9) / 6$の範囲に$n=x^2-y^2$を満たす$x$が存在する。
+逆に、そのような$x$が存在しないならば$n$は素数である。
+\end{Prop}
+
+よって、$\left \lceil\sqrt{n}\right \rceil$から始めて$(n + 9) / 6$まで$x$を変化させれば良い。
+最悪の場合は、$n=3p$(ただし、$p$は素数)というような形の合成数のときで、最後の$(n + 9) / 6$が求めたかった$x$である。
+逆に、すぐに$x$を見つけられるのは、同じくらいの大きさに分解できるときである。
+つまりFermat法は、素因数が$\sqrt{n}$の近くにある場合に素早く解くことができる。
+Fermat法の得手不得手と、試し割法のそれは真逆の関係である。
+Fermat法が素早く解ける整数は、試し割法では苦戦し、試し割法が素早く解ける整数は、Fermat法では苦戦する、といった様子だということが分かる。
+
+以上を踏まえて、Fermat法を実装しよう。
+既に述べたように、$\left \lceil\sqrt{n}\right \rceil \le a \le (n + 9) / 6$の範囲の$a$をすべてチェックするのである。
+次のアルゴリズムは、素直な実装だが、ループの開始位置が$\left \lceil\sqrt{n}\right \rceil$ではなく$\left \lfloor\sqrt{n}\right \rfloor$となっている。
+最初のループが1回余計になることがあるが、新たに$\left \lceil\sqrt{n}\right \rceil$を求めるアルゴリズムを実装する手間を回避した。
+
+\Algo{Fermat法}{fermat_factorization_method}{c.f., \rAlgo{sqrt_int}}
+
+Fermat法の挙動を観察すると、ループ回数は、単純に$n$が大きくなれば多くなるという訳ではないことに気付く。
+例えば、$4343=101\times43$は7回の反復を要するが、その3倍$3\times4343=13029$は、1回目で非自明な約数の発見に至っている。
+ならば、うまい具合に$n$を調整することによって、Fermat法よりも少ない計算回数で素因数分解ができるかもしれない、と思いつく。
+この考えを実現したのが、\IND{Lehman法}{Lehmanほう}である。
+
+Lehman法では、新たに$k$というパラメータを用意し、$n$ではなく$4kn$について$4kn=x^2-y^2$となる$x,y$を探す。
+これだけでは$k$が増えた分、純粋に探索範囲が増えてしまうが、$k,x$の範囲は、
+\begin{itemize}
+\item $k \le \left \lceil n^{1/3}\right \rceil$
+\item $2\sqrt{kn}\le x < 2\sqrt{kn}+n^{1/6}/(4\sqrt{k})$
+\end{itemize}
+で済むことが分かっているので、この範囲を調べ尽くせば良い。
+ただし、$n>21$かつ$n^{1/3}$以下に非自明な約数が存在しないことを前提としている。
+あまり興味がないだろうから軽く触れるだけにするが、探索範囲がなぜこれで済むのかの証明は次の流れで行う。
+\begin{enumerate}
+ \item $n=pq$と分解できるとする。ただし、試し割を実行するため$n^{1/3}<p\le q$を仮定してよい。
+ \item $k \le \left \lceil n^{1/3}\right \rceil$, $\mid uq - vp \mid < n^{1/3}$, $k = uv$を満たす$k, u, v$が存在する。
+ \item $x = uq + vp$, $y = \mid uq - vp \mid$と置くと、$4kn=x^2-y^2$及び$2\sqrt{kn}\le x < 2\sqrt{kn}+n^{1/6}/(4\sqrt{k})$を得る。
+\end{enumerate}
+
+なお、2つ目のステップには、DirichletのDiophantus近似定理を使用する。
+この定理は、ある実数が無理数であることを証明するときによくお目にかかるのだが、数論を勉強していたと思ったら、初歩的とは言え超越数論の教科書を引っ張ってこなければならなくなった。
+どんな分野にでも言えることだが、局所の知識がその分野のみに留まるということは中々ない。
+
+\begin{Theo}{\IND{DirichletのDiophantus近似定理}{DirichletのDiophantusきんしていり}, Dirichlet's approximation theorem}{dirichlets_approximation_theorem}
+実数$\alpha$, 正整数$\mathcal{B}>1$に対し、
+\begin{align*}
+v &\le \mathcal{B}\\
+\mid \frac{u}{v} - \alpha \mid &< \frac{1}{v\mathcal{B}}
+\end{align*}
+を満たす正整数$u,v$が存在する。
+\end{Theo}
+
+この定理に$\alpha=p/q,\mathcal{B}=n^{1/6}\sqrt{q/p}$と代入することによって、
+\begin{align*}
+\mid uq - vp \mid < n^{1/3}
+\end{align*}
+を得る。
