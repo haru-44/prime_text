@@ -13,4 +13,5 @@
 * 試し割
 * Fermat法
 * Fermatテスト
+* Solovay-Strassenテスト
 

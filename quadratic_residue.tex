@@ -1,0 +1,202 @@
+整数の世界において平方数とは、整数の2乗の形で表される数である。
+例えば、$4, 9, 16, 25$は平方数である。
+同じように、剰余の世界でも平方数を考えることができる。
+ただし、剰余の世界では「平方数」ではなく「平方剰余」と呼んでいるのだが。
+
+\begin{Defi}{\IND{平方剰余}{へいほうしようよ}(quadratic residue), \IND{平方非剰余}{へいほうひしようよ}(quadratic nonresidue)}{quadratic residue}
+整数$a$と正整数$n$について、$x^2 \equiv a \pmod{n}$を満たす整数$x$が存在するとき、$a$を$n$を法とする平方剰余と呼ぶ。
+逆に$x$が存在しないとき、$a$を$n$を法とする平方非剰余と呼ぶ。
+\end{Defi}
+
+特に素数$p$において、
+\begin{itemize}
+\item $a$が$p$を法とする平方剰余ならば、$x^2\equiv a\pmod{p}$となるような$x$は、$\mathbb{Z}_p^*$上に必ずちょうど2つ存在する。
+\item $p$を法とする平方剰余の個数と、$p$を法とする平方非剰余の個数は一致する。
+\end{itemize}
+という性質がある。
+1つ目は、整数において、2乗して平方数となるような整数が2つ存在することに似ている。
+そう言われても、狐につままれたような感じだろうから、例を見てみる。
+
+$p=5$のとき
+\begin{table}[h]
+  \begin{tabular}{|c||c|c|c|c|}\hline
+    $a$ & 1 & 2 & 3 & 4 \\\hline
+    $a^2$ & 1 & 4 & 4 & 1 \\\hline
+  \end{tabular}
+\end{table}
+
+となるから、(下段に現れる)1,4が平方剰余で、2,3が平方非剰余である。
+確かに、平方剰余と平方非剰余の個数はどちらも2つであるし、2乗して1になるのは1と4、2乗して4になるのは2と3で、丁度2つである。
+いやいや、$p$が小さいからそうなったのではないかと訝しがる方もいるだろう。
+ならば、$p=11$のときも試してみよう。
+\begin{table}[h]
+  \begin{tabular}{|c||c|c|c|c|c|c|c|c|c|c|}\hline
+    $a$ & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 \\\hline
+    $a^2$ & 1 & 4 & 9 & 5 & 3 & 3 & 5 & 9 & 4 & 1 \\\hline
+  \end{tabular}
+\end{table}
+
+この場合も、1,3,4,5,9の5つが平方剰余で、残りの2,6,7,8が平方非剰余である。
+このような表に書き出してみると、あることが見えてくる。
+$p=11$の場合は、5と6を境界として鏡写しになったように$a^2$が配されていることだ。
+そう考えると、$p=5$のとき、1,4,4,1と並んでいたのも偶然ではなく、$p=11$と同じ理由で起こったことではないか。
+確かに$x^2\equiv a\pmod{p}$となるような$x$が存在したとすれば、$-x$も当然条件を満たすから、解は少なくとも2つ存在する。
+それが、$a^2$の並びが対称的になった理由である。
+
+%3つ目の解は存在しない。
+
+次に、いちいち「$a$を$p$を法とする平方非剰余」等と言うのは面倒くさいので、今後はLegendre記号と呼ばれる記号で表すことにする。
+しかし慣習とはいえ、分数にしか見えないこの記号は混乱を招く。
+しかも、後で紹介するJacobi記号(\rDefi{Jacobi_symbol})も同じように書くものだから、混乱の度合いは増すのだが、そこに文句を言っても仕方がないので諦めよう。
+
+\begin{Defi}{\IND{Legendre記号}{Legendreきこう}, Legendre symbol}{Legendre_symbol}
+Legendre記号$\left(\frac{a}{p}\right)$は、整数$a$及び奇素数$p$について
+\begin{align*}
+\left(\frac{a}{p}\right) =
+\begin{cases}
+0, &\mbox{if }a \equiv 0 \pmod{p}\\
+1, &\mbox{if }\exists x \mbox{ s.t. } x^2 \equiv a \pmod{p}\\
+-1, &\mbox{otherwise}
+\end{cases}
+\end{align*}
+と定義される。
+\end{Defi}
+
+これまで平方剰余の性質について見てきたが、整数$a$と奇素数$p$が与えられたとき、$a$が$p$を法とする平方剰余か否かを判別する(別の言い方をすれば、Legendre記号$\left(\frac{a}{p}\right)$の値を得る)にはどうしたらよいだろうか。
+愚直には、1～$p-1$までの数をそれぞれ2乗し、$a$になるかを確認すればよい。
+$p$が小さいうちは何とかなるかもしれないが、$p$が大きくなると手に負えそうにない。
+実はわりと簡単に計算することができる次の方法が知られていて、それが\IND{Eulerの規準}{Eulerのきしゆん}(Euler's criterion)とも呼ばれている。
+
+\begin{Prop}{}{Legendre_symbol_calc}
+Legendre記号$\left(\frac{a}{p}\right)$は、整数$a$及び奇素数$p$について、次の式で計算できる。
+\begin{align*}
+\left(\frac{a}{p}\right) \equiv a^{(p-1)/2} \pmod{p}
+\end{align*}
+\end{Prop}
+
+% このことから、$\mathbb{Z}_p^*$の元は、$p$を法として平方剰余か平方非剰余かで丁度2つに分けられることが改めて了解される\Notes{なぜ？}。
+
+最初に述べたように、$\mathbb{Z}_p^*$の元は、$p$を法として平方剰余か平方非剰余かで丁度2つに分けられる。
+どちらが多くも少なくもない。
+実は$p$を法とする平方剰余(あるいは平方非剰余)を1つ示せ、という問題に答える確定的アルゴリズムは知られていないのだが、個数は分かっているので、ランダムに選んで平方剰余かを判定すれば、$1/2$の確率で所望の結果が得られるわけだ。
+実用的には数回試行すれば事足りるので十分効率的であると言える。
+
+余談となるが、平方剰余と平方剰余を掛けたものもまた平方剰余であるため、平方剰余の集合
+\begin{align*}
+\mathbf{QR}_p = \{a \in \mathbb{Z}_p : \left(\frac{a}{p}\right) = 1\}
+\end{align*}
+は乗法について群を成す。
+一方、平方非剰余の集合は群にならないが、これがなぜかというのは群の良い復習になる。
+$1$は常に平方剰余であり、つまり、平方非剰余の集合に単位元が存在しないと言うことは、群の定義を満たさないのである。
+
+さて、Legendre記号を求めるアルゴリズムは、\rProp{Legendre_symbol_calc}を素直に実装すると、次の通りとなる。
+
+\Algo{Legendre記号}{legendre_symbol}{}
+
+以上のように、素数を法とする平方剰余の判定は簡単に行うことができるのである。
+平方剰余の理論は、次に示す平方剰余の相互法則によって、1つの頂点を迎える。
+後に、三次や四次の相互法則に拡張され、より一般的な相互法則を見出す作業は、19世紀の数学者にとって大きな目標となった。
+代数的整数論における記念碑的定理である。
+
+\begin{Theo}{Legendre記号に対する\IND{平方剰余の相互法則}{へいほうしようよのそうこほうそく}, quadratic reciprocity}{legendre_quadratic_reciprocity}
+$p,q$を2より大きい素数とする。
+このとき、次が成り立つ。
+\begin{align*}
+\left(\frac{p}{q}\right)\left(\frac{q}{p}\right) = (-1)^{\frac{p-1}{2}\frac{q-1}{2}}
+\end{align*}
+\end{Theo}
+
+普通の教科書ならば、順を追って証明するのだが、ここでは紹介のみに留め、次に進もう。
+素数を法とする平方剰余の判定ができたのだから、次は整数について同じようにと考えることもできる。
+しかし、これから進む道は別の道である。
+Legendre記号を拡張することによって、素数を法とする平方剰余の判定を更に高速化できないか、という方向を考えるのである。
+
+まず、Jacobi記号を定義する。
+
+\begin{Defi}{\IND{Jacobi記号}{Jacobiきこう}, Jacobi symbol}{Jacobi_symbol}
+Jacobi記号$\left(\frac{a}{m}\right)$は、整数$a$及び奇数$m$について
+\begin{align*}
+\left(\frac{a}{m}\right) = \prod_{i = 1}^r \left(\frac{a}{p_i}\right)^{e_i}
+\end{align*}
+と定義される。
+ただし、$m=p_1^{e_1}\cdot\cdots\cdot p_r^{e_r}$と素因数分解できるとする。
+また、右辺はLegendre記号である。
+\end{Defi}
+
+Legendre記号とJacobi記号で、同じ記号を使うものだから混乱しやすい。
+その点は、どうしようもないことなので、「同じ記号であっても別物である」ということを念頭に置いて理解する必要がある。
+
+\begin{Exam}{}{}
+\begin{align*}
+\left(\frac{4}{45}\right) = \left(\frac{4}{3}\right)^2\left(\frac{4}{5}\right)\\
+&= (1)^2(1) = 1
+\end{align*}
+\end{Exam}
+
+Jacobi記号は、Legendre記号の積として定義されたことを思い出せば、計算結果は$-1,0,1$のいずれかになるはずである。
+そうすると、(Legendre記号と同様に)Jacobi記号が平方剰余か否かを表しているように早合点してしまいがちだ。
+しかし、\textbf{Jacobi記号の値が平方剰余かどうかを示すわけではない}ということは予め断っておく。
+Jacobi記号とLegendre記号の関係を知るには、次の2つの性質が重要である。
+
+\begin{Prop}{}{jacobi1}
+$m$が素数ならば、Jacobi記号$\left(\frac{a}{m}\right)$とLegendre記号$\left(\frac{a}{m}\right)$は、任意の$a$について一致する。
+\end{Prop}
+
+素数ならばLegendre記号と一致する、ということは定義から一目瞭然であるが、言い方を変えれば、Legendre記号が定義する範囲内においてはJacobi記号を代用しても構わない、と考えることもできる。
+もう1つは、Jacobi記号の値が平方剰余かどうかを示すわけではないということだ。
+
+\begin{Prop}{}{jacobi2}
+整数$a$及び奇数$m$について、Jacobi記号$\left(\frac{a}{m}\right)$が$-1$になるとき、$a$は$m$を法として平方非剰余であるか$a$と$m$は互いに素でない。
+\end{Prop}
+
+奇数の合成数の時にも、一定の場合平方非剰余の判定に利用できることが分かるが、この命題の逆、つまり、Jacobi記号が1になったからと言って、平方剰余であるとは限らない。
+実際、$2$は$15$を法として平方非剰余であるが、
+\begin{align*}
+\left(\frac{2}{15}\right) &= \left(\frac{2}{3}\right)\left(\frac{2}{5}\right)\\
+&= (-1)(-1)\\
+&= 1
+\end{align*}
+となる。
+何度も確認してそろそろ鬱陶しいと思うが、左辺はJacobi記号で、右辺はLegendre記号である。
+
+そういうわけで、Jacobi記号が平方剰余判定に対して、そこまで強力な武器ではないように見えるし、Jacobi記号の計算するにしても$m$の素因数分解を行う必要があるように見える。
+しかしJacobi記号は、$m$の素因数分解を行うことなく計算することができる。
+それを説明するためには、Jacobi記号の性質について理解する必要がある。
+
+\begin{Prop}{}{}
+1より大きい奇数$n,m$および整数$a,b$について次が成り立つ。
+\begin{enumerate}
+\item $a\equiv b \pmod{n}$ならば、$\left(\frac{a}{n}\right)=\left(\frac{b}{n}\right)$
+\item $\left(\frac{ab}{n}\right)=\left(\frac{a}{n}\right)\left(\frac{b}{n}\right)$
+\item $\left(\frac{a}{nm}\right)=\left(\frac{a}{n}\right)\left(\frac{a}{m}\right)$
+\end{enumerate}
+\end{Prop}
+
+更に、Jacobi記号にも平方剰余の相互法則が成り立つ。
+
+\begin{Theo}{Jacobi記号に対する\IND{平方剰余の相互法則}{へいほうしようよのそうこほうそく}, quadratic reciprocity}{jacobi_quadratic_reciprocity}
+$n,m$を互いに素な1より大きい奇数とする。
+このとき、次が成り立つ。
+\begin{align*}
+\left(\frac{m}{n}\right)\left(\frac{n}{m}\right) = (-1)^{\frac{n-1}{2}\frac{m-1}{2}}
+\end{align*}
+\end{Theo}
+
+以上の性質を用いると、Jacobi記号は次のアルゴリズムで計算できる。
+
+\Algo{Jacobi記号}{jacobi_symbol}{}
+
+\rAlgo{jacobi_symbol}は、\rAlgo{legendre_symbol}より高速に計算できる。
+そして、\rProp{jacobi1}より素数の範囲においてはLegendre記号とJacobi記号は一致する。
+ならば、Legendre記号$\left(\frac{a}{p}\right)$を計算する際は、\rAlgo{jacobi_symbol}を使った方がよい、というのがJacobi記号を導入した1つの成果である。
+一方で、別の見方もできる。
+$m$が素数のとき、$\left(\frac{a}{m}\right)$は、\rAlgo{legendre_symbol}も\rAlgo{jacobi_symbol}でも同じ結果になるが、$m$が合成数のとき\textbf{一致しないこともある}。
+素数と合成数で異なる挙動を示すということは、素数判定に使えるのではないかというアイディアが浮かぶ。
+
+\IND{Solovay-Strassenテスト}{Solovay-Strassenてすと}(Solovay-Strassen primality test)は、Legendre記号とJacobi記号の振舞いの違いに着目する\cite{DBLP:journals/siamcomp/SolovayS77}\Notes{Legendre記号は合成数に対して定義されていないため、正確を期すならば、「Legendre記号を求めるための計算とJacobi記号の振舞いの違い」と言うべきだろうが、その点は甘受頂きたい。}。
+$n$が素数の場合、この2つは常に一致するが、合成数の場合はそうではない。
+$a$の値によって一致することもあるし、一致しないこともある。
+この一致する$a$と一致しない$a$は、(理由の説明なく結果だけ述べるが)丁度半分ずつ存在するので、$a$をランダムに選べば$1/2$の確率で合成数であることが分かるのである。
+
+\Algo{Solovay-Strassenテスト}{solovay_strassen_test}{c.f., \rAlgo{legendre_symbol}, \rAlgo{jacobi_symbol}}
+
