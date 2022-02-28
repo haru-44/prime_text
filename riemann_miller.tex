@@ -1,0 +1,132 @@
+Miller-Rabinテストでは$a$をランダムに選ぶと、「素数」と誤って判定してしまうのであった。
+このような合成数$n$を$a$に対する\IND{強擬素数}{きようきそすう}(strong pseudoprime)と呼ぶ。
+そのため、Miller-Rabinテストでは$a$を複数回選んで、誤る確率を極力小さくしようとした。
+しかし、$a$を選ぶ戦略はそれだけだろうか。
+例えば、$a$を$2$から順に大きくしていくというのも手だ。
+この方法を、\IND{Millerテスト}{Millerてすと}(Miller test)と呼ぶ。
+$a$の選び方が、ランダムから小さいほうから順番に、と変わっただけだ。
+それだけなのだが、もし、例えば「$n$がどんな合成数でも、$a<100$でMiller-Rabinテストを実施すれば確実に合成数と判定される」となれば、これはもう確率的ではなく確定的な素数判定法だ。
+そのような可能性を考察するために、最小証拠という用語を定義しよう。
+
+\begin{Defi}{}{witness}
+合成数$n$に対する証拠は、$a$に対する$n$が強擬素数とならないような$a$である。
+証拠$a$の中で最小のものを最小証拠$W(n)$とする。
+\end{Defi}
+
+換言すれば、合成数が合成数ときちんと判別されるような$a$のことを証拠と呼ぶ。
+簡単に分かることだが、$m \mid n$となる$m$は、$n$の証拠である。
+もし、任意の合成数$n$に対して$W(n)=2$ならば、$a=2$として、Miller-Rabinテストは1回の繰り返しのみで確定的に素数判定ができる。
+素数判定業界にとってはとてもありがたい話だが、それは夢物語だ。
+
+\begin{Theo}{}{ssp_prop1}
+$p$を5よりも大きい素数とし、$n=(4^p+1)/5$とする。
+このとき、$W(n)\neq2$である。
+\end{Theo}
+
+更に残念なことに、$W(n)$は$n$の増加に伴って、ゆっくり増加し、上限が存在しないことが知られている。
+問題は、増加の「ゆっくり度」だ。
+
+\begin{Theo}{}{ssp_prop2}
+一般Riemann予想の下で、任意の奇数の合成数$n$に対して、$W(n)<2\ln^2(n)$が成り立つ。
+\end{Theo}
+
+今、一般Riemann予想が何者なのかは置いておくが、予想が真だとすれば、Millerテストは素数判定問題に対する確定的多項式時間アルゴリズムである。
+というのも、$n$に対する最小証拠$W(n)$が$2\ln^2(n)$未満だというのだから、この範囲をしらみ潰しに調べればよいからだ。
+
+次に、一般Riemann予想について説明するが、本当に駆け足となるので、詳しく知りたい方は\IND{解析的整数論}{かいせきてきせいすうろん}(analytic number theory)の教科書を読むこと。
+まずは、ゼータ関数をさらっと定義する。
+
+\begin{Defi}{\IND{Riemannのゼータ関数}{Riemannのぜーたかんすう}, Riemann zeta function}{Riemann zeta function}
+Riemannのゼータ関数とは、複素数$s$の関数$\zeta(s)$のことである。
+\begin{align*}
+\zeta(s) = \sum_{n=1}^{\infty} \frac{1}{n^s} = \frac{1}{1^s} + \frac{1}{2^s} + \frac{1}{3^s} + \cdots
+\end{align*}
+\end{Defi}
+
+歴史的には、変数$s$は、実数の場合が考察の対象であった。
+具体的な値として、次のようなものが計算されていた。
+\begin{itemize}
+\item $\zeta(1) = \frac{1}{1} + \frac{1}{2} + \frac{1}{3} + \cdots = \infty$
+\item $\zeta(2) = \pi^2 / 6$
+\end{itemize}
+
+実数で考える限り、$s=1$で無限大となってしまい、$s<1$の領域を考えることができない。
+しかし、Riemannは変数$s$を複素数として捉えることによって、$s=1$より「左側」の世界に足を踏み入れた。
+曰く、次の関係式が得られる。
+\begin{align*}
+\zeta(s) = \pi^{s-1/2}\frac{\Gamma((1-s)/2)}{\Gamma(s/2)}\zeta(1-s)
+\end{align*}
+ここで、$\Gamma(s)$は
+\begin{align*}
+\Gamma(s) = \int_0^{\infty} e^{-t}t^{s-1}dt
+\end{align*}
+と定義されるが、これだけでは役割がよく分からない。
+むしろ、$\Gamma(s+1) = s\Gamma(s)$という性質が、階乗を複素数まで拡張したものであることを如実に表している。
+つまり、階乗$n! = 1\cdot2\cdot3\cdot\cdots\cdot{n}$は、$\Gamma$関数を使って$\Gamma(n+1)=n!$と表される。
+
+さて、上式から、$s=-2,-4,-6,\ldots$が、零点、つまり$\zeta(s)=0$となる点であることが分かる。
+これを自明な零点と呼ぶ。
+$0\le\Re(s)\le1$以外の零点は、これですべてである。
+問題は、$0\le\Re(s)\le1$の範囲における零点(これを非自明な零点と呼ぶ)なのだが、これがかの有名なRiemann予想である。
+
+\begin{Conj}{\IND{Riemann予想}{Riemannよそう}, Riemann hypothesis}{Riemann hypothesis}
+$\zeta(s)$の非自明な零点は、実部が1/2である。
+\end{Conj}
+
+Riemannのゼータ関数の零点は、素数分布に関して多くを語っている。
+なぜそうなのか、というのはもっともな疑問であるが、ここでは触れない。
+一方で、一般Riemann予想(generalized Riemann hypothesis)は、剰余類中の素数分布について多くを語る。
+まず、Dirichlet指標を定義する。
+
+\begin{Defi}{\IND{Dirichlet指標}{Dirichletしひよう}, Dirichlet character}{Dirichlet character}
+ある正整数$D$について、整数から複素数への関数$\chi:\mathbb{Z}\to\mathbb{C}$が、次を満たすとき、法$D$のDirichlet指標であると言う。
+\begin{itemize}
+\item 任意の$m,n\in\mathbb{Z}$について、$\chi(mn)=\chi(m)\chi(n)$
+\item $m\equiv n \pmod{D}$ならば$\chi(m)=\chi(n)$
+\item $\chi(n)=0$ならば、かつそのときのみ$\gcd(n, D) = 1$
+\end{itemize}
+\end{Defi}
+
+\begin{Exam}{}{dirichlet_char1}
+$D$が素数のとき、Legendre記号$\left(\frac{a}{D}\right)$は、法$D$のDirichlet指標である。
+\end{Exam}
+
+\begin{Exam}{}{dirichlet_char2}
+$D$が1より大きい奇数のとき、Jacobi記号$\left(\frac{a}{D}\right)$は、法$D$のDirichlet指標である。
+\end{Exam}
+
+このように、Dirichlet指標を定義したが、恒等関数$\chi(n)=1$もここに含まれる。
+ちょっと特殊であるので、他のDirichlet指標と分けて考えたいときのために、主指標と呼ぶことにする。
+
+\begin{Defi}{\IND{主指標}{しゆしひよう}, principal character}{principal character}
+法$D$の主指標は、すべての元を1に移す、法$D$のDirichlet指標である。
+\end{Defi}
+
+Dirichletの$L$関数は、
+\begin{align*}
+L(s,\chi) = \sum_{n=1}^{\infty} \frac{\chi(n)}{n^s}
+\end{align*}
+と定義される。
+Riemannのゼータ関数では1だった分子がDirichlet指標$\chi$に置き換わっている。
+また、$\chi$を主指標とすれば、$L(s, \chi)$が$\zeta(s)$に一致することから、DirichletのL関数はRiemannのゼータ関数の一般化であることが分かる。
+
+Riemann予想と同様に、非自明な零点に関する予想がされている。
+それが一般Riemann予想である。
+
+\begin{Conj}{\IND{一般Riemann予想}{いつぱんRiemannよそう}, Generalized Riemann hypothesis}{Generalized Riemann hypothesis}
+$L(s,\chi)$の非自明な零点は、実部が1/2である。
+\end{Conj}
+
+そして、一般Riemann予想が正しいという仮定の下、次の定理がMillerテストの証明に使える。
+
+\begin{Theo}{}{riemann_true}
+一般Riemann予想が正しいとする。
+このとき、任意の正の整数$D$と任意の主指標でない法$D$のDirichlet指標$\chi$に対して、次のような正整数$n,m$が存在する。
+\begin{itemize}
+\item $n<2\ln^2D$で$\chi(n)\neq1$を満たすもの
+\item $m<3\ln^2D$で$\chi(m)\neq1$と$\chi(m)\neq0$を満たすもの
+\end{itemize}
+\end{Theo}
+
+それでもなお、\rTheo{ssp_prop2}に辿り着いている気がしないのだが、Riemannのゼータ関数がとてもよく分からないことが分かったと思う。
+

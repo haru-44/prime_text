@@ -14,5 +14,6 @@
 * Fermat法
 * Fermatテスト
 * Solovay-Strassenテスト
-* Miller-Rabin テスト
+* Miller-Rabinテスト
+* Millerテスト
 
