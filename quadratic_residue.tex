@@ -193,7 +193,7 @@ $n,m$を互いに素な1より大きい奇数とする。
 $m$が素数のとき、$\left(\frac{a}{m}\right)$は、\rAlgo{legendre_symbol}も\rAlgo{jacobi_symbol}でも同じ結果になるが、$m$が合成数のとき\textbf{一致しないこともある}。
 素数と合成数で異なる挙動を示すということは、素数判定に使えるのではないかというアイディアが浮かぶ。
 
-\IND{Solovay-Strassenテスト}{Solovay-Strassenてすと}(Solovay-Strassen primality test)は、Legendre記号とJacobi記号の振舞いの違いに着目する\cite{DBLP:journals/siamcomp/SolovayS77}\Notes{Legendre記号は合成数に対して定義されていないため、正確を期すならば、「Legendre記号を求めるための計算とJacobi記号の振舞いの違い」と言うべきだろうが、その点は甘受頂きたい。}。
+\IND{Solovay-Strassenテスト}{Solovay-Strassenてすと}(Solovay-Strassen primality test)\cite{DBLP:journals/siamcomp/SolovayS77}は、Legendre記号とJacobi記号の振舞いの違いに着目する\Notes{Legendre記号は合成数に対して定義されていないため、正確を期すならば、「Legendre記号を求めるための計算とJacobi記号の振舞いの違い」と言うべきだろうが、その点は甘受頂きたい。}。
 $n$が素数の場合、この2つは常に一致するが、合成数の場合はそうではない。
 $a$の値によって一致することもあるし、一致しないこともある。
 この一致する$a$と一致しない$a$は、(理由の説明なく結果だけ述べるが)丁度半分ずつ存在するので、$a$をランダムに選べば$1/2$の確率で合成数であることが分かるのである。

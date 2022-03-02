@@ -16,4 +16,5 @@
 * Solovay-Strassenテスト
 * Miller-Rabinテスト
 * Millerテスト
+* p-1法
 
