@@ -10,11 +10,14 @@
 
 ## 解説アルゴリズム
 
-* 試し割
-* Fermat法
-* Fermatテスト
-* Solovay-Strassenテスト
-* Miller-Rabinテスト
-* Millerテスト
-* p-1法
+* 素数判定法
+  * Fermatテスト
+  * Solovay-Strassenテスト
+  * Miller-Rabinテスト
+  * Millerテスト
+  * Lucasテスト
+* 素因数分解アルゴリズム
+  * 試し割
+  * Fermat法
+  * p-1法
 
