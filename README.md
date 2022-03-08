@@ -16,6 +16,7 @@
   * Miller-Rabinテスト
   * Millerテスト
   * Lucasテスト
+  * Pepinテスト
 * 素因数分解アルゴリズム
   * 試し割
   * Fermat法
