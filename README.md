@@ -19,6 +19,7 @@
   * Pepinテスト
   * Pocklingtonテスト
   * Prothテスト
+  * Fibonacci数列テスト
 * 素因数分解アルゴリズム
   * 試し割
   * Fermat法

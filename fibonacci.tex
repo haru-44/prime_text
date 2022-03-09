@@ -1,0 +1,110 @@
+Fibonacci数列は、1202年Leonardo Fibonacciによって著わされた『算盤の書(Liber Abaci)』に記載された。
+$0,1,1,2,3,5,8,\ldots$と続く数列\Notes{\url{https://oeis.org/A000045}}で、定義は次の通りである。
+
+\begin{Defi}{\IND{Fibonacci数列}{Fibonacciすうれつ}, Fibonacci sequence}{Fibonacci_sequence}
+Fibonacci数列$\{F_n\}$は、整数$n\ge0$について
+\begin{align*}
+F_n =
+\begin{cases}
+0, &\mbox{if } n = 0\\
+1, &\mbox{if } n = 1\\
+F_{n - 1} + F_{n - 2}, &\mbox{if } n \ge 2
+\end{cases}
+\end{align*}
+で定義される数列である。
+\end{Defi}
+
+Fibonacciは、ウサギの増え方に関する問題として扱った。
+自然現象に数多く出現する数列として、数学を専門にしない人でも「Fibonacci数列」という名称は比較的聞いたことがあるかも知れない。
+しかし、自然界に出現することはFibonacci数列の一面でしかない。
+
+\Algo{Fibonacci数列}{fibonacci_sequence}{}
+
+上記のように、漸化式を地道に計算していく以外にも、一本の式でも求められる。
+それがFibonacci数列の一般項と呼ばれるものだ。
+\begin{align*}
+F_n = \frac{\phi^n - (1 - \phi)^n}{\phi - (1 - \phi)}
+\end{align*}
+ただし、
+\begin{align*}
+\phi = \frac{1 + \sqrt{5}}{2} = 1.618\ldots
+\end{align*}
+である。
+この$\phi$は\IND{黄金数}{おうこんすう}(golden number)とも呼ばれる。
+ちなみに、$F_n$の分母はあえて整理していない。
+驚くべきは、黄金数が整数(あるいは有理数)ではなく無理数であるということだ。
+右辺は無理数を含んでいるが、左辺は整数になるということは一見すると不可解である。
+
+実は、$\phi$が現れる裏には、特性方程式と呼ばれる方程式が存在する。
+導出過程には触れないが、Fibonacci数列の特性方程式は、$x^2-x-1=0$であり、この方程式の2つの解を$\alpha, \beta$と置くとFibonacci数列の一般項は
+\begin{align*}
+F_n = \frac{\alpha^n - \beta^n}{\alpha - \beta}
+\end{align*}
+とも書ける。
+実は、$\alpha=\phi,\beta=(1-\phi)$となるのであり、「単に$\phi$から$\alpha, \beta$に文字を書き換えただけではないか」という感覚はまったく正しくて、現段階で何ら益はない。
+後々で一般化するにあたり必要な考え方であり、とりあえずそういうものだ、と頭の片隅に置いておけばよい。
+
+Fibonacci数列の一般項は分かったが、面白みに欠ける。
+一般項はこうです、ふーんそうなんだ、というのではやはりお仕着せ感がある。
+また、素数とも関わらないように思える。
+そういうわけだから、ちょっと手を動かしてみよう。
+何をするかというと、Fibonacci数列を素数$p$で割った余りを求めてみるのである。
+ちょっとやる気になった御仁はそのまま進めて、恐らく答えを知りたい大多数の人向けに、$p=5,7,11$での表を示しておく(表\ref{table:fibonacci_example})。
+
+\begin{table}[htb]\label{table:fibonacci_example}
+ \begin{center}
+    \caption{Fibonacci数列を$p$で割った余り}
+  \begin{tabular}{|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|}\hline
+    $p$ & $F_0$ & $F_1$ & $F_2$ & $F_3$ & $F_4$ & $F_5$ & $F_6$ & $F_7$ & $F_8$ & $F_9$ & $F_{10}$ & $F_{11}$ & $F_{12}$ & $F_{13}$ & $F_{14}$ & $F_{15}$ & $F_{16}$ \\ \hline\hline
+    5   & 0     & 1     & 1     & 2     & 3     & 0     & 3     & 3     & 1     & 4     & 0        & 4        & 4        & 3        & 2        & 0        & 2        \\ \hline
+    7   & 0     & 1     & 1     & 2     & 3     & 5     & 1     & 6     & 0     & 6     & 6        & 5        & 4        & 2        & 6        & 1        & 0        \\ \hline
+    11  & 0     & 1     & 1     & 2     & 3     & 5     & 8     & 2     & 10    & 1     & 0        & 1        & 1        & 2        & 3        & 5        & 8        \\ \hline
+  \end{tabular}
+  \end{center}
+\end{table}
+
+この観察から何が得られるか。
+ゼロの出現する箇所を詳しく見てみると、$F_0=0$なので、最初は必ずゼロになる。
+その後、どのようにゼロが出現するかであるが、何かしらの法則性が隠れていそうな雰囲気を醸し出している。
+\begin{itemize}
+ \item $p = 5$のとき、$F_0, F_5, F_{10}, F_{15}$ $\Rightarrow$ 5間隔でゼロが現れる。
+ \item $p = 7$のとき、$F_0, F_8, F_{16}$ $\Rightarrow$ 8間隔でゼロが現れる。
+ \item $p = 11$のとき、$F_0, F_{10}$ $\Rightarrow$ 10間隔でゼロが現れる。
+\end{itemize}
+
+なるほど、0が周期的に現れている。
+しかし、$p=5$のとき5間隔だから、$p=7$のときも7間隔かと思いきや、8間隔である。
+$p+1$間隔になることもあるのかと思ったら、$p=11$のときは10間隔である。
+これを明らかにするのが次の定理である。
+
+\begin{Theo}{}{fibonacci_prime}
+$n$が素数ならば、
+\begin{align*}
+F_{n - \left(\frac{n}{5}\right)} \equiv 0 \pmod{n}
+\end{align*}
+が成り立つ。
+ここで$\left(\frac{n}{5}\right)$はLegendre記号である。
+\end{Theo}
+
+$\left(\frac{n}{5}\right)$はLegendre記号だと言うのだから、次のように扱ってもよい。
+\begin{align*}
+\left(\frac{n}{5}\right) =
+\begin{cases}
+1, &\mbox{if }n \equiv \pm 1 \pmod{5}\\
+-1, &\mbox{if }n \equiv \pm 2 \pmod{5}\\
+0, &\mbox{otherwise}
+\end{cases}
+\end{align*}
+
+例えば、$n=5$のとき、$n$は素数だから$F_{5 - 0} = 0 \pmod{5}$
+が得られるが、これは既に計算されているように正しい。
+同様に、$n=7$のとき、$n$は素数だから
+$F_{7 - (-1)} = F_{8} = 0 \pmod{7}$
+も正しいし、$n=11$のとき、$n$は素数だから
+$F_{11 - 1} = F_{10} = 0 \pmod{11}$も正しい。
+
+「素数ならば\ruby{斯}{か}くなる数式を満たす」という形の定理は、そのまま素数判定に利用できることは既に見た。
+Fibonacci数列もまた、(実用的かはともかく)素数判定に用いることができる。
+この素数判定も、合成数を誤って「素数」と判定することがあり得る。
+
+\Algo{Fibonacci数列テスト}{fibonacci_pseudoprime_test}{c.f., \rAlgo{fibonacci_sequence}, \rAlgo{legendre_symbol}}
