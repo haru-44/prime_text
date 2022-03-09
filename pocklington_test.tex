@@ -1,0 +1,108 @@
+Lucasテストでは、$n-1$の素因数が\kenten{完全に}分かっている必要があった。
+では、一部のみが判明している場合はどうなのだろうか。
+まずは簡単な形を見てみる。
+
+\begin{Theo}{}{pocklington_easy}
+$n-1=q^mR$とする。
+ただし、$q$は素数とし、$m\ge1$かつ$q$は$R$を割り切らないとする。
+次を満たすような$a>1$が存在すれば、$n$の各素因数は$lq^m+1$(ただし、$l\ge1$)の形をしている。
+\begin{align*}
+\begin{cases}
+a^{n-1} \equiv 1 \pmod{n}\\
+\gcd(a^{(n-1)/q}-1, n) = 1
+\end{cases}
+\end{align*}
+\end{Theo}
+
+つまり、$n-1$を1種類の素数$q$で割れるだけ割った場合を考えている。
+
+\begin{Exam}{}{pocklington_easy_1}
+$n = 1991$は、$n-1=5\times398$である。
+$a=42$とすると、
+\begin{align*}
+\begin{cases}
+42^{1990} \equiv 1 \pmod{1991}\\
+\gcd(42^{1990 / 5} - 1, 1991) = 1
+\end{cases}
+\end{align*}
+を満たす。
+一方で、$n=1991=11\times181$と素因数分解できる。
+つまり、
+\begin{align*}
+11 &= 2 \times 5^1 + 1\\
+181 &= 36 \times 5^1 + 1
+\end{align*}
+であり、\rTheo{pocklington_easy}が言う通りである。
+また、$n = 1387$は、$n-1=3^2\times154$である。
+$a=2$とすると、
+\begin{align*}
+\begin{cases}
+2^{1386} \equiv 1 \pmod{1387}\\
+\gcd(2^{1386 / 3} - 1, 1387) = 1
+\end{cases}
+\end{align*}
+を満たす。
+一方で、$n=1387=19\times73$と素因数分解できる。
+つまり、
+\begin{align*}
+19 &= 2 \times 3^2 + 1\\
+73 &= 8 \times 3^2 + 1
+\end{align*}
+であり、\rTheo{pocklington_easy}が言う通りである。
+\end{Exam}
+
+このように、$n-1$の素因数分解の一部でも分かると、$n$の素因数の形を限定できる可能性がある。
+素数1種類の場合を考えたが、一般化を試みよう。
+以降、$n-1=FR$で、$F$の素因数は完全に分かっているとする。
+$q^m$が$F$に変わってもほぼ同じことが言える。
+
+\begin{Theo}{}{pocklington_test}
+$n-1=FR$とする。
+次を満たすような$a>1$が存在すれば、$n$の各素因数は$lF+1$(ただし、$l\ge1$)の形をしている。
+ただし、$q$は$F$の任意の素因数とする。
+\begin{align*}
+\begin{cases}
+a^{n-1} \equiv 1 \pmod{n}\\
+\gcd(a^{(n-1)/q}-1, n) = 1
+\end{cases}
+\end{align*}
+\end{Theo}
+
+この定理は、素数という用語が出てこないし、素数判定には利用できないように思える。
+しかし、$F$に制約を加えることによって、用に立つ。
+
+\begin{Coro}{}{pocklington_test_prime}
+\rTheo{pocklington_test}の条件を満たす$a$が存在し$F\ge\sqrt{n}$ならば、$n$は素数である。
+\end{Coro}
+
+ちょっと考えれば当たり前の事なのだが、\rTheo{pocklington_test}の条件を満たしたということは、すべての素因数が$lF+1$の形なのである。
+更に$F\ge\sqrt{n}$なのだから、すべての素因数は$\sqrt{n}$より大きい。
+こんなことは合成数ではあり得ない。
+これが、\IND{Pocklingtonテスト}{Pocklingtonてすと}(Poecklington test)と呼ばれる素数判定法である。
+
+\Algo{Pocklingtonテスト}{pocklington_test}{c.f., \rAlgo{trial_division}}
+
+次に、Pocklingtonテストを利用して、特殊な形の数についての素数判定を行ってみよう。
+例えば、次のような場合を考えてみる。
+Fermat数$F_{11}$の因数として、$119\times2^{13}+1$が知られているが、$119\times2^{13}+1=974849$が素数であることは、一目で分からない。
+もちろん、この程度の桁数ならば造作もなく他の素数判定法により確認できる。
+しかし、もっと良い方法として\IND{Prothテスト}{Prothてすと}(Proth test)が知られている。
+Prothテストは、$n = m2^s+1$の形の数についての素数判定法である。
+また、このような形の数を\IND{Proth数}{Prothすう}(Proth number)と呼び、素数であるProth数を\IND{Proth素数}{Prothそすう}(Proth prime)と呼ぶ。
+
+\begin{Theo}{\IND{Prothの定理}{Prothのていり}, Proth's theorem}{proths_theorem}
+$n=m2^s+1$とし($m$は奇数で、$m<2^s$)、$a$は$\left(\frac{a}{n}\right)=-1$を満たすとする。
+$n$が素数であるとき、かつそのときに限り、
+\begin{align*}
+a^{(n-1)/2} \equiv -1 \pmod{n}
+\end{align*}
+を満たす。
+ただし、$\left(\frac{a}{n}\right)$はJacobi記号である。
+\end{Theo}
+
+必要十分条件であるから、$a$さえ見つかれば確実に素数だと言える。
+
+\Algo{Prothテスト}{proth_test}{c.f., \rAlgo{jacobi_symbol}}
+
+また、Prothテストは、Pepinテストの拡張でもある。
+$k=1,a=3$とすれば、Pepinテストになる。

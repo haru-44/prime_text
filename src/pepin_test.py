@@ -1,4 +1,4 @@
-def pepin_test(k):
+def pepin_test(k: int) -> str:
     """ Pepinテストによって、Fermat数F_k = 2^{2^k}+1が素数であるかを判定する
 
     Args:

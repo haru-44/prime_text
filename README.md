@@ -17,6 +17,8 @@
   * Millerテスト
   * Lucasテスト
   * Pepinテスト
+  * Pocklingtonテスト
+  * Prothテスト
 * 素因数分解アルゴリズム
   * 試し割
   * Fermat法
