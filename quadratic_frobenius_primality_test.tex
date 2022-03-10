@@ -1,0 +1,93 @@
+Frobenius写像を使った素数判定法は、Fibonacci数列やLucas数列を使った判定法の一般化と言える。
+このFrobenius写像とはどのようなものなのか。
+定義から入ろう。
+
+\begin{Defi}{\IND{Frobenius写像}{Frobeniusしやそう}, Frobenius map}{Frobenius_map}
+素数$p$を標数とする可換環$R$のFrobenius写像$\sigma:R\to R$を、次のように定義する。
+\begin{align*}
+\sigma(a) = a^p
+\end{align*}
+\end{Defi}
+
+難しい言葉が並んだが、結局Frobenius写像とは、元を$p$乗するに過ぎない。
+例えば、$\mathbb{F}_p$の場合は、
+\begin{align*}
+\sigma(a) = a^p = a
+\end{align*}
+となり、恒等関数となる。
+たったそれだけのことである。
+しかし、次のような都合の良い性質がある。
+
+\begin{Prop}{}{Frobenius}
+素数$p$を標数とする可換環$R$と、その元$a,b\in R$とする。
+\begin{itemize}
+\item $\sigma(a) + \sigma(b) = \sigma(a + b)$
+\item $\sigma(a) \times \sigma(b) = \sigma(a \times b)$
+\item $\sigma(a) = a$ならば、$a$は$R$の部分体$\mathbb{F}_p$の元である。
+\end{itemize}
+\end{Prop}
+
+どんなふうに都合が良いかは、これから説明していく。
+今、Lucas数列を$p$で割った余り$U_n \bmod{p}$がどのような構造を持っているかを解明したい。
+構造というのは、もっと具体的に言えば$n$の変化によって、$U_n \bmod{p}$がどのように変わるのかということに興味がある。
+先に答えを言ってしまうと、$p$を素数としたとき$U_n \bmod{p}$は、$\mathbb{F}_{p^2}$あるいは、$\mathbb{F}_p\times\mathbb{F}_p$と同型になる。
+$\left(\frac{\Delta}{n}\right)$が$-1$のとき$\mathbb{F}_{p^2}$と同型になり、$1$のとき$\mathbb{F}_p\times\mathbb{F}_p$と同型となるのだ。
+しかし、これは$U_n \bmod{p}$の「内部」で起こっている本質的な事柄であって、人類にとって容易に確認できる代物ではない。
+そこで、Frobenius写像が登場する。
+$\mathbb{F}_p\times\mathbb{F}_p$にFrobenius写像を適用してもどの元も動かないのに対して、$\mathbb{F}_{p^2}$では根$\alpha,\beta$の置換を引き起こす。
+つまり、$\mathbb{F}_{p^2}$と$\mathbb{F}_p\times\mathbb{F}_p$とでは挙動が異なるのだ。
+
+根$\alpha,\beta$だけに注目すれば、$\mathbb{F}_p\times\mathbb{F}_p$のとき(つまりは$\left(\frac{\Delta}{n}\right)=-1$のとき)
+\begin{align*}
+\begin{cases}
+\sigma(\alpha) &= \beta\\
+\sigma(\beta) &= \alpha
+\end{cases}
+\end{align*}
+である一方、$\mathbb{F}_{p^2}$のとき(つまりは$\left(\frac{\Delta}{n}\right)=1$のとき)
+\begin{align*}
+\begin{cases}
+\sigma(\alpha) &= \alpha\\
+\sigma(\beta) &= \beta
+\end{cases}
+\end{align*}
+となる。
+この違い故に、Fibonacci数列、Lucas数列の素数判定にLegendre記号が現れたのである。
+思い出して欲しい。
+Lucas数列$\{U_n\}$は
+\begin{align*}
+U_n = \frac{\alpha^n - \beta^n}{\alpha - \beta}
+\end{align*}
+と表さるのであった。
+$p$が素数で$\left(\frac{\Delta}{n}\right)=1$のとき、$U_{p-1} \equiv 0 \pmod{n}$となるのは、$\alpha^p,\beta^p$がそれぞれ$\alpha,\beta$に移るため、
+\begin{align*}
+U_{p-1} &= \frac{\alpha^{p-1} - \beta^{p-1}}{\alpha - \beta}\\
+&= \frac{\alpha^p\beta - \beta^p\alpha}{(\alpha-\beta)\alpha\beta}\\
+&= \frac{\alpha\beta - \beta\alpha}{(\alpha-\beta)\alpha\beta}\\
+&= 0
+\end{align*}
+となるためである。
+一方、$p$が素数で$\left(\frac{\Delta}{n}\right)=-1$のとき、$U_{p+1} \equiv 0 \pmod{n}$となるのは、$\alpha^p,\beta^p$がそれぞれ$\beta,\alpha$に移るため、
+\begin{align*}
+U_{p+1} &= \frac{\alpha^{p+1} - \beta^{p+1}}{\alpha - \beta}\\
+&= \frac{\alpha^p\alpha - \beta^p\beta}{\alpha-\beta}\\
+&= \frac{\beta\alpha - \alpha\beta}{\alpha-\beta}\\
+&= 0
+\end{align*}
+となるためである。
+
+以上がFibonacci数列とLucas数列の裏に隠れていたカラクリである。
+
+\begin{Theo}{\IND{2次Frobeniusテスト}{2しFrobeniusてすと}, quadratic frobenius primality test}{quadratic_frobenius_primality_test}
+$a,b$を$\Delta=a^2-4b$が平方数にならないような整数とする。
+また、$n$は$\gcd(n,2b\Delta)=1$を満たすとする。
+$n$が素数ならば、次を満たす。
+\begin{align*}
+U_{n - \left(\frac{\Delta}{n}\right)} &\equiv 0 \pmod{n}\\
+V_{n - \left(\frac{\Delta}{n}\right)} &\equiv
+\begin{cases}
+2b, &\mbox{if } \left(\frac{\Delta}{n}\right) = -1\\
+2,  &\mbox{if } \left(\frac{\Delta}{n}\right) = 1
+\end{cases}
+\end{align*}
+\end{Theo}
