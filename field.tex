@@ -1,0 +1,76 @@
+環は足し算・引き算・掛け算が可能であったが、体ではそれに加えて割り算も可能である。
+
+\begin{Defi}{\IND{体}{たい}, field}{field}
+集合$F$と二項演算$+,\times$について次の2つの条件が成り立つとき$(F,+,\times)$を\textbf{体}と呼ぶ。
+\begin{enumerate}
+ \item $(F,+,\times)$は環である。
+ \item (\textbf{逆元}の存在)任意の$a\in{F}\setminus\{e_{+}\}$について$a{\times}a^{-1}=a^{-1}{\times}a=e_{\times}$となる逆元$a^{-1}$が存在する。
+\end{enumerate}
+\end{Defi}
+
+\IND{斜体}{しやたい}(skew field)あるいは\IND{可除環}{かしよかん}(division ring)と呼ぶ流儀もあるが、これは積が可換かどうかに注目するときに登場する。
+ここで体と言ったときは、暗黙の裡に可換であるとする。
+ちなみに、体を表す文字としてしばしば$K$が用いられるが、これはドイツ語名``Körper"から来ている。
+``Körper"は、「身体」という意味で日本語名の「体」は``Körper"の直訳である。
+
+無限集合で考えた場合、
+\begin{itemize}
+ \item 有理数体 : $\mathbb{Q}$
+ \item 実数体 : $\mathbb{R}$
+ \item 複素数体 : $\mathbb{C}$
+\end{itemize}
+が馴染みのある具体例である。
+しかし、除法が必ずしも整数に収まらないことから、整数は体にはならず、環にとどまる。
+
+一方で、要素が有限の体を\IND{有限体}{ゆうけんたい}(finite field)と呼ぶ。
+位数が素数$p$である剰余環$\mathbb{Z}_p$は、有限体の一例である。
+なお、表記にはいくつかの種類があって、$\mathbb{Z}_p$以外にも$\mathbb{Z}/p\mathbb{Z}, \mathbb{F}_p, GF(p)$等がある。
+ここでは\ruby{専}{もっぱ}ら$\mathbb{F}_p$の表記を用いる。
+
+2つの体に包含関係があるとき、小さい体から見ると体は拡大しており、大きい体から見るともう一方は部分である。
+
+\begin{Defi}{\IND{拡大体}{かくたいたい}(extension field), \IND{部分体}{ふふんたい}(subfield)}{extension field}
+2つの体$K, L$に、$K\subset L$という関係が成り立つとき、$K/L$と書く。
+そして、$L$は$K$の拡大体であると言い、$K$は$L$の部分体であると言う。
+\end{Defi}
+
+\begin{Exam}{}{extention field}\;
+\begin{itemize}
+ \item 実数体$\mathbb{R}$は、有理数体$\mathbb{Q}$の拡大体である。
+ \item 複素数体$\mathbb{C}$は、実数体$\mathbb{R}$の拡大体である。
+\end{itemize}
+\end{Exam}
+
+拡大体や部分体を考えるのは、一番小さい体を見つけたいからである。
+
+\begin{Defi}{\IND{素体}{そたい}, prime field}{prime field}
+部分体を持たない体を素体呼ぶ。
+\end{Defi}
+
+では、どんな体が素体となるのか？
+
+\begin{Prop}{}{prime field}
+任意の素体は、$\mathbb{Q}$または$\mathbb{F}_p$に同型である。
+\end{Prop}
+
+素体は同型を除いて、有理数体$\mathbb{Q}$か$\mathbb{F}_p$しか存在しないことが分かった。
+つまり、どんな体でも$\mathbb{Q}$か$\mathbb{F}_p$を部分として持っていることになる。
+体の世界は、案外狭いように感じられただろうか。
+標数という用語を定義すれば、素体のようすがもう少し詳しく描写できる。
+
+\begin{Defi}{\IND{標数}{ひようすう}, characteristic}{characteristic}
+体$\mathbb{F}$において、次を満たす$p$を$\mathbb{F}$の標数と呼ぶ。
+\begin{align*}
+\underbrace{1 + 1 + \cdots + 1}_{p \mbox{個}} = 0
+\end{align*}
+このような$p$がないときは$0$と定義する。
+\end{Defi}
+
+\begin{Prop}{}{prime field2}\;
+\begin{itemize}
+\item 体$\mathbb{F}$の標数が$0$のとき、$\mathbb{F}$は有理数体$\mathbb{Q}$と同型な部分体を持つ。
+\item 体$\mathbb{F}$の標数$p$が$0$でないとき、それは素数であり、$\mathbb{F}$は有限体$\mathbb{F}_p$と同型な部分体を持つ。
+\end{itemize}
+\end{Prop}
+
+つまり、標数が判明すれば素体が明らかになるわけだ。
