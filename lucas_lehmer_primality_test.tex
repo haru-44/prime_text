@@ -1,0 +1,126 @@
+LucasテストやPepinテストは、$n-1$の素因数分解を利用した素因数判定法であった。
+一般に$n-1$の素因数を求めることは難しいが、特殊な形の数\Notes{例えば、Fermat数$F_k=2^{2^k}+1$}に対しては都合よく適用できる。
+同じように、$n+1$の素因数分解を利用した素数判定法を、Lucas数列テストから構成する。
+$n-1$と同様に$n+1$の素因数を求めることは難しいが、特殊な形の数(具体的には\IND{Mersenne数}{Mersenneすう}$M_n=2^n-1$)に対しては都合よく適用できる。
+それがLucas-Lehmerテストである。
+
+Lucas数列テストでは、
+\begin{align*}
+f(x)=x^2-ax+b, \Delta = a^2-4b
+\end{align*}
+と置き、方程式の根を$\alpha,\beta$としたとき
+\begin{align*}
+U_n &= \frac{\alpha^n - \beta^n}{\alpha - \beta}\\
+V_n &= \alpha^n - \beta^n
+\end{align*}
+を考えたのであった。
+
+ここで、$\left(\frac{\Delta}{n}\right)=-1$の場合に限定して考える。
+すると、LucasテストやPepinテスト、Pocklingtonテストが$n-1$の素因数分解を利用したのに対して、$n+1$の素因数分解を利用する素数判定法を得られる。
+
+\begin{Theo}{}{p_plus_1_u}
+$f(x)=x^2-ax+b, \Delta = a^2-4b$とし、$n$は$\gcd(n,2b)=1$および$\left(\frac{\Delta}{n}\right)=-1$を満たすとする。
+$n+1=FR$としたとき、$q$は$F$の任意の素因数とする。
+次を満たすとき、$n$の任意の素因数$p$は$p\equiv\left(\frac{\Delta}{p}\right)\pmod{F}$を満たす。
+特に、$F>\sqrt{n}+1$ならば$n$は素数である。
+\begin{align*}
+\begin{cases}
+U_{n+1} \equiv 0 \pmod{n}\\
+\gcd(U_{(n+1)/q}, n) = 1
+\end{cases}
+\end{align*}
+\end{Theo}
+
+$V_n$でも同様の定理が考えられる。
+
+\begin{Theo}{}{p_plus_1_v}
+$f(x)=x^2-ax+b, \Delta = a^2-4b$とし、$n$は$\gcd(n,2b)=1$および$\left(\frac{\Delta}{n}\right)=-1$を満たすとする。
+$n+1=FR$としたとき(ただし、$F$は偶数)、$q$は$F$の$2$以外の任意の素因数とする。
+次を満たすとき、$n$の任意の素因数$p$は$p\equiv\left(\frac{\Delta}{p}\right)\pmod{F}$を満たす。
+特に、$F>\sqrt{n}+1$ならば$n$は素数である。
+\begin{align*}
+\begin{cases}
+V_{F/2} \equiv 0 \pmod{n}\\
+\gcd(V_{F/2q}, n) = 1
+\end{cases}
+\end{align*}
+\end{Theo}
+
+Lucas-Lehmerテストは、Mersenne数$M_n=2^n-1$に対して\rTheo{p_plus_1_v}を適用した素数判定法である。
+ただし、Lucas-Lehmerテストは必要十分条件であり、素数か合成数かを確実に判定する。
+
+\begin{Theo}{\IND{Lucas-Lehmerテスト}{Lucas-Lehmerてすと}, Lucas-Lehmer test}{Lucas_Lehmer_test}
+数列$\{v_k\}$を、$v_0=4,v_{k+1}=v_k^2-2$と定める。
+奇素数$q$に対して、$v_{q-2} \equiv 0 \pmod{M_q}$を満たすとき、かつそのときのみ、Mersenne数$M_q$は素数である。
+\end{Theo}
+
+証明の流れを見てみよう。
+$a=4,b=1$とするLucas数列$\{V_k\}$は、特性多項式$f(x)=x^2-4x+1$であり、$\Delta=4^2-4\cdot1=12$である。
+特性方程式$f(x)$の根を$\alpha,\beta$とするとき、$x^2-4x+1=(x-\alpha)(x-\beta)=x^2-(\alpha+\beta)x+\alpha\beta$である\Notes{多項式の係数と根の関係という高校数学の知識だ。}から、
+\begin{align*}
+\alpha + \beta &= 4\\
+\alpha\beta &= 1
+\end{align*}
+が得られる。
+このことから、$\alpha\beta=\alpha(4-\beta)=1$が分かり、また$f(\alpha) = \alpha^2 - 4\alpha + 1 = 0$であることも併せて
+\begin{itemize}
+\item $x(4-x)\equiv1\pmod{f(x)}$
+\item $x^2 \equiv 4x - 1 \pmod{f(x)}$
+\end{itemize}
+という2本の式が得られる。
+
+さらに$M_q$が素数のとき、Frobenius写像(\rDefi{Frobenius_map}\Notes{元を$M_q$乗するのであった})は根の置換を引き起こす。
+雰囲気的には$\alpha^{M_q}=\beta,\beta^{M_q}=\alpha$が起きるのだが、丁寧に書けば、
+\begin{itemize}
+\item $x^{M_q} \equiv (4 - x) \pmod{f(x),M_q}$
+\item $(4-x)^{M_q} \equiv x \pmod{f(x),M_q}$
+\end{itemize}
+となる。
+2次Frobeniusテストでは、Legendre記号の値によって根の置換か恒等写像かが分かれることを見たが、ここで考えるLegendre記号の値は常に$-1$であると主張する\rProp{ll_sub_2}のお陰で根の置換のみを考えればよい。
+
+\begin{Prop}{}{ll_sub_2}
+$n\ge3$が奇数のとき、次が成り立つ。
+\begin{align*}
+\left(\frac{12}{M_n}\right)=-1
+\end{align*}
+\end{Prop}
+
+そして、$\{V_k\}$と$\{v_k\}$をつなぐ次の命題は重要である。
+
+\begin{Prop}{}{ll_sub_1}
+任意の$k\ge1$について
+\begin{align*}
+V_{2^k} = v_k
+\end{align*}
+\end{Prop}
+
+前提条件が揃ったので、$F=2^{q-1}$と置いて、\rTheo{p_plus_1_v}を適用する。
+すると、$V_{F/2} = V_{2^{q-2}} \equiv 0 \pmod{M_q}$という簡単な条件となる\Notes{一応述べておくが、2つ目の最大公約数の条件は、$F$の素因数が$2$しかないことから、考える必要はない。}。
+さらに\rProp{ll_sub_1}を適用すると$v_{q-2} \equiv 0 \pmod{M_q}$が得られる。
+以上より、$v_{q-2} \equiv 0 \pmod{M_q}$ならば$M_q$は素数である。
+
+そして、$M_q$が素数であるとして、$V_{2^{q-2}}\equiv0\pmod{M_q}$を導出しよう。
+以下の命題では、$M_q$が素数であるという前提や、特性方程式が$f(x)=x^2-4x+1$であることの明言を端折っているため注意する。
+
+\begin{Prop}{}{ll_sub_3}
+$x^{2^{q-1}}\equiv-1\pmod{f(x),M_q}$
+\end{Prop}
+
+これより、次の命題が言える。
+
+\begin{Prop}{}{ll_sub_4}
+$U_{2^{q-1}}\equiv0\pmod{M_q}$
+\end{Prop}
+
+最後に、次の命題を証明することで$M_q$が素数ならば$v_{q-2} \equiv 0 \pmod{M_q}$であると言える。
+
+\begin{Prop}{}{ll_sub_5}
+$V_{2^{q-2}}\equiv0\pmod{M_q}$
+\end{Prop}
+
+アルゴリズムの実装を見てみよう。
+
+\Algo{Lucas-Lehmerテスト}{lucas_lehmer_primality_test}{}
+
+その裏で必要となる整数論の難解さは別にして、アルゴリズム自体は驚くほど単純である。
+$p-2$回の2乗算を高速化する余地はあるが、ここでは言及しない。
