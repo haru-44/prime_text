@@ -2,7 +2,7 @@ import math
 from sympy.ntheory import n_order
 
 
-def get_r_for_aks(n):
+def get_r_for_aks(n: int) -> int:
     """ rは、n のZ_r^*での位数がlog2(n)**2 より大きくなる最小の整数。
 
     Args:

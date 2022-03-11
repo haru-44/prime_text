@@ -156,28 +156,34 @@ a^{n-1} \not\equiv 1 \pmod{n}
 もちろん、15は合成数なのでこれら3つに遭遇してしまうと、正しく合成数と判定できない。
 例え運悪く3つのどれかを選んでしまったとしても、もう一度$a$を選んで「合成数でない」と判定できる他の$a$を選ぶことを祈ればよい。
 $n=15$で試してみたが、すべての合成数$n$で同じようなことが言えるのだろうか。
-つまり、$n$が合成数にも関わらず、 $a^{n−1} \bmod{n}$ の結果が1になってしまう$a$の数はどうなっているのだろうか。
-これに関して、Carmichael数という数が知られている。
+つまり、$n$が合成数にも関わらず、 $a^{n−1} \bmod{n}$ の結果が常に1になってしまうような$n$は存在するのだろうか。
+そのような数を、Carmichael数と呼ぶ\Notes{\url{https://oeis.org/A002997}}。
 
 \begin{Defi}{\IND{Carmichael数}{Carmichaelすう}, Carmichael number}{Carmichael number}
 合成数$n$が、$n$と互いに素な、どんな$a$にも$a^{n−1}\equiv 1 \pmod{n}$を満たすとき、$n$をCarmichael数と呼ぶ。
 \end{Defi}
 
-最小のCarmichael数は561で、無限に存在することが知られている。
+あるいは同値であるが「どんな整数$a$にも$a^{n}\equiv a \pmod{n}$を満たすとき」と定義する場合もある。
+最小のCarmichael数は561で、無数に存在することが知られている\cite{Alford1994}。
 さらに必要十分条件も知られている。
 
 \begin{Theo}{\IND{Korseltの判定法}{Korseltのはんていほう}, Korselt's criterion}{Korselt's criterion}
-合成数$n$が$n=p_1^{e_1}\cdot p_2^{e_2} \cdot\cdots\cdot p_r^{e_r}$と素因数分解できるとする。
-次を満たすとき、かつそのときのみ、$n$はCarmichael数である。
+合成数$n$の任意の素因数$p$が次を満たすとき、かつそのときのみ、$n$はCarmichael数である。
 \begin{itemize}
- \item $n$は平方因子を持たない。つまり、すべての$1 \le i \le r$について$e_i=1$である。
- \item すべての$1 \le i \le r$について、$p_i − 1$は$n−1$を割り切る。
+ \item $p^2 \nmid n$
+ \item $(p − 1) \mid (n-1)$
 \end{itemize}
 \end{Theo}
 
-例えば561は、$561=3^1\cdot 11^1 \cdot17^1$と素因数分解できる。
+\begin{Exam}{}{}
+561は、$561=3^1\cdot 11^1 \cdot17^1$と素因数分解できる。
 \begin{itemize}
  \item 平方因子を持たない。つまり、 3,11,17 いずれの指数部も1である。
  \item $560 = (3−1) \times 280 = (11−1) \times 56 = (17−1) \times 35$
 \end{itemize}
 となるから、Korseltの判定法の性質を満たしている。
+\end{Exam}
+
+意外にも、Carmichaelが具体例として571を発見する前に、Korseltが必要十分条件を与えている。
+前者が1910年、後者が1899年だから11年も前である。
+Korseltは、そのような数が存在しないだろうと予想したのだろうが、手計算でしらみ潰しに探しても見つけられる場所に存在していたのである。
