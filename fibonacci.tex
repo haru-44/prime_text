@@ -108,3 +108,59 @@ Fibonacci数列もまた、(実用的かはともかく)素数判定に用いる
 この素数判定も、合成数を誤って「素数」と判定することがあり得る。
 
 \Algo{Fibonacci数列テスト}{fibonacci_pseudoprime_test}{c.f., \rAlgo{fibonacci_sequence}, \rAlgo{legendre_symbol}}
+
+\begin{thProof}{fibonacci_prime}
+Fibonacci数列の一般項は、
+\begin{align*}
+F_n = \frac{\alpha^n - \beta^n}{\sqrt{5}}
+\end{align*}
+とも書ける\Notes{$\alpha-\beta=\sqrt{5}$に注意}。
+両辺に$2^n\sqrt{5}$を掛けて、$\alpha,\beta$を展開すると、
+\begin{align*}
+2^n\sqrt{5}F_n = (1+\sqrt{5})^n - (1-\sqrt{5})^n
+\end{align*}
+となる。
+右辺の各項に二項定理を適用すると、右辺はそれぞれ
+\begin{align*}
+{n \choose 0}\sqrt{5}^0       &+& {n \choose 1}\sqrt{5}^1       &+ \cdots +& {n \choose n-1}\sqrt{5}^{n-1}           &+& {n \choose n}\sqrt{5}^n\\
+{n \choose 0}(-1)^0\sqrt{5}^0 &+& {n \choose 1}(-1)^1\sqrt{5}^1 &+ \cdots +& {n \choose n-1}(-1)^{n-1}\sqrt{5}^{n-1} &+& {n \choose n}(-1)^n\sqrt{5}^n
+\end{align*}
+となって、上から下を引くと奇数乗の項のみが残る。
+つまり、
+\begin{align}
+\label{catalan_equation_fibonacci_prime}
+2^n F_n = 2 \left[ {n \choose 1} + {n \choose 3}5 + {n \choose 5}5^2 + \cdots \right]
+\end{align}
+を得る。
+
+式(\ref{catalan_equation_fibonacci_prime})に$n=p-1$を代入すると、
+\begin{align*}
+2^{p-1}F_{p-1} = 2 \left[ {p-1 \choose 1} + {p-1 \choose 3}5 + {p-1 \choose 5}5^2 + \cdots \right]
+\end{align*}
+となるが、$p$が素数のとき、$0 < k < p$において
+\begin{align*}
+{p-1 \choose k} \equiv (-1)^k \pmod{p}
+\end{align*}
+であることと、等比数列の和の公式より、
+\begin{align*}
+2^{p-1}F_{p-1} &\equiv -2 (1 + 5 + \cdots + 5^{(p-3)/2}) \pmod{p}\\
+&\equiv -2 \frac{5^{(p-1)/2} - 1}{5-1}\pmod{p}
+\end{align*}
+を得る。
+$5^{(p-1)/2}\pmod{p}$は、$p\equiv\pm1\pmod{5}$のとき、1となるから、このとき$F_{p-1}\equiv 0\pmod{p}$を得る。
+
+同様に、式(\ref{catalan_equation_fibonacci_prime})に$n=p+1$を代入すると、
+\begin{align*}
+2^{p+1}F_{p+1} = 2 \left[ {p+1 \choose 1} + {p+1 \choose 3}5 + {p+1 \choose 5}5^2 + \cdots \right]
+\end{align*}
+となるが、$p$が素数のとき、$1 < k < p$において
+\begin{align*}
+{p+1 \choose k} \equiv 0 \pmod{p}
+\end{align*}
+であるから、
+\begin{align*}
+2^{p+1}F_{p+1} \equiv 2 (1 + 5^{(p-1)/2}) \pmod{p}
+\end{align*}
+を得る。
+$5^{(p-1)/2}\pmod{p}$は、$p\equiv\pm2\pmod{5}$のとき、$-1$となるから、このとき$F_{p+1}\equiv 0\pmod{p}$を得る。
+\end{thProof}
