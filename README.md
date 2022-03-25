@@ -4,6 +4,9 @@
 
 素数判定法と素因数分解アルゴリズムに関して、Pythonによるプログラム例を載せた教科書(になる予定)。
 
+## Contents
+[pdf](https://github.com/haru-44/prime_text/releases/latest/download/main.pdf)
+
 ## Author
 
 [twitter](https://twitter.com/haru_44)
