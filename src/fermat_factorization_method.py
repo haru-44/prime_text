@@ -1,4 +1,3 @@
-import math
 from sqrt_int import sqrt_int
 
 

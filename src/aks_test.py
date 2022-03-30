@@ -2,7 +2,6 @@ import math
 from get_r_for_aks import get_r_for_aks
 from is_perfect_power import is_perfect_power
 from PolynomialCyclotomic import PolynomialCyclotomic
-from sqrt_int import sqrt_int
 from totient_function import totient_function
 
 

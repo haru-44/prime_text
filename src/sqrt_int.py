@@ -1,6 +1,3 @@
-import math
-
-
 def sqrt_int(n: int) -> int:
     """ 整数nに対して、sqrt(n)の整数部分を返す。
 
