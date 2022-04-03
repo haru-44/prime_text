@@ -220,3 +220,64 @@ $n$が$n=p_1^{e_1}p_2^{e_2}\cdots p_r^{e_r}$と素因数分解できるとき、
 それは、「素因数分解→$\varphi(n)$の計算→RSA暗号解読」という手順によってなされるわけであるが、$\varphi(n)$の計算に素因数分解が必須であるかは分かっていない。
 つまり、素因数分解をしなくとも$\varphi(n)$を計算できる可能性があって、素因数分解問題が難しいままでも、RSA暗号を解読することが可能かもしれない。
 
+次に、\IND{中国の剰余定理}{ちゆうこくのしようよていり}(Chinese remainder theorem)を紹介しよう。
+これは、『孫子算経』に、「3で割ると2余り、5で割ると3余り、7で割ると2余る数は何か」という問題とその解法が載せられたことに端を発する。
+この解法は、本来ならきちんと学ばなければならない所だが、さらっと載せる。
+
+\Algo{中国の剰余定理}{chainese_remainder_theorem}{c.f., \rAlgo{extended_gcd}}
+
+今注目したいのは、中国の剰余定理の系である。
+
+\begin{Coro}{}{chinese_remainder_theorem}
+互いに素な整数$m,n$とすると、次が成り立つ。
+\begin{align*}
+\mathbb{Z}_{mn} &\cong \mathbb{Z}_m \times \mathbb{Z}_n\\
+\mathbb{Z}_{mn}^* &\cong \mathbb{Z}_m^* \times \mathbb{Z}_n^*
+\end{align*}
+\end{Coro}
+
+一般には$m,n$の2つの場合だけでなく、$k$個の場合でも成り立つ。
+
+色々と未登場の記号を使ったが、簡単な例で説明する。
+例えば、$\mathbb{Z}_3\times\mathbb{Z}_4$とは2つの群の元をペアにしたものである。
+つまり、
+\begin{align*}
+\mathbb{Z}_3\times\mathbb{Z}_4 = \{(a,b) : a \in \mathbb{Z}_3, b \in \mathbb{Z}_4\}
+\end{align*}
+として、演算はそれぞれ別個に$(a_1+a_2,b_1+b_2)$などとすれば、$\mathbb{Z}_3\times\mathbb{Z}_4$もまた群となる。
+では、これがどういう群かというと、\rCoro{chinese_remainder_theorem}が示すには、$\mathbb{Z}_{12}$と本質的には同じになる。
+「本質的には」とは、両者に一対一対応があることを意味し、例の場合なら任意の$A\in\mathbb{Z}_{12}$は$(A \% 3, A \% 4)$という変換によって$\mathbb{Z}_3\times\mathbb{Z}_4$の元になる。
+逆に$\mathbb{Z}_3\times\mathbb{Z}_4$の元は、中国の剰余定理によって$\mathbb{Z}_{12}$の元と対応付けられる。
+このような一対一対応を同型写像と呼び、次のように定義する。
+
+\begin{Defi}{\IND{準同型写像}{しゆんとうけいしやそう}, homomorphism}{homomorphism}
+2つの群を$(G, \dagger),(H, \star)$とする。
+$f:G\to H$が任意の$a,b\in G$について次を満たすとき、$f$を準同型写像と呼ぶ。
+\begin{align*}
+f(a) \star f(b) = f(a \dagger b)
+\end{align*}
+\end{Defi}
+
+\begin{Defi}{\IND{同型写像}{とうけいしやそう}, isomorphism}{isomorphism}
+2つの群を$G,H$とする。
+準同型写像$f:G\to H$が全単射のとき、$f$を同型写像と呼ぶ。
+\end{Defi}
+
+2つの群$G,H$に同型写像が存在するとき、この2つの群は同型であると呼び、$G\cong H$と書く\Notes{教科書によっては$G\simeq H$と書く流儀もある。}。
+また、単に準同型写像、同型写像、あるいは同型と呼んだが、群における同型なので、区別する必要があるときは\kenten{群}準同型写像、\kenten{群}同型写像、\kenten{群}同型と呼ぶことがある。
+特に、後に説明する環や体にも同型写像が存在するが、2つが「同じ」であるということを定義したいというココロは、群の場合と変わりない。
+
+$\mathbb{Z}_m \times \mathbb{Z}_n$の``$\times$"は、直積と呼ばれる、新たな群を生み出す操作である。
+
+\begin{Defi}{\IND{直積}{ちよくせき}, direct product}{direct_product}
+2つの群を$(G, \dagger),(H, \star)$とする。
+直積群$G \times H$を次のように定義する。
+\begin{itemize}
+ \item 元は$(g, h)$とする。ここで、$g \in G, h \in H$。
+ \item 2項演算は、任意の元$(g_1, h_1), (g_2, h_2)\in G \times H$について$(g_1, h_1)\cdot(g_2, h_2) = (g_1 \dagger g_2, h_1 \star h_2)$
+\end{itemize}
+\end{Defi}
+
+似た概念に、$G \oplus H$と書く\IND{直和}{ちよくわ}(direct sum)がある。
+直積と同じく群から新たな群をつくり出す操作であるが、有限個の群に対してであれば両者は一致する。
+無論、ここでは無限直和や無限直積を扱わないので、$G \times H$と書いても、$G \oplus H$と書いても言っていることは同じである。
