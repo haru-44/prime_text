@@ -78,13 +78,13 @@ a^{n-1} \equiv 1 \pmod{n}\\
 ちょっと考えれば当たり前の事なのだが、\rTheo{pocklington_test}の条件を満たしたということは、すべての素因数が$lF+1$の形なのである。
 更に$F\ge\sqrt{n}$なのだから、すべての素因数は$\sqrt{n}$より大きい。
 こんなことは合成数ではあり得ない。
-これが、\IND{Pocklingtonテスト}{Pocklingtonてすと}(Poecklington test)と呼ばれる素数判定法である。
+これが、\IND{Pocklingtonテスト}{Pocklingtonてすと}(Pocklington test)と呼ばれる素数判定法である。
 
 \Algo{Pocklingtonテスト}{pocklington_test}{c.f., \rAlgo{trial_division}}
 
-次に、Pocklingtonテストを利用して、特殊な形の数についての素数判定を行ってみよう。
+Pocklingtonテストを利用して、特殊な形の数についての素数判定を行ってみよう。
 例えば、次のような場合を考えてみる。
-Fermat数$F_{11}$の因数として、$119\times2^{13}+1$が知られているが、$119\times2^{13}+1=974849$が素数であることは、一目で分からない。
+Fermat数$F_{11}$の因数として、$119\times2^{13}+1=974849$が知られているが、974849が素数であることは、一目で分からない。
 もちろん、この程度の桁数ならば造作もなく他の素数判定法により確認できる。
 しかし、もっと良い方法として\IND{Prothテスト}{Prothてすと}(Proth test)が知られている。
 Prothテストは、$n = m2^s+1$の形の数についての素数判定法である。
@@ -104,5 +104,9 @@ a^{(n-1)/2} \equiv -1 \pmod{n}
 
 \Algo{Prothテスト}{proth_test}{c.f., \rAlgo{jacobi_symbol}}
 
-また、Prothテストは、Pepinテストの拡張でもある。
-$k=1,a=3$とすれば、Pepinテストになる。
+Prothテストは、Pepinテストの拡張と考えることもできる。
+Prothテストにおいて$k=1,a=3$とすれば、Pepinテストになるからである。
+
+$\left(\frac{a}{n}\right)=-1$となる$a$は、全体の半分ほど存在しているため、実用的にはそれほど試行せずに見つけられる。
+このように、運が悪いといつまでも終了しないが、平均的には時間がかからずに終了し、出力される答えは常に正しい乱択アルゴリズムは\IND{ラスベガス法}{らすべがすほう}(Las Vegas algorithm)と総称される。
+最大の素数を発見する競争では、Mersenne数がトップをひた走るが、Mersenne数でない数の中ではProth素数が最大である\Notes{2022年現在、$10223\times2^{31172165}+1$が、Mersenne数でない数の中で最大の素数(2016年発見)。\url{https://primes.utm.edu/primes/page.php?id=122473}}。
