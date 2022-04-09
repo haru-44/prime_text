@@ -97,6 +97,7 @@ def elliptic_curve_method_fast(n: int, *, B1: int,  D: int,
 
     # stage 2
     s_1 = _double(Q)
+    # S_i = [2(i+1)]Q
     S = list(_sequence(s_1=s_1, s_2=_double(s_1), delta=s_1, k=D))
     beta = [(x * z) % n for x, z in S]
     g = 1
