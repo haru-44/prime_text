@@ -124,3 +124,41 @@ $V_{2^{q-2}}\equiv0\pmod{M_q}$
 
 その裏で必要となる整数論の難解さは別にして、アルゴリズム自体は驚くほど単純である。
 $p-2$回の2乗算を高速化する余地はあるが、ここでは言及しない。
+
+Mersenne素数が大きな素数の上位を独占しているのは、Lucas-Lehmerテストに拠るところが大きいが、Mersenne数自体にも都合の良い性質がいくつもある。
+
+\begin{Prop}{}{}
+$M_q$が素数ならば$q$は素数である。
+\end{Prop}
+
+残念ながら逆は正しくない。
+しかし、Mersenne素数を探すなら$q$が素数のみで良いことが分かる。
+更に、
+
+\begin{Prop}{}{}
+$q$を奇素数とする。
+$M_q$の任意の素因数$r$は、$r\equiv1\pmod{q}$かつ$r\equiv\pm1\pmod{8}$を満たす。
+\end{Prop}
+
+ということが分かっているので、$M_q$の任意の素因数$r$は、$r=2qt+1$の形で表される。
+試し割をするにも、$p-1$法を実行するにも都合がいいことが了解されよう。
+
+また、Catalan予想は、1844年Catalanが予想し、2002年Mihăilescuによって証明された\Notes{そのため、「予想」と呼ばず、Mihăilescuの定理と呼ぶこともある。}\cite{Catalan's_conjecture}。
+
+\begin{Theo}{\IND{Catalan予想}{Catalanよそう}, Catalan's conjecture}{Catalan's conjecture}
+次を満たす1より大きい正整数$x,n,y,m>1$は、$(x,n,y,m)=(3,2,2,3)$のみである。
+\begin{align*}
+x^n - y^m = 1
+\end{align*}
+\end{Theo}
+
+この事実を用いれば、
+
+\begin{Coro}{}{Catalan_Mersenne}
+$n$が1より大きい正整数であるとすると、$M_n$は累乗数ではない。
+\end{Coro}
+
+ということも分かる。
+もっと言えば、$M_q$は平方因子を持たないようにも見えるが、未証明である。
+
+これらの事実から、Mersenne素数の探索するには、素数$q$のみを考えればよく、試し割や$p-1$法によって篩にかけ、残った$M_q$に対してのみLucas-Lehmerテストを実施してやればよい。
