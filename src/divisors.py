@@ -10,7 +10,7 @@ def divisors(n: int) -> List[int]:
     """ nの約数リストを返す
 
     Args:
-        n (int): 対称の自然数
+        n (int): 対象の自然数
 
     Returns:
         list[int]: nの約数のリスト
