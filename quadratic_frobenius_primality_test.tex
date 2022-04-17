@@ -1,6 +1,9 @@
-Frobenius写像を使った素数判定法は、Fibonacci数列やLucas数列を使った判定法の一般化と言える。
-このFrobenius写像とはどのようなものなのか。
-定義から入ろう。
+Fibonacci数列やLucas数列に見られた素数に関する性質は、数列それ自体が特別であるためではない。
+その裏にある特性多項式と呼ばれる多項式に、重要なカラクリがあるのだ。
+それを表舞台に出したのがFrobeniusテストである。
+Frobeniusテストは、多項式一般に対して考えることができるが、簡単のため2次多項式の場合を扱おう。
+2次に限ったとしても、Fibonacci数列テストやLucas数列テストの一般化であり、これらよりも(誤って素数だと答えてしまう合成数が少ないという意味で)強力である。
+Frobeniusテストを説明するには、Frobenius写像を定義しなければならない。
 
 \begin{Defi}{\IND{Frobenius写像}{Frobeniusしやそう}, Frobenius map}{Frobenius_map}
 素数$p$を標数とする可換環$R$のFrobenius写像$\sigma:R\to R$を、次のように定義する。

@@ -71,7 +71,7 @@ Fermatの小定理は、群という枠組みで考えると、新たな発見�
 \begin{eqnarray*}
 a + b = b + a
 \end{eqnarray*}
-ならば、$(G,+)$を\IND{可換群}{かかんくん}(commutative group)と呼ぶ。
+ならば、$(G,+)$を\IND{可換群}{かかんくん}(commutative group)あるいは\IND{アーベル群}{あーへるくん}(abelian group)と呼ぶ。
 また、慣例的に加法について群ならば加法群と呼び、逆元を$-a$、単位元を0と表し、乗法について群ならば乗法群と呼び、逆元を$a^{-1}$、単位元を1と表すが、本質的に違いはない。
 同様に、スカラー倍についても表記上の差異が見られる。
 加法群$(G,+)$ならば$a\in{G}$と非負整数$k$について
@@ -123,12 +123,17 @@ a \times a^{k-1}, & \mbox{if } k > 0\\
 $a,n\in\mathbb{Z}$が互いに素であるとき、かつそのときのみ$ax=1\pmod{n}$となるような$x$が存在する。
 \end{Prop}
 
+\begin{prProof}{inverse_element_not_exists}
+$\gcd(a,n)=1$ならば、$ax+ny=1$を満たす整数$x,y$が存在する(\rTheo{ex_euclid})。
+$\bmod{n}$においては、$ax+ny\equiv1\pmod{n}$より、$ax\equiv1\pmod{n}$。
+\end{prProof}
+
 つまり、$a$と$n$が互いに素でないと、逆元が存在しないのである。
 例えば、$a=4,n=12$のとき、$ax \% n =1$となるような$x$が存在しないため$\mathbb{Z}_{12}$は群にならない。
 ちなみに、逆元を持つ元を\IND{可逆元}{かきやくけん}(invertible element)あるいは\IND{単元}{たんけん}(unit)と呼ぶ。
 換言すれば、群はすべての要素が可逆元である。
 
-逆元を求めるには、拡張Euclidの互除法を使えばよい。
+逆元を求めるには、証明で見たように拡張Euclidの互除法を使えばよい。
 具体的には次のようになる。
 
 \Algo{逆元}{inverse_mod}{c.f., \rAlgo{extended_gcd}}
@@ -280,7 +285,7 @@ $\mathbb{Z}_m \times \mathbb{Z}_n$の``$\times$"は、直積と呼ばれる、�
 
 似た概念に、$G \oplus H$と書く\IND{直和}{ちよくわ}(direct sum)がある。
 直積と同じく群から新たな群をつくり出す操作であるが、有限個の群に対してであれば両者は一致する。
-無論、ここでは無限直和や無限直積を扱わないので、$G \times H$と書いても、$G \oplus H$と書いても言っていることは同じである。
+無論、ここでは無限直和や無限直積を扱わないので、$G \times H$と書いても、$G \oplus H$と書いても言っていることは同じである\Notes{他にも、\IND{半直積}{はんちよくせき}(semidirect product)などもあるが、名前を紹介に留める。}。
 
 $\mathbb{Z}_n$について、いくつか注意しておこう。
 $\mathbb{Z}_n$は$\mathbb{Z}/n\mathbb{Z}$と書かれることもあるが、意味に違いはない。
