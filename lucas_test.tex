@@ -124,6 +124,45 @@ $n$を十分大きい素数とする。$n$を法とする原始根は$n/(2\ln\ln
 \end{Prop}
 
 よって、$n$が十分大きければ、$2\ln\ln{n}$以下の試行で原始根を見つけられると期待できる。
+また、$\mathbb{Z}_p^*$に原始根が必ず存在するという事実は、証明にも利用できる。
+試しにFermatの小定理を証明してみよう。
+
+\begin{thProof}{Fermats-little-theorem}
+$p$を素数とする。
+任意の$a\in\mathbb{Z}_p^*$は、原始根$g\in\mathbb{Z}_p^*$と$k\in\mathbb{Z}$で、$a=g^k$と書けることに注意しよう。
+\begin{align*}
+a^{p-1} &= (g^k)^{p-1}\\
+ &= (g^{p-1})^k\\
+ &= 1^k \\
+ &= 1
+\end{align*}
+となり、題意は示された。
+\end{thProof}
+
+他にもWilsonの定理も原始根を使って証明できる\Notes{なお、Wilsonの定理を使って素数判定を行うこともできるが、計算コストが高すぎて小さな数でさえも実用的ではない。}。
+
+\begin{Theo}{\IND{Wilsonの定理}{Wilsonのていり}, Wilson's theorem}{wilson}
+$p$が素数であるとき、かつそのときのみ、次が成り立つ。
+\begin{align*}
+(p-1)! \equiv -1 \pmod{p}
+\end{align*}
+\end{Theo}
+
+\begin{thProof}{wilson}
+十分条件のみ示す。
+
+$p$を奇素数とする($p=2$のときは明らか)。
+定理は$\mathbb{Z}_p^*$の総積が$-1$に一致すると主張するが、任意の$a\in\mathbb{Z}_p^*$は、原始根$g\in\mathbb{Z}_p^*$と$k\in\mathbb{Z}$で$a=g^k$と書け、さらにこの$k$と$a$は1対1に対応する。
+\begin{align*}
+\prod_{a \in \mathbb{Z}_p^*} a &= \prod_{k=0}^{p-1} g^k\\
+ &= g^{\sum_{k=0}^{p-1}k}\\
+ &= g^{(p-1)(p-2)/2} = (g^{(p-1)/2})^{p-2}\\
+ &= (-1)^{p-2} = -1
+\end{align*}
+となり、題意は示された。
+途中、$g^{(p-1)/2}=-1$となることは、$g^{p-1}=1$になることからも了解できる。
+また、$p-2$は奇数であることにも注意する。
+\end{thProof}
 
 もう一つ懸念があるとすれば、Lucasテストを実行するには$n-1$の素因数分解が明らかでなければならないという所にある。
 \rAlgo{lucas_primality_test}では、自前で素因数分解したが、これが常に簡単にできるとは限らない。
