@@ -1,5 +1,7 @@
 import math
+
 from sympy import primerange
+
 from lucas_sequence_v import lucas_sequence_v
 
 

@@ -1,4 +1,5 @@
 import random
+
 from jacobi_symbol import jacobi_symbol
 
 

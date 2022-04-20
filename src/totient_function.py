@@ -1,5 +1,6 @@
 import functools
 import operator
+
 from sympy.ntheory import factorint
 
 

@@ -1,5 +1,6 @@
-from extended_gcd import extended_gcd
 from typing import Optional
+
+from extended_gcd import extended_gcd
 
 
 def inverse_mod(a: int, n: int) -> Optional[int]:

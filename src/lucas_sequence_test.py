@@ -1,4 +1,5 @@
 import math
+
 from legendre_symbol import legendre_symbol
 from lucas_sequence import lucas_sequence
 

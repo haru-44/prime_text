@@ -1,5 +1,6 @@
-from sqrt_int import sqrt_int
 from typing import List, Optional
+
+from sqrt_int import sqrt_int
 
 
 def trial_division(n: int, *, upper: Optional[int] = None) -> List[int]:

@@ -1,4 +1,5 @@
 import math
+
 from sympy.ntheory import n_order
 
 

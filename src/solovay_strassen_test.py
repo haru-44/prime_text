@@ -1,6 +1,7 @@
 import random
-from legendre_symbol import legendre_symbol
+
 from jacobi_symbol import jacobi_symbol
+from legendre_symbol import legendre_symbol
 
 
 def solovay_strassen_test(n: int, k: int = 10) -> str:

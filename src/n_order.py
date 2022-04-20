@@ -1,4 +1,5 @@
 from sympy import factorint
+
 from totient_function import totient_function
 
 
@@ -12,6 +13,12 @@ def n_order(a: int, n: int) -> int:
 
     Returns:
         int: 法nにおけるaの位数
+
+    Examples:
+        >>> n_order(3, 11)
+        5
+        >>> n_order(5, 12)
+        2
     """
     group_order = totient_function(n)
     order = group_order
