@@ -11,7 +11,7 @@ $n=4,a=3$とすると、$a^1=3,a^2=1,a^3=1\ldots$というように$1$と$3$を�
 \end{Defi}
 
 法$n$の既約剰余類$\mathbb{Z}_n^*$で考えるなら、$a^s \equiv 1 \pmod{n}$を満たす最小の正整数$s$と言い換えても良い。
-群の位数(\rDefi{group_order})と元の位数は混同しやすいが、別物である。
+群の位数(\rDefi{group_order})と元の位数は混同しやすいが、まったく別物である。
 
 \begin{itemize}
  \item 既約剰余類$\mathbb{Z}_{5}^*$において、$a=3$の位数は$4$である。なぜなら、法$5$において、$a^1\equiv3,a^2\equiv4,a^3\equiv2,a^4\equiv1$となるからである。
@@ -27,8 +27,7 @@ $n=4,a=3$とすると、$a^1=3,a^2=1,a^3=1\ldots$というように$1$と$3$を�
 \end{Defi}
 
 同じことだが、$g$が原始根ならば、$(g,g^2,g^3,\ldots,g^{\varphi(n)})$の中に、ダブりもモレもなく、$\mathbb{Z}_n^*$の元が登場する。
-\begin{Exam}{}{primitive_root}
-原始根の実例を示す。
+\begin{Exam}{}{primitive_root}\;
 \begin{itemize}
  \item $g=2$は$n=5$を法とする原始根である。実際、$g=2,g^2=4,g^3=3,g^4=1$である。
  \item $g=3$は$n=49$を法とする原始根である。
@@ -113,8 +112,28 @@ $a=7$とすると、
 
 \begin{Prop}{}{primitive_root_number}
 奇素数$p$を法とする原始根の個数は$\varphi(p-1)$個である。
-一般に、$\mathbb{Z}_p^*$の中で、元の位数が$R$となる元は$\varphi(R)$個存在する。
+一般に、$\mathbb{Z}_p^*$の中で、位数が$r$となる元は$\varphi(r)$個存在する。
 \end{Prop}
+
+\begin{Exam}{}{primitive_root_number}\;
+\begin{itemize}
+ \item $p=5$のとき、
+  \begin{itemize}
+   \item 位数4の元は2,3の2個($=\varphi(4)$)
+   \item 位数2の元は4の1個($=\varphi(2)$)
+   \item 位数1の元は1の1個($=\varphi(1)$)
+  \end{itemize}
+  \item $p=13$のとき、
+  \begin{itemize}
+   \item 位数12の元は2,6,7,11の4個($=\varphi(12)$)
+   \item 位数6の元は4,10の2個($=\varphi(6)$)
+   \item 位数4の元は5,8の2個($=\varphi(4)$)
+   \item 位数3の元は3,9の2個($=\varphi(3)$)
+   \item 位数2の元は12の1個($=\varphi(2)$)
+   \item 位数1の元は1の1個($=\varphi(1)$)
+  \end{itemize}
+\end{itemize}
+\end{Exam}
 
 そう言われても、$\varphi(n-1)$はどのくらいなのだ、という疑問が湧き出てくる。
 そこで次の事実である。
@@ -195,10 +214,7 @@ $p$を奇素数とする($p=2$のときは明らか)。
 $a=3$の位数は$48$であり、$96$を割り切る。一方、$a=7$の位数は$96$であり、$96$を割り切る。
 \end{Exam}
 
-いま、素数$n$に対する$n-1$の約数が知られているとしよう(もはや朝飯前の拡張だが、非負整数$n$に対する$\varphi(n)$の約数が知られていると言っても良い)。
-どんな$a\in\mathbb{Z}_n^*$でも、$\mbox{ord}(a)$は、この約数のいずれかである。
-もし、ある約数$m$が$a^m=1$を満たすなら、\rProp{element_order}の2から求めたい$\mbox{ord}(a)$は、$m$を割り切る。
-これをまとめると、元$a \in \mathbb{Z}_n^*$の位数の求め方は次のようになる。
+元$a \in \mathbb{Z}_n^*$の位数の求め方は次のようになる。
 
 \Algo{位数を求める}{n_order}{c.f., \rAlgo{totient_function}}
 
