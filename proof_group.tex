@@ -1,0 +1,112 @@
+\subsubsection{\rProp{primitive_root_exists}の証明}
+
+\begin{Lemm}{}{totient_function_multiplicative}
+Eulerの$\varphi$関数は乗法的である。つまり、互いに素な$m,n$について、
+\begin{align*}
+\varphi(mn) = \varphi(m)\varphi(n)
+\end{align*}
+である。
+\end{Lemm}
+
+\begin{Lemm}{}{totient_function_even}
+$n>2$のときEulerの$\varphi$関数$\varphi(n)$は偶数である。
+\end{Lemm}
+
+\begin{lmProof}{totient_function_even}
+Eulerの$\varphi$関数が乗法的であることに注意する(\rLemm{totient_function_multiplicative})。
+素数$p$に対して
+\begin{align*}
+\varphi(p^k) = p^{k-1}(p-1)
+\end{align*}
+であるから、$n$の素因数に奇素数があれば$(p-1)$が偶数になるので$\varphi(n)$は偶数になる。
+また、$n$の因数に$2^k$(ここで$k>1$)があれば、$p^{k-1}$が偶数になるので$\varphi(n)$は偶数になる。
+\end{lmProof}
+
+\begin{Prop}{}{primitive_root_search_2p}
+奇素数$p$、正整数$k$とし、$p^k$を法とする原始根を$g$とする。
+$g$と$g+p^k$のうち、奇数である方が$2p^k$を法とする原始根である。
+\end{Prop}
+
+\begin{prProof}{primitive_root_exists}
+2以上の自然数を次のように分割し、それぞれに原始根が存在する、あるいは存在しないことを示す。
+\begin{enumerate}
+ \item 2,4
+ \item $2^k$。ただし、$k>2$
+ \item 奇素数$p$
+ \item $p^k$。ただし、$p$は奇素数で、$k>1$
+ \item $2p^k$。ただし、$p$は奇素数で、$k\ge1$
+ \item $mk$。ただし、$m$と$k$は互いに素で、$m>2, k>2$
+\end{enumerate}
+
+\noindent\textbf{2,4の場合}
+
+$n=2,4$のとき、$g=1,3$がそれぞれの原始根である。
+
+\noindent\textbf{$2^k$の場合}
+
+どんな$a\in\mathbb{Z}_{2^k}^*$の位数も$\varphi(2^k)=2^{k-1}$未満であることを示す。
+より具体的には、$a^{2^{k-2}}\equiv1\pmod{2^k}$を示せば、$a$の位数は高々$2^{k-2}$であり、$2^{k-1}$未満であることが分かって、原始根は存在しない。
+$a$は奇数だから$a=2t+1$と書き直し、数学的帰納法を用いよう。
+
+$k=3$のとき、
+\begin{align*}
+(2t + 1)^2 = 4t^2 + 4t + 1 = 4t(t+1) + 1 = 8T + 1 \equiv 1 \pmod{2^3}
+\end{align*}
+となり成立($t, t+1$のどちらかは偶数だから$4t(t+1)$は8で割り切れる)。
+
+$k=m$のとき、$(2t+1)^{2^{m-3}}=2^{m-1}T+1$を仮定すると、
+\begin{align*}
+(2t + 1)^{2^{m-2}} = (2^{m-1}T+1)^2 = 2^{2(m-1)}T^2 + 2^mT + 1 = 2^m(2^{m-2}T^2 + T) + 1 \equiv 1 \pmod{2^m}
+\end{align*}
+となり、$a^{2^{k-2}}\equiv1\pmod{2^k}$が示された。
+よって、原始根は存在しない。
+
+\noindent\textbf{奇素数$p$の場合}
+
+素数$p$に対して$p-1=\prod_{i=1}^kq_i^{e_i}$と素因数分解できるとする。
+$(p-1)/q_i$次方程式
+\begin{align*}
+x^{(p-1)/q_i} \equiv 1 \pmod{p}
+\end{align*}
+を満たさない$X_i\in\mathbb{Z}_p^*$が存在する($n$次方程式の根は高々$n$個しかない)。
+$Y_i=X_i^{(p-1)/q_i^{e_i}}$と置くと、
+\begin{align*}
+Y_i^{q_i^{e_i}} &\equiv X^{p-1} \equiv 1 \pmod{p}\\
+Y_i^{q_i^{e_i-1}} &\equiv X^{(p-1)/q_i} \not\equiv 1 \pmod{p}
+\end{align*}
+を得る。
+上式はFermatの小定理(\rTheo{Fermats-little-theorem})から得られるし、下式は$X$の前提条件を思い返せば当然の結論だ。
+このことから$\mbox{ord}(Y_i)=q_i^{e_i}$を得るが、これはすべての$p-1$の素因数に言える。
+そこで、\rProp{element_order}の3を適用すると、
+\begin{align*}
+\mbox{ord}(Y_1Y_2\cdots Y_k) = q_1^{e_1}q_2^{e_2} \cdots q_k^{e_k} = p-1
+\end{align*}
+を得る。
+よって、$\prod_{i=1}^k Y_i$は$p$を法とする原始根である。
+
+\noindent\textbf{$p^k$の場合}
+
+\rProp{primitive_root_search}より原始根が存在する。
+
+\noindent\textbf{$2p^k$の場合}
+
+\rProp{primitive_root_search_2p}より原始根が存在する。
+
+\noindent\textbf{$mk$の場合}
+
+$mk$(ただし、$m$と$k$は互いに素で、$m>2, k>2$)のとき、\rLemm{totient_function_even}より$\varphi(m),\varphi(k),\varphi(mk)$は偶数であるから、それぞれを2で割っても問題ない。
+最終的に、任意の$a\in\mathbb{Z}_n^*$に対して
+\begin{align*}
+a^{\frac{\varphi(mk)}{2}} \equiv 1 \pmod{mk}
+\end{align*}
+を示す。
+これによって、$a$の位数は$\varphi(mk)$未満であることが分かり、原始根は存在しないと結論付けられる。
+それには、$\bmod{m},\bmod{k}$それぞれにおける$a^{\varphi(mk)/2}$を評価してみる。
+\rLemm{totient_function_multiplicative}より、$\varphi(mk)=\varphi(m)\varphi(k)$であることを思い出すと、
+\begin{align*}
+a^{\frac{\varphi(mk)}{2}} &= (a^{\varphi(m)})^{\frac{\varphi(k)}{2}} \equiv 1 \pmod{m}\\
+a^{\frac{\varphi(mk)}{2}} &= (a^{\varphi(k)})^{\frac{\varphi(m)}{2}} \equiv 1 \pmod{k}
+\end{align*}
+となって、$a^{\varphi(mk)/2}\equiv1\pmod{m}$および$a^{\varphi(mk)/2}\equiv1\pmod{k}$を得る。
+この2式から、\rTheo{chinese_remainder_theorem}より$a^{\varphi(mk)/2} \equiv 1 \pmod{mk}$が得られる。
+\end{prProof}

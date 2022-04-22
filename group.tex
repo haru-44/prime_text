@@ -225,9 +225,21 @@ $n$が$n=p_1^{e_1}p_2^{e_2}\cdots p_r^{e_r}$と素因数分解できるとき、
 それは、「素因数分解→$\varphi(n)$の計算→RSA暗号解読」という手順によってなされるわけであるが、$\varphi(n)$の計算に素因数分解が必須であるかは分かっていない。
 つまり、素因数分解をしなくとも$\varphi(n)$を計算できる可能性があって、素因数分解問題が難しいままでも、RSA暗号を解読することが可能かもしれない。
 
-次に、\IND{中国の剰余定理}{ちゆうこくのしようよていり}(Chinese remainder theorem)を紹介しよう。
+次に、中国の剰余定理を紹介しよう。
 これは、『孫子算経』に、「3で割ると2余り、5で割ると3余り、7で割ると2余る数は何か」という問題とその解法が載せられたことに端を発する。
 この解法は、本来ならきちんと学ばなければならない所だが、さらっと載せる。
+
+\begin{Theo}{\IND{中国の剰余定理}{ちゆうこくのしようよていり}, Chinese remainder theorem}{chinese_remainder_theorem}
+$m_1,m_2,\ldots,m_k$はどの2つも互いに素とする。
+連立合同式
+\begin{align*}
+x &\equiv a_1 \pmod{m_1}\\
+x &\equiv a_1 \pmod{m_2}\\
+&\vdots\\
+x &\equiv a_k \pmod{m_k}
+\end{align*}
+を満たす$x$が$m_1m_2\cdots m_k$を法としてただ1つ存在する。
+\end{Theo}
 
 \Algo{中国の剰余定理}{chainese_remainder_theorem}{c.f., \rAlgo{extended_gcd}}
 
