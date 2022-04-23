@@ -1,4 +1,94 @@
+\subsubsection{\rProp{element_order}の証明}
+\begin{prProof}{element_order}\;
+\begin{enumerate}
+ \item 異なる$i,j$(ただし$0<i<j\le\mbox{ord}(a)$)において$a^i=a^j$を満たすとする。すると、$a^{j-i}=1$となるが$0<j-i<\mbox{ord}(a)$であるから、位数の定義に反する。
+ \item $s=\mbox{ord}(a)$と置く。$j=sh$と書けるなら$a^j=a^{sh}=(a^s)^j=1$となる。逆に、$a^j=1$を仮定すると、\rTheo{division_algorithm}より$j=sh+r$となる$0\le r<s$が存在する。$1=a^j=a^{sh+r}=a^r$となるが、位数の定義より$r=0$でなければならない。よって、$s \mid j$を得る。
+ \item $x=\mbox{ord}(a),y=\mbox{ord}(b),z=\mbox{ord}(ab)$と置く。$a^{yz}=1,b^{xz}=1,(ab)^{xy}=1$を示せば、それぞれに\rProp{element_order}の2を適用し、$x\mid yz, y \mid xz, z \mid xy$を得る。最終的には、$xy\mid z$と$z\mid xy$から$xy=z$を得る。全体の流れは図\ref{fig:element_order}を参照。
+\end{enumerate}
+\begin{figure}[htb]
+\begin{center}
+\begin{tikzpicture}[every node/.style={rectangle, draw, text width=2cm,text centered,minimum height=0.8cm}]
+  \node (ass_x) at (12, 0) {$a^x=1$};
+  \node (ass_y) at (8.5, 0) {$b^y=1$};
+  \node (ass_z) at (5, 0) {$(ab)^z=1$};
+  \node (abyz)  at (2, 1.5) {$(ab)^{yz}=1$};
+  \node (abxz)  at (8, 1.5) {$(ab)^{xz}=1$};
+  \node (ayz)   at (2, 3) {$a^{yz}=1$};
+  \node (bxz)   at (8, 3) {$b^{xz}=1$};
+  \node (abxy)  at (12, 3) {$(ab)^{xy}=1$};
+  \node (xyz)   at (2, 4.5) {$x \mid yz$};
+  \node (yxz)   at (8, 4.5) {$y \mid xz$};
+  \node (ass_g) at (5, 4.5) {$\gcd(x,y)=1$};
+  \node (xz)    at (2, 6) {$x \mid z$};
+  \node (yz)    at (8, 6) {$y \mid z$};
+  \node (xyz_)  at (5, 7.5) {$xy \mid z$};
+  \node (zxy)   at (12, 7.5) {$z \mid xy$};
+  \node (goal)  at (8.5, 9) {$xy = z$};
+
+  \draw[->] (ass_x) -- (abxy);
+  \draw[->] (ass_x) -- (bxz);
+  \draw[->] (ass_y) -- (abxy);
+  \draw[->] (ass_y) -- (ayz);
+  \draw[->] (ass_z) -- (abyz);
+  \draw[->] (ass_z) -- (abxz);
+  \draw[->] (abyz) -- (ayz);
+  \draw[->] (abxz) -- (bxz);
+  \draw[->] (ayz) -- (xyz);
+  \draw[->] (bxz) -- (yxz);
+  \draw[->] (abxy) -- (zxy);
+  \draw[->] (xyz) -- (xz);
+  \draw[->] (yxz) -- (yz);
+  \draw[->] (ass_g) -- (xz);
+  \draw[->] (ass_g) -- (yz);
+  \draw[->] (xz) -- (xyz_);
+  \draw[->] (yz) -- (xyz_);
+  \draw[->] (xyz_) -- (goal);
+  \draw[->] (zxy) -- (goal);
+\end{tikzpicture}
+\caption{証明の流れ}
+\label{fig:element_order}
+\end{center}
+\end{figure}
+\end{prProof}
+
 \subsubsection{\rProp{primitive_root_exists}の証明}
+\begin{Theo}{\IND{剰余の定理}{しようよのていり}, polynomial remainder theorem}{polynomial_remainder_theorem}
+多項式$f(x)$を$(x-a)$で割った余りは$f(a)$である。
+同じことだが、ある多項式$g(x)$が存在し、
+\begin{align*}
+f(x) = (x-a)g(x) + f(a)
+\end{align*}
+を満たす。
+\end{Theo}
+
+\begin{Prop}{}{polynomial_root_n}
+$p$を素数とする。
+$\mathbb{Z}_p^*$を係数とする$n$次合同式の根は高々$n$個である。
+\end{Prop}
+
+\begin{prProof}{polynomial_root_n}
+$f(n)$を$n$次合同式とする。
+$f(x_0)=0$となる$x_0$が存在したとすると、\rTheo{polynomial_remainder_theorem}より
+\begin{align*}
+f(x) = (x-x_0)g(x) + f(x_0) = (x-x_0)g(x)
+\end{align*}
+もし、$x_0$以外の根$x_1$が存在すれば
+\begin{align*}
+0 = f(x_1) = (x_1-x_0)g(x_1)
+\end{align*}
+となるが、$x_1-x_0$は$p$で割り切れないから、$g(x_1)=0$。
+つまり、$x_1$は$g(x)$の根でなければならない。
+
+以上を念頭に置いて数学的帰納法を使う。
+
+$n=1$のとき、$ax+b\equiv0\pmod{p}$はただ1つの根を持つ。
+これは、\rProp{inverse_element_not_exists}からも分かる。
+
+$n=k$のとき、$k-1$次合同式$g(x)$の根は高々$k-1$個であると仮定する。
+$f(x)$の根は$x_0$以外は$g(x)$の根しかないので、$f(x)$の根は高々$k$個である。
+
+よって題意は示された。
+\end{prProof}
 
 \begin{Lemm}{}{totient_function_multiplicative}
 Eulerの$\varphi$関数は乗法的である。つまり、互いに素な$m,n$について、
@@ -64,11 +154,11 @@ $k=m$のとき、$(2t+1)^{2^{m-3}}=2^{m-1}T+1$を仮定すると、
 \noindent\textbf{奇素数$p$の場合}
 
 素数$p$に対して$p-1=\prod_{i=1}^kq_i^{e_i}$と素因数分解できるとする。
-$(p-1)/q_i$次方程式
+\rProp{polynomial_root_n}より、$(p-1)/q_i$次方程式
 \begin{align*}
 x^{(p-1)/q_i} \equiv 1 \pmod{p}
 \end{align*}
-を満たさない$X_i\in\mathbb{Z}_p^*$が存在する($n$次方程式の根は高々$n$個しかない)。
+を満たさない$X_i\in\mathbb{Z}_p^*$が存在する。
 $Y_i=X_i^{(p-1)/q_i^{e_i}}$と置くと、
 \begin{align*}
 Y_i^{q_i^{e_i}} &\equiv X^{p-1} \equiv 1 \pmod{p}\\
