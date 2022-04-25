@@ -7,8 +7,6 @@
 ## Contents
 [pdf](https://github.com/haru-44/prime_text/releases/latest/download/main.pdf)
 
-<object data="https://github.com/haru-44/prime_text/releases/latest/download/main.pdf" type="application/pdf" width="100%" height="600"></object>
-
 ## Author
 
 [twitter](https://twitter.com/haru_44)
