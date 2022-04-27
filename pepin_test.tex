@@ -33,11 +33,7 @@ $k\ge1$に対し、Fermat数$F_k$が素数であるとき、かつそのとき�
 \end{Theo}
 
 \ruby{斯}{か}くなる数式が成り立つとき$F_k$が素数であるという主張は、Lucasの定理(\rTheo{Lucas_theorem})から得られるが、重要な点は逆が成り立つことである。
-つまり、$F_k$が素数のとき、$3^{(F_k - 1)/2}\equiv-1\pmod{F_k}$となることが重要である。
-Legendre記号$\left(\frac{3}{F_k}\right)$を考えると、\rProp{Legendre_symbol_calc}より、$\left(\frac{3}{F_k}\right)=3^{(F_k - 1)/2}\pmod{F_k}$である。
-ということは、$\left(\frac{3}{F_k}\right)$が$-1$になればよくて、実際$\left(\frac{F_k}{3}\right)=1$と$(F_k-1)(3-1)$は$4$の倍数であることを平方剰余の相互法則(\rTheo{legendre_quadratic_reciprocity})に適用すると$\left(\frac{3}{F_k}\right)$が$-1$であることが得られる。
-
-ここまで見るとPepinテストの3という基数は、$\left(\frac{3}{F_k}\right)$が$-1$になれば良いだけのものであり、他の適当な値に変更可能である。
+なお、謎の基数3が登場するが、他の適当な値に変更可能である。
 その代替可能な値は、$5,6,7,10,\ldots$と続くことが知られている\Notes{\url{https://oeis.org/A129802}}。
 
 最後にPepinテストを実装してみよう。

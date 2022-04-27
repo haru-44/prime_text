@@ -1,0 +1,35 @@
+\subsubsection{\rTheo{pepin}の証明}
+\begin{thProof}{pepin}
+必要条件は、Lucasの定理(\rTheo{Lucas_theorem})より明らか。
+
+十分条件を証明する。
+\rProp{Legendre_symbol_calc}より
+\begin{align*}
+\left(\frac{3}{F_k}\right) \equiv 3^{(F_k-1)/2} \pmod{F_k}
+\end{align*}
+であるから$\left(\frac{3}{F_k}\right)$が$-1$となればよい。
+$F_k$が素数のとき、平方剰余の相互法則(\rTheo{legendre_quadratic_reciprocity})より
+\begin{align*}
+\left(\frac{3}{F_k}\right)\left(\frac{F_k}{3}\right) = (-1)^{\frac{3-1}{2}\frac{F_k-1}{2}}
+\end{align*}
+が成り立つので、
+\begin{align*}
+\left(\frac{3}{F_k}\right) = (-1)^{\frac{3-1}{2}\frac{F_k-1}{2}} \bigg/ \left(\frac{F_k}{3}\right)
+\end{align*}
+が$-1$となれば証明が完了する。
+
+$(F_k-1)/2$は偶数だから$(-1)^{\frac{3-1}{2}\frac{F_k-1}{2}}=1$。
+
+$2^k$が偶数であること、2の偶数乗は3を法として1と合同であることより、$F_k\equiv2\pmod{3}$を得る。
+よって、
+\begin{align*}
+\left(\frac{F_k}{3}\right) = \left(\frac{2}{3}\right) = 2^{(3-1)/2} \equiv -1 \pmod{3}
+\end{align*}
+となる。
+
+以上より、
+\begin{align*}
+\left(\frac{3}{F_k}\right) = -1
+\end{align*}
+となり、証明は完了する。
+\end{thProof}
