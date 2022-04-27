@@ -1,0 +1,135 @@
+
+<html lang="ja">
+  <head>
+    <script type="text/x-mathjax-config">
+       MathJax.Hub.Config({TeX:{equationNumbers:{autoNumber:"AMS"}}});
+    </script>
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML,/www_func/MathJax/MyConfig.js">
+    </script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+  </head>
+  <body>
+  <strong>このページは、pdfファイル出力用に作成したtexファイルから機械的に変換されています。体裁不良がある場合は<a href="https://github.com/haru-44/prime_text/releases/latest/download/main.pdf">pdfファイル</a>をご覧ください。</strong>
+  <hr/>
+<h1>sieve</h1>素数を列挙するためのアルゴリズムとして、<strong>Eratosthenesの篩</strong>(sieve of Eratosthenes)は有名だ。
+長さ\(n\)のリストを用意して、
+<ul>
+ <li> 2の倍数は素数を素数でないとして消し込む
+ <li> 3の倍数は素数を素数でないとして消し込む
+ <li> 5の倍数は素数を素数でないとして消し込む……
+</ul>
+とすることで、素数のみが残る。
+
+<pre class="prettyprint">from typing import List
+
+from sqrt_int import sqrt_int
+
+
+def sieve_of_eratosthenes(n: int) -> List[bool]:
+    """ 素因数を篩う
+
+    Args:
+        n (int): nまでのリストを作成する
+
+    Returns:
+        sieve_list (list[bool]): nが素数   <=> sieve_list[n] == True
+                                 nが合成数 <=> sieve_list[n] == False
+
+    Examples:
+        >>> sieve_list = sieve_of_eratosthenes(100)
+        >>> sieve_list[5]
+        True
+        >>> sieve_list[12]
+        False
+    """
+    sieve_list = [True] * (n + 1)
+    sieve_list[0] = sieve_list[1] = False
+    for p in range(2, sqrt_int(n) + 1):
+        if sieve_list[p]:
+            for idx in range(2 * p, n + 1, p):
+                sieve_list[idx] = False
+    return sieve_list
+</pre>
+
+1つに対する素数判定を行うには大仰だが、複数回の素数判定を行う場合には効果を発揮する。
+
+篩のアイディアは、素数判定以外にも利用できる。
+例えば、与えられた数の素因数分解も可能だ。
+リストに記録するのは、「最後に割られた数」である。
+
+<pre class="prettyprint">from typing import List
+
+from sqrt_int import sqrt_int
+
+
+def factor_sieve(n: int) -> List[int]:
+    """ 素因数を篩う
+
+    Args:
+        n (int): nまでのリストを作成する
+
+    Returns:
+        sieve_list (list[int]): nが素数   <=> sieve_list[n] == 1
+                                nが合成数 <=> sieve_list[n] == nの素因数のうち最大の自然数
+    Examples:
+        >>> sieve_list = factor_sieve(100)
+        >>> sieve_list[20] # 20 = 2**2 * 5 の最大の素因数は5
+        5
+        >>> sieve_list[13] # 13 は素数
+        1
+        """
+    sieve_list = [1] * (n + 1)
+    for p in range(2, sqrt_int(n) + 1):
+        if sieve_list[p] == 1:
+            for idx in range(2 * p, n + 1, p):
+                sieve_list[idx] = p
+    return sieve_list
+</pre>
+
+もう少し工夫すると、B-smooshな数を篩うことも可能だ。
+リストには、書き込むのは、\(p^a\)の倍数のとき\(p\)を掛ける。
+\(B\)-smoothな数ならば、インデックスと値が同じになっているはずだ。
+
+<pre class="prettyprint">from typing import List
+
+
+def b_smooth_sieve(n: int, B: int) -> List[int]:
+    """ B-smoothな数を篩う
+
+    Args:
+        n (int): nまでのリストを作成する
+        B (int): B-smooth
+
+    Returns:
+        sieve_list (list[int]): nが素数     <=> sieve_list[n] == 1
+                                nはB-smooth <=> sieve_list[n] == n
+    Examples:
+        >>> sieve_list = b_smooth_sieve(100, 5)
+        >>> sieve_list[20] # 20 = 2**2 * 5 は、5-smoothなので出力は20と一致する
+        20
+        >>> sieve_list[14] # 14 = 2 * 7 は5-smoothではないから出力は14と一致しない
+        2
+        """
+    sieve_list = [1] * (n + 1)
+    for p in range(2, B + 1):
+        if sieve_list[p] == 1:
+            q = p
+            while q < n + 1:
+                for idx in range(q, n + 1, q):
+                    sieve_list[idx] *= p
+                q *= p
+    return sieve_list
+</pre>
+
+smoothな数を篩うことは結構重要で、後で紹介する2次篩法などがどうして「篩」という名を冠しているかというと、\(B\)-smoothな数を篩うからだ。
+そして、実際上にしろ理論上にしろ最も時間がかかるのが篩うステップである。
+よって、篩の高速化はそのまま素因数分解アルゴリズムの高速化にもつながる。
+対数表は画期的な発明だったとされるが、現代の感覚からすると中々理解しづらい。
+コンピュータが計算することが当たり前になって、手計算で近似値を求める必要性が乏しいからだ。
+対数表の本質的な考えは、\(x\)と\(a^x\)とを対応させることにある。
+「掛け算が足し算になる」というのは、単純な計算コストという面でも有利だ。
+つまり、で配列に保持するのは\(\log\)を取った値にすれば、毎回掛け算をする必要がなく、足し算で済む。
+こうすると、実数で扱うため、計算機上では誤差が避けられないが、「\(B\)-smoothかどうかを(ほぼ正しく)判別したい」という目的において大きな問題ではない。
+
+</body></html>

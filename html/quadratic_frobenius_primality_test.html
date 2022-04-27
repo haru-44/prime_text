@@ -1,0 +1,111 @@
+
+<html lang="ja">
+  <head>
+    <script type="text/x-mathjax-config">
+       MathJax.Hub.Config({TeX:{equationNumbers:{autoNumber:"AMS"}}});
+    </script>
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML,/www_func/MathJax/MyConfig.js">
+    </script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+  </head>
+  <body>
+  <strong>このページは、pdfファイル出力用に作成したtexファイルから機械的に変換されています。体裁不良がある場合は<a href="https://github.com/haru-44/prime_text/releases/latest/download/main.pdf">pdfファイル</a>をご覧ください。</strong>
+  <hr/>
+<h1>quadratic_frobenius_primality_test</h1>Fibonacci数列やLucas数列に見られた素数に関する性質は、数列それ自体が特別であるためではない。
+その裏にある特性多項式と呼ばれる多項式に、重要なカラクリがあるのだ。
+それを表舞台に出したのがFrobeniusテストである。
+Frobeniusテストは、多項式一般に対して考えることができるが、簡単のため2次多項式の場合を扱おう。
+2次に限ったとしても、Fibonacci数列テストやLucas数列テストの一般化であり、これらよりも(誤って素数だと答えてしまう合成数が少ないという意味で)強力である。
+Frobeniusテストを説明するには、Frobenius写像を定義しなければならない。
+
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>定義</strong>)
+素数\(p\)を標数とする可換環\(R\)のFrobenius写像\(\sigma:R\to R\)を、次のように定義する。
+\begin{align*}
+\sigma(a) = a^p
+\end{align*}
+</div>
+
+難しい言葉が並んだが、結局Frobenius写像とは、元を\(p\)乗するに過ぎない。
+例えば、\(\mathbb{F}_p\)の場合は、
+\begin{align*}
+\sigma(a) = a^p = a
+\end{align*}
+となり、恒等関数となる。
+たったそれだけのことである。
+しかし、次のような都合の良い性質がある。
+
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>命題</strong>)
+素数\(p\)を標数とする可換環\(R\)と、その元\(a,b\in R\)とする。
+<ul>
+<li> \(\sigma(a) + \sigma(b) = \sigma(a + b)\)
+<li> \(\sigma(a) \times \sigma(b) = \sigma(a \times b)\)
+<li> \(\sigma(a) = a\)ならば、\(a\)は\(R\)の部分体\(\mathbb{F}_p\)の元である。
+</ul>
+</div>
+
+どんなふうに都合が良いかは、これから説明していく。
+今、Lucas数列を\(p\)で割った余り\(U_n \bmod{p}\)がどのような構造を持っているかを解明したい。
+構造というのは、もっと具体的に言えば\(n\)の変化によって、\(U_n \bmod{p}\)がどのように変わるのかということに興味がある。
+先に答えを言ってしまうと、\(p\)を素数としたとき\(U_n \bmod{p}\)は、\(\mathbb{F}_{p^2}\)あるいは、\(\mathbb{F}_p\times\mathbb{F}_p\)と同型になる。
+\(\left(\frac{\Delta}{n}\right)\)が\(-1\)のとき\(\mathbb{F}_{p^2}\)と同型になり、\(1\)のとき\(\mathbb{F}_p\times\mathbb{F}_p\)と同型となるのだ。
+しかし、これは\(U_n \bmod{p}\)の「内部」で起こっている本質的な事柄であって、人類にとって容易に確認できる代物ではない。
+そこで、Frobenius写像が登場する。
+\(\mathbb{F}_p\times\mathbb{F}_p\)にFrobenius写像を適用してもどの元も動かないのに対して、\(\mathbb{F}_{p^2}\)では根\(\alpha,\beta\)の置換を引き起こす。
+つまり、\(\mathbb{F}_{p^2}\)と\(\mathbb{F}_p\times\mathbb{F}_p\)とでは挙動が異なるのだ。
+
+根\(\alpha,\beta\)だけに注目すれば、\(\mathbb{F}_p\times\mathbb{F}_p\)のとき(つまりは\(\left(\frac{\Delta}{n}\right)=-1\)のとき)
+\begin{align*}
+\begin{cases}
+\sigma(\alpha) &= \beta\\
+\sigma(\beta) &= \alpha
+\end{cases}
+\end{align*}
+である一方、\(\mathbb{F}_{p^2}\)のとき(つまりは\(\left(\frac{\Delta}{n}\right)=1\)のとき)
+\begin{align*}
+\begin{cases}
+\sigma(\alpha) &= \alpha\\
+\sigma(\beta) &= \beta
+\end{cases}
+\end{align*}
+となる。
+この違い故に、Fibonacci数列、Lucas数列の素数判定にLegendre記号が現れたのである。
+思い出して欲しい。
+Lucas数列\(\{U_n\}\)は
+\begin{align*}
+U_n = \frac{\alpha^n - \beta^n}{\alpha - \beta}
+\end{align*}
+と表さるのであった。
+\(p\)が素数で\(\left(\frac{\Delta}{n}\right)=1\)のとき、\(U_{p-1} \equiv 0 \pmod{n}\)となるのは、\(\alpha^p,\beta^p\)がそれぞれ\(\alpha,\beta\)に移るため、
+\begin{align*}
+U_{p-1} &= \frac{\alpha^{p-1} - \beta^{p-1}}{\alpha - \beta}\\
+&= \frac{\alpha^p\beta - \beta^p\alpha}{(\alpha-\beta)\alpha\beta}\\
+&= \frac{\alpha\beta - \beta\alpha}{(\alpha-\beta)\alpha\beta}\\
+&= 0
+\end{align*}
+となるためである。
+一方、\(p\)が素数で\(\left(\frac{\Delta}{n}\right)=-1\)のとき、\(U_{p+1} \equiv 0 \pmod{n}\)となるのは、\(\alpha^p,\beta^p\)がそれぞれ\(\beta,\alpha\)に移るため、
+\begin{align*}
+U_{p+1} &= \frac{\alpha^{p+1} - \beta^{p+1}}{\alpha - \beta}\\
+&= \frac{\alpha^p\alpha - \beta^p\beta}{\alpha-\beta}\\
+&= \frac{\beta\alpha - \alpha\beta}{\alpha-\beta}\\
+&= 0
+\end{align*}
+となるためである。
+
+以上がFibonacci数列とLucas数列の裏に隠れていたカラクリである。
+
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>定理</strong>)
+\(a,b\)を\(\Delta=a^2-4b\)が平方数にならないような整数とする。
+また、\(n\)は\(\gcd(n,2b\Delta)=1\)を満たすとする。
+\(n\)が素数ならば、次を満たす。
+\begin{align*}
+U_{n - \left(\frac{\Delta}{n}\right)} &\equiv 0 \pmod{n}\\
+V_{n - \left(\frac{\Delta}{n}\right)} &\equiv
+\begin{cases}
+2b, &\mbox{if } \left(\frac{\Delta}{n}\right) = -1\\
+2,  &\mbox{if } \left(\frac{\Delta}{n}\right) = 1
+\end{cases}
+\end{align*}
+</div>
+</body></html>

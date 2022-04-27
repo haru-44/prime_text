@@ -1,0 +1,315 @@
+
+<html lang="ja">
+  <head>
+    <script type="text/x-mathjax-config">
+       MathJax.Hub.Config({TeX:{equationNumbers:{autoNumber:"AMS"}}});
+    </script>
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML,/www_func/MathJax/MyConfig.js">
+    </script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+  </head>
+  <body>
+  <strong>このページは、pdfファイル出力用に作成したtexファイルから機械的に変換されています。体裁不良がある場合は<a href="https://github.com/haru-44/prime_text/releases/latest/download/main.pdf">pdfファイル</a>をご覧ください。</strong>
+  <hr/>
+<h1>p_minus_1</h1>Fermatの小定理()の考え方は素因数分解にも利用できる。
+合成数\(n\)を素因数分解したいとしよう。
+合成数だというのだから、我々には知ることはできないが素因数\(p\)が確かに存在している。
+この\(p\)はFermatの小定理によれば、\(p\)と互いに素な整数\(a\)について、
+\begin{align*}
+a^{p-1} \equiv 1 \pmod{p}
+\end{align*}
+が成り立つのであった。
+この両辺を何乗しても右辺は1なのだが、これはつまり、\(p-1\)の倍数を\(L\)とすると、
+\begin{align*}
+a^{L} \equiv 1 \pmod{p}
+\end{align*}
+が成り立つということでもある。
+\(a\equiv b\pmod{n}\)とは、\(a-b\)が\(n\)の倍数であることを言い換えたに過ぎないということを思い出せば、\(a^L-1\)は\(p\)の倍数であることが分かる。
+よって、\(\gcd(a^{L}-1, n)\)は、\(p\)の倍数になる。
+
+以上が<strong>Pollardの\(p-1\)法</strong>(以下、\(p-1\)法)の基本的アイディアである。
+ところで、勘のいい方なら気付いたかもしれないが、そもそも\(p\)が不明なのだから\(p-1\)の倍数である\(L\)も計算できない。
+まったくその通りで、後で\(L\)を計算する方法を議論するが、ここでは一旦、\(L\)は所与のものとして考えよう。
+
+次の例で、本当に素因数分解できるかを確かめる。
+
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>例</strong>)
+\(n=15=3\times5\)を考える。
+<ul>
+<li> \(a=3,L=8\)とする。\(\gcd(3^8-1,15)=5\)は、\(15\)の非自明な因数である。
+<li> \(a=2,L=8\)とする。\(\gcd(2^8-1,15)=15\)は、\(n\)と一致する。
+</ul>
+</div>
+
+2つ目の例で見るように、計算結果が不幸にも\(n\)と一致してしまうことが起こり得る{「\(\gcd(a^L-1,n)\)は\(p\)の倍数になる」ということは、\(n\)になることも当然あり得る。}。
+それでは素因数分解の意味を成さないので、回避方法は、1つ目の例のように\(a\)を変えるということが考えられる。
+ただし、特定の\(a\)が万能というわけではなく、結局\(n\)との<strong>相性</strong>というものがあり、それは見た目では判断できない。
+そのため実際には、最大公約数が\(n\)と一致した場合は、\(a\)を選び直して再度実行する等の方策が取られるだろう。
+一方、最大公約数が\(1\)になった場合は、\(L\)が不適切だったことを意味する。
+つまり、「\(L\)は\(p-1\)の倍数」という当初の仮定が間違っていたのである。
+
+それでは、脇に置いていた疑問である「どのようにして\(L\)を決めれば良いのか」という議論に移ろう。
+\(p-1\)の倍数であることが\(L\)に求められる条件であるが、何の仮定もなしに\(L\)を決めるのはさすがに辛い。
+そこで、「\(p-1\)は小さな素因数に分解できる」という仮定を置く。
+もう少し専門家っぽい言い方をすれば、\(B\)-smoothであるという仮定を置く。
+この\(B\)-smoothという仮定は、素数判定や素因数分解においてよく現れる。
+というのも、ある数が\(B\)-smoothであれば素数判定や素因数分解が成功する等と結論付けられるためだ。
+これは一見、不十分な結果であるように見えるが、想像以上に深い議論になる。
+
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>定義</strong>)
+整数\(n\)が\(B\)-smoothであるとは、\(n\)の任意の素因数が\(B\)以下であることを言う。
+つまり、\(n\)が\(n=p_1^{e_1}\cdot p_2^{e_2}\cdot\cdots\cdot p_r^{e_r}\)と素因数分解できるとき、任意の\(1\le i\le r\)について\(p_i \le B\)が成り立つことである。
+</div>
+
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>例</strong>)
+\(100\)は、\(100=2^2\cdot5^2\)と素因数分解できるので、素因数は\(2,5\)である。
+よって、\(100\)は\(5\)-smoothである。
+もちろん、\(5\)以上の任意の整数で、例えば12-smoothとか、100-smoothとか言えるわけだが、あまり益はない。
+</div>
+
+\(B\)-smoothという仮定を置くとどうなるか。
+例えば、\(p-1\)は、\(5\)-smoothだと仮定しよう。
+すると、\(p-1=2^{e_1}\cdot3^{e_2}\cdot5^{e_3}\)という形に素因数分解できる。
+今の目的は、\(p-1\)が\(L\)を割り切るような\(L\)を見つけることにあった。
+\(L\)を、\(L=2^{l_1}\cdot3^{l_2}\cdot5^{l_3}\)と素因数分解するとき、このような目的に適うためには、各指数が、\(p-1\)のものよりも大きければ十分である。
+そして、この指数は際限なく大きい訳ではなく、\(p-1\)の素因数\(q\)は、\(p^e\le p-1\le n\)を満たしている。
+
+要約すると、素因数分解したい整数を\(n\)としたとき、その素因数を\(p\)と置く。
+ただし、\(p-1\)は\(B\)-smoothであるとする。
+つまり、\(p-1\)は、\(p-1=p_1^{e_1}\cdot p_2^{e_2}\cdot\cdots\cdot p_r^{e_r}\)と素因数分解できるとする。
+このとき、\(L\)を\(L=p_1^{l_1}\cdot p_2^{l_2}\cdot\cdots\cdot p_r^{l_r}\)とし、任意の\(l_i(1\le i\le r)\)について、\(l_i =\left \lfloor \log{n} / \log{q_i}\right \rfloor\)と設定すれば、\(p-1 \mid L\)である。
+
+こうして、\(p-1\)が\(B\)-smoothであるという仮定の下、\(L\)を決めることができた。
+このことを実装してみよう。
+
+<pre class="prettyprint">import math
+
+from sympy import primerange
+
+
+def p_minus_1_method(n: int, *, B: int, a: int = 2) -> int:
+    """ p-1法によって、nの素因数分解を行う。
+
+    Args:
+        n (int): 素因数分解を行う整数
+        B (int): nの素因数をpとしたとき、p-1がB-smoothであることを仮定する。
+                 一般論として、Bを大きくすれば素因数を見つけやすくなるが、計算時間がかかる。
+        a (int): 底。nによって得手不得手があるので、失敗するようならば変更し、
+                 再度実行する等が考えられる。
+
+    Returns:
+        int: nの非自明な約数。素因数分解に失敗したときは、1
+
+    Examples:
+        >>> # 464808857 = 229 * 967 * 2099, 221443 = 229 * 967
+        >>> # 229 - 1 = 2**3 * 3 * 19
+        >>> # 967 - 1 = 2 * 3* 7 * 23
+        >>> p_minus_1_method(464808857, B=22)
+        229
+        >>> p_minus_1_method(464808857, B=23)
+        221443
+    """
+    for prime in primerange(1, B + 1):
+        l = math.floor(math.log(n) / math.log(prime))
+        a = pow(a, prime**l, n)
+    d = math.gcd(a - 1, n)
+    if 1 < d < n:
+        return d
+    return 1
+</pre>
+
+primerange(a, b)は、\(a \le p < b\)を満たす素数\(p\)を列挙するメソッドである。
+変数aは\(B\)以下の素数primeを列挙する過程で逐一べき乗が行われている。
+
+計算結果が\(1\)になる場合、\(p-1\)が\(B\)-smoothであるという当初の仮定が間違っていたと想像できるわけだが、その場合\(B\)を更に大きくして再計算するという方法がすぐさま思いつく。
+その他にも、第2段階と呼ばれる方法を用いることが考えられる。
+ここでは、今まで\(B\)と呼んでいた上限を\(B_1\)、新しく導入する上限を\(B_2\)と呼ぶことにする。
+この方法では、\(p-1\)が\(p-1=p_1^{e_1}\cdot p_2^{e_2}\cdot\cdots\cdot p_{r-1}^{e_{r-1}}\cdot p_r\)と素因数分解できるとき、\(p_1,\ldots,p_{r-1}\le B_1\)かつ\(p_r\le B_2\)であるときに素因数分解が成功する。
+つまり、\(B_1\)から\(B_2\)の間に1つしか素因数が存在しない場合に上手くいく。
+それを計算するくらいだったら、\(B=B_2\)として再度計算した方がより強力であると思われるかも知れないが、第2段階は(第1段階に比べて)高速に実行できるという利点がある。
+
+例えば、\(2^{67}-1\)の素因数\(193707721\)は、\(193707721-1=2^3\times3^3\times5\times67\times2677\)であるから、少なくとも\(B_1=67, B_2=2677\)を設定すれば、成功する。
+
+第2段階の基本的なアイディアは、第1段階終了時に得られた値\(a^L\pmod{n}\)から、\(a^{Q_iL}\pmod{n}\)を求めることにある。
+ここで、\(Q_i\)は\(B_1\)から\(B_2\)の間にある素数である。
+既に見たように、\(Q_iL\)が\(p-1\)の倍数ならば、\(\gcd(a^{Q_iL}-1,n)\)を計算することで、素因数分解できる。
+
+毎回\(\gcd(a^{Q_iL}-1,n)\)を計算してもよいのだが、\(\gcd\)を1回計算するより、乗算1回の方が速い。
+よって、
+\begin{align*}
+a_2 = \prod(a^{Q_iL}-1)
+\end{align*}
+を計算してから、\(\gcd(a_2, n)\)を1回計算した方が良い。
+
+さらに、高速化に寄与するのは、\(Q_1<Q_2<\cdots\)を\(B_1\)から\(B_2\)の素数とするとき、素数の間隔\(Q_{i+1}-Q_i\)は、\(Q_i\)に比べてかなり小さく種類も少ないという事実である。
+予め\(a^{(Q_{i+1}-Q_i)L}\pmod{n}\)をすべて計算・保存しておき、まず、\(a^{Q_1L}\pmod{n}\)を計算する。
+次に、\(a^{Q_2L}\pmod{n}\)を計算したいのだが、これは、\(a^{Q_1L}\pmod{n}\)と\(a^{(Q_2-Q_1)L}\pmod{n}\)から計算できる。
+このとき、\(a^{(Q_2-Q_1)L}\pmod{n}\)は既に計算済みである。
+更に、\(a^{Q_3L}\pmod{n}\)を計算する場合は、\(a^{Q_2L}\pmod{n}\)と\(a^{(Q_3-Q_2)L}\pmod{n}\)から計算する。
+というように、順次計算できるのだ。
+
+\begin{align*}
+&a^{Q_1L}\pmod{n}\\
+&\downarrow \\
+&a^{Q_2L}\pmod{n} \qquad\leftarrow\qquad a^{(Q_2-Q_1)L}\pmod{n}\\
+&\downarrow \\
+&a^{Q_3L}\pmod{n} \qquad\leftarrow\qquad a^{(Q_3-Q_2)L}\pmod{n}\\
+&\downarrow \\
+&a^{Q_4L}\pmod{n} \qquad\leftarrow\qquad a^{(Q_4-Q_3)L}\pmod{n}\\
+&\downarrow \\
+&\vdots
+\end{align*}
+
+ここで、\(a^{(Q_{i+1}-Q_i)L}\pmod{n}\)は\(Q_{i+1}-Q_i\)が小さい故に、\(a^L\pmod{n}\)から計算するのも簡単である。
+
+<pre class="prettyprint">import math
+
+from sympy import primerange
+
+
+def p_minus_1_method_stage2(n: int, *, B1: int, B2: int, a: int = 2) -> int:
+    """ p-1法によって、nの素因数分解を行う。
+
+    Args:
+        n  (int): 素因数分解を行う整数
+        B1 (int): nの素因数をpとしたとき、p-1がB1-smoothであることを仮定する。
+                  一般論として、Bを大きくすれば素因数を見つけやすくなるが、計算時間がかかる。
+        B2 (int): 第1段階の後、実行される第2の上限。
+                  B1からB2にある素数をQiとするとき、(p-1)/QiがB1-smoothならば成功する。
+        a  (int): 底。nによって得手不得手があるので、失敗するようならば変更し、
+                  再度実行する等が考えられる。
+
+    Returns:
+        int: nの非自明な約数。素因数分解に失敗したときは、1
+
+    Examples:
+        >>> # 193707721 - 1 = 2**3 * 3**3 * 5 * 67 * 2677
+        >>> p_minus_1_method_stage2(2**67 - 1, B1=67, B2=2677, a=3)
+        193707721
+    """
+    # 第1段階
+    for prime in primerange(1, B1 + 1):
+        l = math.floor(math.log(n) / math.log(prime))
+        a = pow(a, prime**l, n)
+    # 第2段階の初期化
+    diff_dict = {}
+    stage2_prime_list = list(primerange(B1 + 1, B2 + 1))
+    for idx in range(len(stage2_prime_list) - 1):
+        prime_pair = stage2_prime_list[idx:idx + 2]
+        diff = prime_pair[1] - prime_pair[0]
+        if diff not in diff_dict:
+            diff_dict[diff] = pow(a, diff, n)
+    # 第2段階
+    a = pow(a, stage2_prime_list[0], n)
+    d = a - 1
+    for idx in range(len(stage2_prime_list) - 1):
+        prime_pair = stage2_prime_list[idx:idx + 2]
+        diff = prime_pair[1] - prime_pair[0]
+        a = (a * diff_dict[diff]) % n
+        d = (d * (a - 1)) % n
+    d = math.gcd(d, n)
+    if 1 < d < n:
+        return d
+    return 1
+</pre>
+
+他にも、\(p-1\)法には変種がいくつかある。
+いずれにしろ、\(p-1\mid L\)となる\(L\)をどのように設定するか、という所に違いが現れる。
+例えば、\(B\)-power-smoothを次のように定義する。
+
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>定義</strong>)
+整数\(n\)が\(B\)-powersmoothであるとは、\(n\)が\(n=p_1^{e_1}\cdot p_2^{e_2}\cdot\cdots\cdot p_r^{e_r}\)と素因数分解できるとき、任意の\(1\le i\le r\)について\(p_i^{e_i}\le B\)が成り立つことである。
+</div>
+
+\(B\)-powersmoothに対する\(p-1\)法も容易に考え付くであろう。
+
+\(p-1\)法の存在は、素因数分解問題の難しさが、単に\(n\)の大きさに依存するわけではないということを教えてくれる。
+例えばRSA暗号は、素因数分解問題が難しいことで解読できないと言うことになっているが、素数を単純に選ぶと\(p-1\)法で解かれてしまうかもしれない。
+そこで、\(p-1\)法で解かれないように、次のようにしてRSA暗号用の合成数\(n\)を作ることが考えられる。
+<ol>
+<li> ランダムに\(p', q'\)に選ぶ。
+<li> 次を確認し、満たしていれば次に進む。そうでなければ、1に戻る。
+ <ul>
+ <li> \(p'\)が素数であること
+ <li> \(q'\)が素数であること
+ <li> \(p = 2p' + 1\)が素数であること
+ <li> \(q = 2q' + 1\)が素数であること
+ </ul>
+<li> \(n=pq\)を公開情報とする。
+</ol>
+
+こうすれば、\(n\)の素因数は\(p\)と\(q\)だが、\(p-1\)は\(p'\)-smooth、\(q-1\)は\(q'\)-smoothとなる。
+よって、\(p',q'\)共に十分に大きければ、\(p-1\)法は成功しない。
+
+他にも、先ほどの第2段階では\((a^{Q_iL}-1)\)を計算したが、\(x-y\)が\(Q_iL\)の倍数であれば、\((a^x - a^y)\)としてもよい。
+もっと一般的に、\((a^{x^e}-a^{y^e})\)は、\((x^e-y^e)\)が\(Q_iL\)の倍数であれば素因数分解が成功する{\(e=1,x=Q_iL,y=0\)とすれば最初に説明した第2段階と一致する。}。
+こうすることの利点は、\(Q_iL\)以外の倍数になる可能性があるということだ。
+例えば、\(e=2\)のとき、\(x^2-y^2=(x-y)(x+y)\)であり、\(x-y\)は\(Q_iL\)の倍数になるように設定するのだが、副次的に現れる\((x+y)\)がもしかしたら素因数\(p\)の倍数になって、素因数分解が成功するかもしれない。
+
+次に、\(B\)-smoothな数は多く存在するのだろうか、ということに注目してみる。
+\(B\)-smoothの個数について議論するために、次の記号を導入する。
+
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>定義</strong>)
+\(1\)から\(x\)までの整数のうち、\(y\)-smoothである整数の個数を、\(\psi(x,y)\)と書く。
+</div>
+
+次の事実が知られている。
+
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>定理</strong>)
+固定された任意の実数\(u>0\)に対して
+\begin{align*}
+\psi(x, x^{1/u}) \sim \rho(u) x
+\end{align*}
+を満たす実数\(\rho(u)>0\)が存在する。
+</div>
+
+ここで、\(\rho(u)\)はDickman関数であり、次の通り定義される。
+
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>定義</strong>)
+Dicman関数は、\([0,\infty)\)で定義された連続関数で、次を満たす。
+<ul>
+<li> \(0\le u \le 1\)に対して\(\rho(u) = 1\)
+<li> \(u > 1\)に対して\(u\rho'(u) = -\rho(u-1)\)
+</ul>
+</div>
+
+微分方程式の形になっていて分かり辛いが、簡単な表し方は知られていない。
+しかし、\(u^{-u}\)が良い近似として知られている。
+
+<pre class="prettyprint">import math
+
+
+def dickman_function(u: float) -> float:
+    """ dickman関数を計算する。(u > 2においては近似値)
+
+    Args:
+        u (float): 正の実数
+
+    Returns:
+        float: dickman関数 rho(u)を返す
+
+    Examples:
+        >>> dickman_function(1)
+        1
+        >>> dickman_function(2)
+        0.3068528194400547
+        >>> dickman_function(3)
+        0.037037037037037035
+    """
+    if u <= 1:
+        return 1
+    if u <= 2:
+        return 1 - math.log(u)
+    return pow(u, -u)
+</pre>
+
+不等式によって評価すると、
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>定理</strong>)
+すべての\(x\ge4\)と\(2 \le x^{1/u}\le x\)について
+\begin{align*}
+\psi(x, x^{1/u}) \ge \frac{x}{\ln^u x}
+\end{align*}
+</div>
+
+</body></html>

@@ -1,0 +1,76 @@
+
+<html lang="ja">
+  <head>
+    <script type="text/x-mathjax-config">
+       MathJax.Hub.Config({TeX:{equationNumbers:{autoNumber:"AMS"}}});
+    </script>
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML,/www_func/MathJax/MyConfig.js">
+    </script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+  </head>
+  <body>
+  <strong>このページは、pdfファイル出力用に作成したtexファイルから機械的に変換されています。体裁不良がある場合は<a href="https://github.com/haru-44/prime_text/releases/latest/download/main.pdf">pdfファイル</a>をご覧ください。</strong>
+  <hr/>
+<h1>pepin_test</h1>Lucasテストを実行するには、\(n-1\)の素因数が判明している必要があるが、一般的には、\(n-1\)の素因数を求めることは困難である。
+しかし、特殊な形に限定すれば容易である。
+\(2^{2^k} + 1\)という形で表されるFermat数もその一例で、\(n-1\)の素因数は明らかに2のみである。
+Pepinテストは、Fermat数に特化したLucasテストと言える。
+ただし、必要性をも示している点において、単なるLucasテストとは一線を画す。
+つまり、Pepinテストによって、Fermat数が素数か合成数かを確実に判別できるのである。
+
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>定義</strong>)
+Fermat数\(F_k\)は、\(F_k=2^{2^k} + 1\)と表される数である。
+</div>
+
+つまり、\(F_0=3, F_1 = 5, F_2 = 17,\ldots\)である。
+Fermatは、すべてのFermat数が素数であることを予想し、実際、\(k \le 4\)の場合、\(F_k\)は素数である。
+一方、Eulerは、\(F_5\)が合成数であることを示し、Fermatの予想が誤りであることを示した。
+現在までに素数か合成数かが判明しているFermat数は、\(k\)が\(5\)以上においてすべて合成数である。
+
+<strong>Pepinテスト</strong>(Pepin's test)は、Fermat数に対する素数判定アルゴリズムである。
+Fermat数にLucasの定理を適用してみると、\(F_k - 1\)の素因数は明らかに2のみであるから、上手くいきそうな気配がある。
+単純に適用すれば、
+\begin{align*}
+\begin{cases}
+a^{F_k-1} \equiv 1 \pmod{F_k}\\
+a^{(F_k-1)/2} \not\equiv 1 \pmod{F_k}
+\end{cases}
+\end{align*}
+となるような\(a\)を見つける必要がある。
+また、このような\(a\)が見つけられないとき、本当に合成数なのか、単に探し足りないだけなのかは、Lucasの定理からははっきりとしない。
+しかし、Pepinは次のような素数判定法を与えた。
+つまり、1つの式で素数かどうかを明らかにすることができる。
+
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>定理</strong>)
+\(k\ge1\)に対し、Fermat数\(F_k\)が素数であるとき、かつそのときのみ、\(3^{(F_k - 1)/2}\equiv-1\pmod{F_k}\)
+</div>
+
+斯くなる数式が成り立つとき\(F_k\)が素数であるという主張は、Lucasの定理()から得られるが、重要な点は逆が成り立つことである。
+なお、謎の基数3が登場するが、他の適当な値に変更可能である。
+その代替可能な値は、\(5,6,7,10,\ldots\)と続くことが知られている{\url{https://oeis.org/A129802}}。
+
+最後にPepinテストを実装してみよう。
+と言っても、至極簡単な実装にしかならない。
+
+<pre class="prettyprint">def pepin_test(k: int) -> str:
+    """ Pepinテストによって、Fermat数F_k = 2^{2^k}+1が素数であるかを判定する
+
+    Args:
+        k (int): 素数判定する対象の整数Fermat数
+
+    Returns:
+        string: 'composite number' = F_kは合成数
+                'prime number'     = F_kは素数
+    """
+    F_k = 2**(2**k) + 1
+    if pow(3, (F_k - 1) // 2, F_k) == F_k - 1:
+        return 'prime number'
+    else:
+        return 'composite number'
+</pre>
+
+2022年の時点で\(F_{33}\)は素数か合成数か判明していない{\url{http://www.prothsearch.com/fermat.html}}。
+33という数字に惑わされて、\(F_{33}\)それ自体が小さいと誤解しがちだが、2進数表記で約86億桁、この数を保存するだけで約1Gbyte必要な数である。
+いくら簡潔なアルゴリズムだろうと、扱う数が大きくなれば計算が困難になるのは当然だ。
+</body></html>

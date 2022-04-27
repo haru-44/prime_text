@@ -1,0 +1,298 @@
+
+<html lang="ja">
+  <head>
+    <script type="text/x-mathjax-config">
+       MathJax.Hub.Config({TeX:{equationNumbers:{autoNumber:"AMS"}}});
+    </script>
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML,/www_func/MathJax/MyConfig.js">
+    </script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+  </head>
+  <body>
+  <strong>このページは、pdfファイル出力用に作成したtexファイルから機械的に変換されています。体裁不良がある場合は<a href="https://github.com/haru-44/prime_text/releases/latest/download/main.pdf">pdfファイル</a>をご覧ください。</strong>
+  <hr/>
+<h1>aks_test</h1><strong>AKSテスト</strong>は、素数判定問題が多項式時間で確定的に判定できることを示したアルゴリズムである{AKSは発見者Agrawal, Kayal, Saxenaの頭文字である。}。
+それまで次のようなアルゴリズムしか知られていなかった。
+<ul>
+<li> 「確率的」と呼ばれるような、低い確率に抑えられるとはいえ、合成数を誤って素数と判定してしまうアルゴリズム
+<li> 確定的に判定できるが、わずかながら多項式時間でないアルゴリズム
+<li> 未解決の問題が正しいという仮定の下に証明されたアルゴリズム
+</ul>
+
+実用上は、宝くじに当たるより低い確率でしか間違わないなら、確率的アルゴリズムでも問題ないと言える。
+そういう割り切りがあった。
+一方で、AKSテストは実用に耐えられないほど遅い。
+しかし、理論研究においては重要な成果である。
+計算複雑性の分野において、素数判定問題はそれまで\(\mathbf{NP}\cap\mathbf{co-NP}\)というクラスに属することが知られていた。
+AKSテストは、素数判定問題が\(\mathbf{P}\)に属することを示すものであり、AKSテストを発表した論文のタイトルも``PRIMES is in P"であった。
+\(\mathbf{P}\)や\(\mathbf{NP}\)が何なのか、ということはここでは触れない。
+
+AKSテストは、Fermatの小定理を拡張したとも言える、多項式に関する素数の性質を利用する。
+しかし、そのまま利用するのでは到底多項式時間では収まらない。
+多項式を評価する際に、ある多項式で剰余算するというのは、高速化には寄与する一方で正確性が犠牲になるというトレードオフがある。
+この二律背反に対し、絶妙なパラメータ設定をすることで、多項式時間で収まりつつ、正確に素数判定ができるアルゴリズムが、AKSテストである。
+
+まず、多項式に関する素数の性質を述べておく。
+これは数学的には重要な定理であるが、実際に計算することは現実的ではない。
+
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>定理</strong>)
+\(n\)を素数とすると、任意の多項式\(f(x)\in\mathbb{Z}[x]\)に対して、次が成り立つ。
+\begin{align*}
+f(x)^n = f(x^n) \pmod{n}
+\end{align*}
+</div>
+
+\(\mathbb{Z}[x]\)は整数係数多項式の集合であり、\(3x^2+4x-1\)や\(x^5-1\)等が該当する。
+もっと次数が高くともよいのだが、確認のために簡単な例で試してみよう。
+\(f(x) = x^2 + 2\)とする。
+\(n=3\)のとき、
+\begin{align*}
+f(x)^3 &= x^6 + 6x^4 + 12x^2 + 8\\
+f(x^3) &= x^6 + 2
+\end{align*}
+であり、一致しないかのように見えるが、\(\pmod{3}\)があることに注意しよう。
+これは、各係数が3で割った余りになる。
+\begin{align*}
+f(x)^3 &= x^6 + 0 \cdot x^4 + 0\cdot x^2 + 2\\
+&= x^6 + 2\\
+f(x^3) &= x^6 + 2
+\end{align*}
+なので、めでたく一致する。
+なお、Fermatの小定理()は、この定理の特別な場合(\(f(x)\)が定数関数)になる。
+
+特に次の定理は、素数であるための必要十分条件を与える。
+
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>定理</strong>)
+\(\gcd(n,a)=1\)かつ\((x+a)^n = x^n + a \pmod{n}\)を満たす整数\(a\)が存在するとき、かつそのときのみ、\(n\)は素数である。
+</div>
+
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>例</strong>)
+\(n=3,a=1\)のとき、\((x+1)^3=x^3+3x^2+3x+1\equiv x^3+1\pmod{3}\)。一方、\(n=4,a=3\)のとき、\((x+3)^4=x^4+12x^3+54x^2+108x+81\not\equiv x^4+3\pmod{4}\)。
+</div>
+
+ただし、これをそのまま素数判定法とするには無理がある。
+というのも、計算が困難であるという問題があるのである。
+\((x+a)^n\)を展開すれば、\(n\)次の式になるから、\(n\)個の変数で管理する必要があるわけだ。
+これでは多項式時間どころの話ではない。
+これを緩和するために、多項式を剰余算することを考える。
+
+さて、実際に計算してみれば分かる通り、\(k\)次多項式で剰余算すると、結果は高々\(k-1\)次の多項式となる。
+適切な多項式で剰余算すれば、多項式の次数を増やすことなく素数判定ができるのではないか、といのが素朴なアイディアである。
+ただし、むやみやたらな多項式で剰余算しても、今度は必要性を満たさなくなる。
+つまり、「合成数かも」という疑念は払しょくできない、あくまで確率的アルゴリズムにしかならない。
+
+我々が探求するのは「確定的」アルゴリズムである。
+それはつまり、必要十分条件を見出すことに他ならない。
+AKSテストは、\(x^r-1\)を選ぶことが適切だと言う。
+そして\(r\)は、最終的な計算量が多項式で済むほどに小さく抑えられる。
+さらに、\(x^r-1\)での剰余算はコンピュータに扱いやすいと言える。
+というのも、\(x^r=1\)であるから、例えば
+\begin{align*}
+8x^8 + 7x^7 + 6x^6 + 5x^5 + 4x^4 + 3x^3 + 2x^2 + x + 0
+\end{align*}
+という多項式を\(x^3-1\)で剰余算すると、
+\begin{align*}
+8x^2 + 7x^1 + 6x^0 + 5x^2 + 4x^1 + 3x^0 + 2x^2 + x + 0 = (8 + 5 + 2)x^2 + (7 + 4 + 1)x^1 + (6 + 3 + 0)x^0
+\end{align*}
+となる。
+直感的には、指数部で\(\bmod{3}\)すればよい。
+
+<pre class="prettyprint">class PolynomialCyclotomic():
+    def __init__(self, r:int, n:int, coefs:dict={}):
+        """
+        Args:
+            r (int): 剰余する多項式 x^r-1 のパラメータ
+            n (int):
+            coefs (dict): 多項式の係数。次数をキーとする。
+        """
+        self.r = r
+        self.n = n
+        self.f = [0] * r
+        for coef, val in coefs.items():
+            self.f[coef % r] += val % n
+
+    def __eq__(self, other):
+        assert self.r == other.r and self.n == other.n
+        return self.f == other.f
+
+    def __ne__(self, other):
+        return not (self == other)
+
+    def __mul__(self, other):
+        assert self.r == other.r and self.n == other.n
+        result = PolynomialCyclotomic(self.r, self.n)
+        for i in range(self.r):
+            for j in range(self.r):
+                coef = (i + j) % self.r
+                result.f[coef] += self.f[i] * other.f[j]
+                result.f[coef] %= self.n
+        return result
+
+    def __pow__(self, other):
+        if other == 0:
+            return self.identityElement()
+        if other % 2 == 0:
+            return (self * self) ** (other // 2)
+        else:
+            return self * (self ** (other - 1))
+
+    def identityElement(self):
+        """ 乗法単位元を返す
+        """
+        element = PolynomialCyclotomic(self.r, self.n)
+        element.f[0] = 1
+        return element
+</pre>
+
+<pre class="prettyprint">import math
+
+from nth_root_int import nth_root_int
+
+
+def is_perfect_power(n: int) -> bool:
+    """ nが累乗数（n = a^bの形）かを判定する。
+
+    bが取り得る範囲の2 <= b <= lg(n) を全探索する
+
+    Args:
+        n (int): 累乗数かを判定する対象の自然数
+
+    Returns:
+        bool: True  = 累乗数である
+              False = 累乗数ではない
+
+    Examples:
+        >>> is_perfect_power(27)
+        True
+        >>> is_perfect_power(26)
+        False
+    """
+    for b in range(2, int(math.log2(n)) + 1):
+        a = nth_root_int(n, b)
+        if a**b == n:
+            return True
+    return False
+</pre>
+
+<pre class="prettyprint">import math
+
+from sympy.ntheory import n_order
+
+
+def get_r_for_aks(n: int) -> int:
+    """ rは、n のZ_r^*での位数がlog2(n)**2 より大きくなる最小の整数。
+
+    Args:
+        n (int): rを求める対象の自然数
+
+    Returns:
+        r (int or string): rは、ord_r(n) > log2(n)**2を満たす最小の整数
+                           'composite number' : rの探索中に、nが合成数であることが判明した
+    """
+    minimum_order = int(math.log2(n)**2)
+    for r in range(minimum_order, n):
+        if math.gcd(n, r) != 1:
+            return 'composite number'
+        if n_order(n, r) > minimum_order:
+            return r
+    return n
+</pre>
+
+<pre class="prettyprint">import math
+
+from get_r_for_aks import get_r_for_aks
+from is_perfect_power import is_perfect_power
+from PolynomialCyclotomic import PolynomialCyclotomic
+from totient_function import totient_function
+
+
+def aks_test(n: int) -> str:
+    """ AKS法によってn>=2の素数判定を行う。
+
+    確定的アルゴリズム。
+
+    Args:
+        n (int): 素数かを判定する対象の自然数
+
+    Returns:
+        string: 'composite number' = nは合成数
+                'prime number'     = nは素数
+
+    Examples:
+        >>> aks_test(31)
+        'prime number'
+        >>> aks_test(111)
+        'composite number'
+    """
+    if is_perfect_power(n):
+        return 'composite number'
+    r = get_r_for_aks(n)
+    if r == 'composite number':
+        return r
+    threshold = int(math.sqrt(totient_function(r)) * math.log2(n)) + 1
+    if any(n % p == 0 for p in range(2, threshold)):  # thresholdまで試し割を行う
+        return 'composite number'
+    for a in range(1, threshold):
+        # (x + a)^n と x^n + a が mod x^r - 1, n で合同でないならば合成数と判定する
+        if PolynomialCyclotomic(r, n, {0: a, 1: 1})**n != \
+           PolynomialCyclotomic(r, n, {0: a, n: 1}):
+            return 'composite number'
+    return 'prime number'
+</pre>
+
+何の説明もなしに、アルゴリズムを実装した。
+ここからはその理屈を説明しよう。
+理屈は、次の定理によって説明できる。
+
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>定理</strong>)
+整数\(n\ge2\)、正整数\(r\)は\(n\)と互いに素で、\(ord_r(n)>\lg^2{n}\)を満たすとする。
+さらに、\(0\le a \le\sqrt{\varphi(r)}\lg{n}\)を満たす任意の\(a\)に対して、
+\begin{align*}
+(x+a)^n \equiv x^n + a \pmod{x^r-1, n}
+\end{align*}
+を満たすとする。
+\(n\)に素因数\(p>\sqrt{\varphi(r)}\lg{n}\)が存在するならば、\(n\)は\(p\)の累乗数である。
+</div>
+
+この定理から、\(0\le a \le\sqrt{\varphi(r)}\lg{n}\)を満たす任意の\(a\)に対して\((x+a)^n \equiv x^n + a \pmod{x^r-1, n}\)を満たしたとき、次の3パターンに分けられることが分かる。
+<ol>
+ <li> \(n\)は\(n=p^m\)という形の累乗数である。
+ <li> 合成数で、\(\sqrt{\varphi(r)}\lg{n}\)以下に素因数を持つ。
+ <li> 素数である。
+</ol>
+
+アルゴリズムでは、1のケースを最初に除外し、2のケースを試し割によって除外しているのだ。
+そういうわけで、この定理が成り立てば、アルゴリズムが正しく素数を判定することは理解できたと思う。
+そして、\(r\)がとてつもなく大きくなってしまっては、計算時間が多項式に収まらないが、これについては、次の定理が\(r\)の大きさの上限を説明し、アルゴリズム全体が多項式時間で終了することを保証している。
+
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>定理</strong>)
+任意の\(n>3\)に対して、\(r<\lg^5{n}\)。
+ただし\(r\)は、\(ord_r(n) > \lg^2{n}\)を満たす最小の正整数とする。
+</div>
+
+AKSテストではなぜ\(x^r-1\)という多項式で剰余したのか、という疑問が沸き起こる。
+というのも、証明中でも\(x^r-1\)という多項式である必然性はどこにもないからだ。
+実は\(x^r-1\)でなくともよいのである。
+次の定理が一般化として知られている。
+
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>定理</strong>)
+整数\(n\ge2\), モニックな\(d\)次多項式\(f(x)\in\mathbb{Z}_n[x]\)とする(ただし、\(d>\lg^2{n}\))。
+さらに、\(0\le a \le\sqrt{d}\lg{n}\)を満たす任意の\(a\)に対して、
+\begin{align*}
+(x+a)^n\equiv x^n+a\pmod{f(x)}
+\end{align*}
+を満たすとする。
+\(n\)に素因数\(p>\sqrt{d}\lg{n}\)が存在するならば、\(n\)は\(p\)の累乗数である。
+なお、\(f(x)\)は次の3つを満たすとする。
+<ul>
+<li> \(f(x^n) \equiv 0 \pmod{f(x)}\)
+<li> \(x^{n^d}\equiv x\pmod{f(x)}\)
+<li> \(d\)の任意の素因数\(q\)に対して\(x^{n^{d/q}}-x\)と\(f(x)\)は互いに素
+</ul>
+</div>
+
+AKSテストは、素数判定問題が多項式時間で確定的に判定できることを示したアルゴリズムであった。
+\(x^r-1\)で剰余算した多項式で判定を行う。
+多項式時間で実行でき、かつ、確実に素数判定を行うために\(r\)は適切な値にする必要があった。
+</body></html>

@@ -1,0 +1,91 @@
+
+<html lang="ja">
+  <head>
+    <script type="text/x-mathjax-config">
+       MathJax.Hub.Config({TeX:{equationNumbers:{autoNumber:"AMS"}}});
+    </script>
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML,/www_func/MathJax/MyConfig.js">
+    </script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+  </head>
+  <body>
+  <strong>このページは、pdfファイル出力用に作成したtexファイルから機械的に変換されています。体裁不良がある場合は<a href="https://github.com/haru-44/prime_text/releases/latest/download/main.pdf">pdfファイル</a>をご覧ください。</strong>
+  <hr/>
+<h1>field</h1>環は足し算・引き算・掛け算が可能であったが、体ではそれに加えて割り算も可能である。
+
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>定義</strong>)
+集合\(F\)と二項演算\(+,\times\)について次の2つの条件が成り立つとき\((F,+,\times)\)を<strong>体</strong>と呼ぶ。
+<ol>
+ <li> \((F,+,\times)\)は環である。
+ <li> (<strong>逆元</strong>の存在)任意の\(a\in{F}\setminus\{e_{+}\}\)について\(a{\times}a^{-1}=a^{-1}{\times}a=e_{\times}\)となる逆元\(a^{-1}\)が存在する。
+</ol>
+</div>
+
+<strong>斜体</strong>(skew field)あるいは<strong>可除環</strong>(division ring)と呼ぶ流儀もあるが、これは積が可換かどうかに注目するときに登場する。
+ここで体と言ったときは、暗黙の裡に可換であるとする。
+ちなみに、体を表す文字としてしばしば\(K\)が用いられるが、これはドイツ語名``Körper"から来ている。
+``Körper"は、「身体」という意味で日本語名の「体」は``Körper"の直訳である。
+
+無限集合で考えた場合、
+<ul>
+ <li> 有理数体 : \(\mathbb{Q}\)
+ <li> 実数体 : \(\mathbb{R}\)
+ <li> 複素数体 : \(\mathbb{C}\)
+</ul>
+が馴染みのある具体例である。
+しかし、除法が必ずしも整数に収まらないことから、整数は体にはならず、環にとどまる。
+
+一方で、要素が有限の体を<strong>有限体</strong>(finite field)と呼ぶ。
+位数が素数\(p\)である剰余環\(\mathbb{Z}_p\)は、有限体の一例である。
+なお、表記にはいくつかの種類があって、\(\mathbb{Z}_p\)以外にも\(\mathbb{Z}/p\mathbb{Z}, \mathbb{F}_p, GF(p)\)等がある。
+ここでは専ら\(\mathbb{F}_p\)の表記を用いる。
+
+2つの体に包含関係があるとき、小さい体から見ると体は拡大しており、大きい体から見るともう一方は部分である。
+
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>定義</strong>)
+2つの体\(K, L\)に、\(K\subset L\)という関係が成り立つとき、\(K/L\)と書く。
+そして、\(L\)は\(K\)の拡大体であると言い、\(K\)は\(L\)の部分体であると言う。
+</div>
+
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>例</strong>)\;
+<ul>
+ <li> 実数体\(\mathbb{R}\)は、有理数体\(\mathbb{Q}\)の拡大体である。
+ <li> 複素数体\(\mathbb{C}\)は、実数体\(\mathbb{R}\)の拡大体である。
+</ul>
+</div>
+
+拡大体や部分体を考えるのは、一番小さい体を見つけたいからである。
+
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>定義</strong>)
+部分体を持たない体を素体呼ぶ。
+</div>
+
+では、どんな体が素体となるのか？
+
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>命題</strong>)
+任意の素体は、\(\mathbb{Q}\)または\(\mathbb{F}_p\)に同型である。
+</div>
+
+素体は同型を除いて、有理数体\(\mathbb{Q}\)か\(\mathbb{F}_p\)しか存在しないことが分かった。
+つまり、どんな体でも\(\mathbb{Q}\)か\(\mathbb{F}_p\)を部分として持っていることになる。
+体の世界は、案外狭いように感じられただろうか。
+標数という用語を定義すれば、素体のようすがもう少し詳しく描写できる。
+
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>定義</strong>)
+体\(\mathbb{F}\)において、次を満たす\(p\)を\(\mathbb{F}\)の標数と呼ぶ。
+\begin{align*}
+\underbrace{1 + 1 + \cdots + 1}_{p \mbox{個}} = 0
+\end{align*}
+このような\(p\)がないときは\(0\)と定義する。
+</div>
+
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>命題</strong>)\;
+<ul>
+<li> 体\(\mathbb{F}\)の標数が\(0\)のとき、\(\mathbb{F}\)は有理数体\(\mathbb{Q}\)と同型な部分体を持つ。
+<li> 体\(\mathbb{F}\)の標数\(p\)が\(0\)でないとき、それは素数であり、\(\mathbb{F}\)は有限体\(\mathbb{F}_p\)と同型な部分体を持つ。
+</ul>
+</div>
+
+つまり、標数が判明すれば素体が明らかになるわけだ。
+</body></html>

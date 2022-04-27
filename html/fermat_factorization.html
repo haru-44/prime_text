@@ -1,0 +1,150 @@
+
+<html lang="ja">
+  <head>
+    <script type="text/x-mathjax-config">
+       MathJax.Hub.Config({TeX:{equationNumbers:{autoNumber:"AMS"}}});
+    </script>
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML,/www_func/MathJax/MyConfig.js">
+    </script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+  </head>
+  <body>
+  <strong>このページは、pdfファイル出力用に作成したtexファイルから機械的に変換されています。体裁不良がある場合は<a href="https://github.com/haru-44/prime_text/releases/latest/download/main.pdf">pdfファイル</a>をご覧ください。</strong>
+  <hr/>
+<h1>fermat_factorization</h1>例えば、\(n=9951\)を素因数分解するとしよう。
+\(x^2-y^2 = (x-y)(x+y)\)という公式と、直感によって、
+\begin{align*}
+9951 &= 10000 - 49\\
+&= 100^2 - 7^2 = (100 - 7)(100 + 7)\\
+&= 93 \times 107
+\end{align*}
+を見つけるだろう。
+この原理を一般の合成数にも適用できないだろうか。
+実は、どんな奇数の合成数\(n\)でも\(n=x^2-y^2\)を満たす自然数\(x,y\)が存在することが知られている。
+つまり、この\(x,y\)を見つけられることができれば、素因数分解できたと言うことになる。
+\(n=x^2-y^2\)となる\(x,y\)を見つけることによって、\(n\)を素因数分解数しようとするアルゴリズムを一般に<strong>平方差法</strong>と呼ぶが、<strong>Fermat法</strong>は、その中でも最も愚直な方法である。
+つまり、\(x\)を動かして\(y=\sqrt{x^2-n}\)が整数になれば良い。
+\(x\)を調べる範囲は、次の命題が教えてくれる。
+
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>命題</strong>)
+\(n\)が奇数の合成数ならば\(\left \lceil\sqrt{n}\right \rceil\le x \le (n + 9) / 6\)の範囲に\(n=x^2-y^2\)を満たす\(x\)が存在する。
+逆に、そのような\(x\)が存在しないならば\(n\)は素数である。
+</div>
+
+よって、\(\left \lceil\sqrt{n}\right \rceil\)から始めて\((n + 9) / 6\)まで\(x\)を変化させれば良い。
+最悪の場合は、\(n=3p\)(ただし、\(p\)は素数)というような形の合成数のときで、最後の\((n + 9) / 6\)が求めたかった\(x\)である。
+逆に、すぐに\(x\)を見つけられるのは、同じくらいの大きさに分解できるときである。
+つまりFermat法は、素因数が\(\sqrt{n}\)の近くにある場合に素早く解くことができる。
+Fermat法の得手不得手と、試し割法のそれは真逆の関係である。
+Fermat法が素早く解ける整数は、試し割法では苦戦し、試し割法が素早く解ける整数は、Fermat法では苦戦する、といった様子だということが分かる。
+
+以上を踏まえて、Fermat法を実装しよう。
+既に述べたように、\(\left \lceil\sqrt{n}\right \rceil \le a \le (n + 9) / 6\)の範囲の\(a\)をすべてチェックするのである。
+次のアルゴリズムは、素直な実装だが、ループの開始位置が\(\left \lceil\sqrt{n}\right \rceil\)ではなく\(\left \lfloor\sqrt{n}\right \rfloor\)となっている。
+最初のループが1回余計になることがあるが、新たに\(\left \lceil\sqrt{n}\right \rceil\)を求めるアルゴリズムを実装する手間を回避した。
+
+<pre class="prettyprint">from sqrt_int import sqrt_int
+
+
+def fermat_factorization_method(n: int) -> int:
+    """ Fermat法による素因数分解を行う。
+
+    Args:
+        n (int): 素因数分解する奇数
+
+    Returns:
+        int: nが合成数の場合は、nの非自明な約数
+             nが素数の場合は、1
+
+    Examples:
+        >>> fermat_factorization_method(2021) # 2021 = 43 * 47
+        43
+        >>> fermat_factorization_method(2019) # 2019 = 3 * 673
+        3
+        >>> fermat_factorization_method(2027) # 2027 is prime
+        1
+    """
+    assert n % 2 == 1
+    # ループの開始位置が厳密には正しくない
+    for x in range(sqrt_int(n), (n + 9) // 6 + 1):
+        y2 = x**2 - n
+        y = sqrt_int(y2)
+        if y**2 == y2:
+            return x - y
+    return 1
+</pre>
+
+Fermat法の挙動を観察すると、ループ回数は、単純に\(n\)が大きくなれば多くなるという訳ではないことに気付く。
+例えば、\(4343=101\times43\)は7回の反復を要するが、その3倍\(3\times4343=13029\)は、1回目で非自明な約数の発見に至っている。
+ならば、うまい具合に\(n\)を調整することによって、Fermat法よりも少ない計算回数で素因数分解ができるかもしれない、と思いつく。
+この考えを実現したのが、<strong>Lehman法</strong>である。
+
+Lehman法では、新たに\(k\)というパラメータを用意し、\(n\)ではなく\(4kn\)について\(4kn=x^2-y^2\)となる\(x,y\)を探す。
+これだけでは\(k\)が増えた分、純粋に探索範囲が増えてしまうが、\(k,x\)の範囲は、
+<ul>
+<li> \(k \le \left \lceil n^{1/3}\right \rceil\)
+<li> \(2\sqrt{kn}\le x < 2\sqrt{kn}+n^{1/6}/(4\sqrt{k})\)
+</ul>
+で済むことが分かっているので、この範囲を調べ尽くせば良い。
+ただし、\(n>21\)かつ\(n^{1/3}\)以下に非自明な約数が存在しないことを前提としている。
+
+<pre class="prettyprint">import math
+
+from sqrt_int import sqrt_int
+
+
+def lehman_method(n: int) -> int:
+    """ Lehman法による素因数分解を行う。
+    確定的アルゴリズムで、素数ならば確実に素数と判定し、
+    合成数ならば、nの非自明な約数を返す。
+
+    Args:
+        n (int): 素因数分解する整数。n > 21 でn^(1/3)以下に非自明な約数は存在しないとする
+
+    Returns:
+        int: nが合成数の場合は、nの非自明な約数。
+             nが素数の場合は、1
+
+    Examples:
+        >>> lehman_method(2021) # 2021 = 43 * 47
+        47
+        >>> lehman_method(2027) # 2027 is prime
+        1
+    """
+    for k in range(1, math.ceil(math.pow(n, 1 / 3)) + 1):
+        head = 2 * math.sqrt(k * n)
+        for x in range(math.ceil(head), math.floor(head + pow(n, 1 / 6) / (4 * math.sqrt(k))) + 1):
+            y2 = x**2 - 4 * k * n
+            y = sqrt_int(y2)
+            if y**2 == y2:
+                return math.gcd(x + y, n)
+    return 1
+</pre>
+
+あまり興味がないだろうから軽く触れるだけにするが、探索範囲がなぜこれで済むのかの証明は次の流れで行う。
+<ol>
+ <li> \(n=pq\)と分解できるとする。ただし、試し割を実行するため\(n^{1/3}<p\le q\)を仮定してよい。
+ <li> \(k \le \left \lceil n^{1/3}\right \rceil\), \(\mid uq - vp \mid < n^{1/3}\), \(k = uv\)を満たす\(k, u, v\)が存在する。
+ <li> \(x = uq + vp\), \(y = \mid uq - vp \mid\)と置くと、\(4kn=x^2-y^2\)及び\(2\sqrt{kn}\le x < 2\sqrt{kn}+n^{1/6}/(4\sqrt{k})\)を得る。
+</ol>
+
+なお、2つ目のステップには、DirichletのDiophantus近似定理を使用する。
+この定理は、ある実数が無理数であることを証明するときによくお目にかかるのだが、数論を勉強していたと思ったら、初歩的とは言え超越数論の教科書を引っ張ってこなければならなくなった。
+どんな分野にでも言えることだが、局所の知識がその分野のみに留まるということは中々ない。
+
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>定理</strong>)
+実数\(\alpha\), 正整数\(\mathcal{B}>1\)に対し、
+\begin{align*}
+v &\le \mathcal{B}\\
+\mid \frac{u}{v} - \alpha \mid &< \frac{1}{v\mathcal{B}}
+\end{align*}
+を満たす正整数\(u,v\)が存在する。
+</div>
+
+この定理に\(\alpha=p/q,\mathcal{B}=n^{1/6}\sqrt{q/p}\)と代入することによって、
+\begin{align*}
+\mid uq - vp \mid < n^{1/3}
+\end{align*}
+を得る。
+</body></html>
