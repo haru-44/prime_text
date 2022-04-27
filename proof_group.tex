@@ -3,6 +3,7 @@
 \begin{enumerate}
  \item 異なる$i,j$(ただし$0<i<j\le\mbox{ord}(a)$)において$a^i=a^j$を満たすとする。すると、$a^{j-i}=1$となるが$0<j-i<\mbox{ord}(a)$であるから、位数の定義に反する。
  \item $s=\mbox{ord}(a)$と置く。$j=sh$と書けるなら$a^j=a^{sh}=(a^s)^j=1$となる。逆に、$a^j=1$を仮定すると、\rTheo{division_algorithm}より$j=sh+r$となる$0\le r<s$が存在する。$1=a^j=a^{sh+r}=a^r$となるが、位数の定義より$r=0$でなければならない。よって、$s \mid j$を得る。
+ \item $x=\mbox{ord}(a),y=\mbox{ord}(a^{-1})$と置く。仮定より$a^x=1$、両辺を$-1$乗すると$(a^{-1})^x=1$となり、$y \le x$。もし、$y < x$なら$(a^{-1})^y=1$だが、両辺を$-1$乗すると$a^y=1$となり、位数の最小性に矛盾。
  \item $x=\mbox{ord}(a),y=\mbox{ord}(b),z=\mbox{ord}(ab)$と置く。$a^{yz}=1,b^{xz}=1,(ab)^{xy}=1$を示せば、それぞれに\rProp{element_order}の2を適用し、$x\mid yz, y \mid xz, z \mid xy$を得る。最終的には、$xy\mid z$と$z\mid xy$から$xy=z$を得る。全体の流れは図\ref{fig:element_order}を参照。
 \end{enumerate}
 \begin{figure}[htb]
