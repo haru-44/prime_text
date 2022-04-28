@@ -17,8 +17,7 @@ def tonelli_shanks_algorithm(a: int, p: int) -> Optional[int]:
         p (int): 奇素数
 
     Returns:
-        x (int or None): x^2 = a mod pを満たすxで、0～p-1の範囲の中で小さい数。
-                         存在しない場合はNone
+        x (int): x^2 = a mod pを満たすxで、0～p-1の範囲の中で小さい数
 
     Examples:
         >>> tonelli_shanks_algorithm(2, 7) # 4も解であるが、小さいほうの3を返す
