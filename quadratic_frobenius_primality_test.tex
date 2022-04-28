@@ -30,6 +30,29 @@ Frobeniusテストを説明するには、Frobenius写像を定義しなけれ�
 \end{itemize}
 \end{Prop}
 
+平方根を求めるアルゴリズムとしてTonelli-Shanksのアルゴリズムは既に紹介したが、\IND{Cipollaのアルゴリズム}{Cipollaのあるこりすむ}(Cipolla's algorithm)はFrobenius写像の性質を使って平方根を求める。
+
+\begin{Prop}{}{Cipollas_algorithm}
+$p$を奇素数、$t\in\mathbb{F}_p$は$\left(\frac{t^2-a}{p}\right)=-1$を満たすとする。
+$\alpha=\sqrt{t^2-a}, x=(t+\alpha)^{(p+1)/2}$と計算されるとき、$x$は$x^2 \equiv a\pmod{p}$を満たす。
+\end{Prop}
+
+\begin{prProof}{Cipollas_algorithm}
+$a=x^2=(t+\alpha)^{p+1}$を示す。
+$\left(\frac{t^2-a}{p}\right)=-1$より、$\alpha\not\in\mathbb{F}_p$である。
+よって、$t,\alpha,t+\alpha$は、$\mathbb{F}_{p^2}=\{x+y\alpha : x,y \in\mathbb{F}_p\}$の元と考えてよい。
+ここで、$\pm\alpha$は$x^2=t^2-a$の根であることに注意する。
+つまり、$\sigma(\alpha)=-\alpha$。
+さらに、$t\in\mathbb{F}_p$でもあるので、$\sigma(t)=t$。
+以上より、
+\begin{align*}
+(t+\alpha)^p &= \sigma(t + \alpha) = \sigma(t) + \sigma(\alpha) = t - \alpha\\
+(t+\alpha)^{p+1} &= (t+\alpha)(t-\alpha) = t^2 - \alpha^2 = a
+\end{align*}
+\end{prProof}
+
+\Algo{Cipollaのアルゴリズム}{cipolla_algorithm}{c.f., \rAlgo{legendre_symbol}, \rAlgo{n_times}}
+
 どんなふうに都合が良いかは、これから説明していく。
 今、Lucas数列を$p$で割った余り$U_n \bmod{p}$がどのような構造を持っているかを解明したい。
 構造というのは、もっと具体的に言えば$n$の変化によって、$U_n \bmod{p}$がどのように変わるのかということに興味がある。

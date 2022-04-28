@@ -101,6 +101,7 @@
     * [legendre_symbol.py](https://github.com/haru-44/prime_text/blob/main/src/legendre_symbol.py)
     * [jacobi_symbol.py](https://github.com/haru-44/prime_text/blob/main/src/jacobi_symbol.py)
     * [tonelli_shanks_algorithm.py](https://github.com/haru-44/prime_text/blob/main/src/tonelli_shanks_algorithm.py)
+    * [cipolla_algorithm.py](https://github.com/haru-44/prime_text/blob/main/src/cipolla_algorithm.py)
   * べき根
     * [sqrt_int.py](https://github.com/haru-44/prime_text/blob/main/src/sqrt_int.py)
     * [nth_root_int.py](https://github.com/haru-44/prime_text/blob/main/src/nth_root_int.py)
