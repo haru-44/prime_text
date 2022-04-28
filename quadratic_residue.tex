@@ -234,7 +234,36 @@ $\mathcal{S}$をLegendre記号とJacobi記号が一致する$a$の集合とす�
 よって、$\mathcal{S}$が$\mathbb{Z}_n^*$の真部分群ならば、少なくとも$\sharp\mathcal{S}\le\sharp\mathbb{Z}_n^*/2$が言える。
 
 余勢を駆って、具体的な平方根を求めるアルゴリズムにも言及しよう。
+\IND{Tonelli–Shanksのアルゴリズム}{Tonelli–Shanksのあるこりすむ}(Tonelli–Shanks algorithm)は素数$p$を法とする$a$の平方根を求めるアルゴリズムである。
 
-\Algo{平方根を求める}{square_root}{c.f., \rAlgo{legendre_symbol}, \rAlgo{split_int}}
+$a$は当然、平方剰余を仮定してよい。
+つまり、$\left(\frac{a}{p}\right)=1$である。
+Eulerの規準(\rProp{Legendre_symbol_calc})より$t=(p-1)/2$と置くと、
+\begin{align*}
+a^t &\equiv 1 \pmod{p}\\
+a^{t+1} &\equiv a \pmod{p}\\
+a^{(t+1)/2} &\equiv a^{1/2} \pmod{p}
+\end{align*}
+となり、求めたい平方根は$a^{(t+1)/2}$であることが分かる。
+とても簡単に求めてしまったように思えるが、もちろん落とし穴があって、すぐに$(t+1)/2$が整数とならなければ計算できないことに気付く。
+それでも、$(t+1)/2$が整数になる、言い換えれば$p\equiv3\pmod{4}$の場合のアルゴリズムは得た。
+
+この考察を一般化しよう。
+$p-1$は$2^s\cdot t$と書けるとする(ここで$t$は奇数)。
+$a^t \equiv D^{-2\mu}\pmod{p}$を満たす$D,\mu$が\kenten{与えられたとすれば}、先ほどと同様の議論により、
+\begin{align*}
+a^t &\equiv D^{-2\mu}\pmod{p}\\
+a^tD^{2\mu} &\equiv 1 \pmod{p}\\
+a^{t+1}D^{2\mu} &\equiv a \pmod{p}\\
+a^{(t+1)/2}D^{\mu} &\equiv a^{1/2} \pmod{p}
+\end{align*}
+となって$a$の平方根は$a^{(t+1)/2}D^{\mu}$であることが分かる。
+
+となれば、次は$D,\mu$を求める方法を考える。
+$d$は$p$を法として平方非剰余だとしよう。
+$D=d^t$の位数は$2^s$であるから$D^{-1}$の位数も$2^s$である。
+一方、$A=a^t$の位数は$2^{s-1}$であるから、$D,\mu$が存在することが分かる。
+
+\Algo{Tonelli–Shanksのアルゴリズム}{tonelli_shanks_algorithm}{c.f., \rAlgo{legendre_symbol}, \rAlgo{split_int}}
 
 これは、あくまで素数を法とする平方根を求める方法であることに注意する。

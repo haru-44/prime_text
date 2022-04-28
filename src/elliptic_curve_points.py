@@ -1,7 +1,7 @@
 from typing import Generator, Tuple
 
 from legendre_symbol import legendre_symbol
-from square_root import square_root
+from tonelli_shanks_algorithm import tonelli_shanks_algorithm
 
 
 def elliptic_curve_points(a: int, b: int, p: int) -> Generator[Tuple[int, int], None, None]:
@@ -27,6 +27,6 @@ def elliptic_curve_points(a: int, b: int, p: int) -> Generator[Tuple[int, int], 
         if legendre == 0:
             yield x, 0
         elif legendre == 1:
-            y = square_root(y2, p)
+            y = tonelli_shanks_algorithm(y2, p)
             yield x, y
             yield x, -y % p
