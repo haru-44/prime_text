@@ -1,11 +1,10 @@
 import random
-from typing import Optional
 
 from legendre_symbol import legendre_symbol
 from split_int import split_int
 
 
-def tonelli_shanks_algorithm(a: int, p: int) -> Optional[int]:
+def tonelli_shanks_algorithm(a: int, p: int) -> int:
     """ Tonelli-Shanksのアルゴリズム。
 
     x^2 = a mod p
