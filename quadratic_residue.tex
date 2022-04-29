@@ -149,7 +149,7 @@ Legendre記号とJacobi記号で、同じ記号を使うものだから混乱し
 
 \begin{Exam}{}{}
 \begin{align*}
-\left(\frac{4}{45}\right) = \left(\frac{4}{3}\right)^2\left(\frac{4}{5}\right)\\
+\left(\frac{4}{45}\right) &= \left(\frac{4}{3}\right)^2\left(\frac{4}{5}\right)\\
 &= (1)^2(1) = 1
 \end{align*}
 \end{Exam}
@@ -234,7 +234,8 @@ $\mathcal{S}$をLegendre記号とJacobi記号が一致する$a$の集合とす�
 よって、$\mathcal{S}$が$\mathbb{Z}_n^*$の真部分群ならば、少なくとも$\sharp\mathcal{S}\le\sharp\mathbb{Z}_n^*/2$が言える。
 
 余勢を駆って、具体的な平方根を求めるアルゴリズムにも言及しよう。
-\IND{Tonelli-Shanksのアルゴリズム}{Tonelli–Shanksのあるこりすむ}(Tonelli–Shanks algorithm)は素数$p$を法とする$a$の平方根を求めるアルゴリズムである。
+Legendre記号は平方剰余かを判定できたが、それがどんな数かは分からなかった。
+\IND{Tonelli-Shanksのアルゴリズム}{Tonelli-Shanksのあるこりすむ}(Tonelli-Shanks algorithm)は素数$p$を法とする$a$の平方根を具体的に求めるアルゴリズムである。
 
 $a$は当然、平方剰余を仮定してよい。
 つまり、$\left(\frac{a}{p}\right)=1$である。
@@ -245,7 +246,7 @@ a^{t+1} &\equiv a \pmod{p}\\
 a^{(t+1)/2} &\equiv a^{1/2} \pmod{p}
 \end{align*}
 となり、求めたい平方根は$a^{(t+1)/2}$であることが分かる。
-とても簡単に求めてしまったように思えるが、もちろん落とし穴があって、すぐに$(t+1)/2$が整数とならなければ計算できないことに気付く。
+とても簡単に求めてしまったように思えるが、もちろん落とし穴があって、ちょっと考えればすぐに$(t+1)/2$が整数とならなければ計算できないことに気付く。
 それでも、$(t+1)/2$が整数になる、言い換えれば$p\equiv3\pmod{4}$の場合のアルゴリズムは得た。
 
 この考察を一般化しよう。
@@ -259,10 +260,19 @@ a^{(t+1)/2}D^{\mu} &\equiv a^{1/2} \pmod{p}
 \end{align*}
 となって$a$の平方根は$a^{(t+1)/2}D^{\mu}$であることが分かる。
 
-となれば、次は$D,\mu$を求める方法を考える。
-$d$は$p$を法として平方非剰余だとしよう。
-$D=d^t$の位数は$2^s$であるから$D^{-1}$の位数も$2^s$である。
-一方、$A=a^t$の位数は$2^{s-1}$であるから、$D,\mu$が存在することが分かる。
+となれば、次は$D,\mu$を求める方法を考えるわけだが、ここでは次が正しいとしてアルゴリズムを与える。
+
+\begin{Prop}{}{tonelli_shanks_algorithm}
+$p$を奇素数、$d\in\mathbf{QNR}_p$とする。
+$p-1=2^s\cdot t$と書ける(ここで$t$は奇数)とし、$A\equiv a^t\pmod{p},D\equiv d^t\pmod{p}$と置く。
+$0\le k<s$について、$(AD^m)^{2^{s-1-k}}\equiv1\pmod{p}$ならば、$(AD^m)^{2^{s-1-(k+1)}}\equiv\pm1\pmod{p}$である。
+特に$-1$のとき、$m'=m+2^k$とすると、$(AD^{m'})^{2^{s-1-(k+1)}}\equiv1\pmod{p}$である。
+\end{Prop}
+
+$k=0,m=0$のとき、$(AD^m)^{2^{s-1-k}}\equiv1\pmod{p}$を満たすので、あとは$k$を大きくしながら常に1になるように$m$を書き換えてやればよい。
+最終的に$AD^m\equiv1\pmod{p}$を満たす$m$が見つかるが、これは$2\mu$に他ならない。
+
+Tonelli-Shanksのアルゴリズムは、任意の奇素数$p$で正しく平方根を返すので\rProp{tonelli_shanks_algorithm}を実装するだけでもよいのだが、$p\equiv3\pmod{4}$ならもっと簡単な方法があるので、コードの簡潔さは劣るが高速化のためにはそちらを使った方が良い。
 
 \Algo{Tonelli-Shanksのアルゴリズム}{tonelli_shanks_algorithm}{c.f., \rAlgo{legendre_symbol}, \rAlgo{split_int}}
 

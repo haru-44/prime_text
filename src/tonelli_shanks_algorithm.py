@@ -21,17 +21,25 @@ def tonelli_shanks_algorithm(a: int, p: int) -> int:
     Examples:
         >>> tonelli_shanks_algorithm(2, 7) # 4も解であるが、小さいほうの3を返す
         3
+        >>> tonelli_shanks_algorithm(10, 13)
+        6
     """
     assert legendre_symbol(a, p) == 1  # aは平方非剰余であり、平方根は存在しない
-    while True:  # 法pで平方非剰余なdを見つけるまでループする
-        d = random.randrange(2, p)
-        if legendre_symbol(d, p) == -1:
-            break
-    s, t = split_int(p - 1)
-    A, D = pow(a, t, p), pow(d, t, p)
-    mu = 0
-    for i in range(s):
-        if pow(A * pow(D, mu, p), pow(2, s - 1 - i), p) == p - 1:
-            mu += pow(2, i)
-    x = (pow(a, (t + 1) // 2, p) * pow(D, mu // 2, p)) % p
+
+    res = p % 4
+    a %= p
+    if res == 3:
+        x = pow(a, (p+1)//4, p)
+    else:
+        while True:  # 法pで平方非剰余なdを見つけるまでループする
+            d = random.randrange(2, p)
+            if legendre_symbol(d, p) == -1:
+                break
+        s, t = split_int(p - 1)
+        A, D = pow(a, t, p), pow(d, t, p)
+        m = 0
+        for i in range(1, s):
+            if pow(A * pow(D, m, p), pow(2, s-1-i), p) == p - 1:
+                m += pow(2, i)
+        x = (pow(a, (t+1)//2, p) * pow(D, m//2, p)) % p
     return min(x, -x % p)
