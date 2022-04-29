@@ -265,11 +265,11 @@ a^{(t+1)/2}D^{\mu} &\equiv a^{1/2} \pmod{p}
 \begin{Prop}{}{tonelli_shanks_algorithm}
 $p$を奇素数、$d\in\mathbf{QNR}_p$とする。
 $p-1=2^s\cdot t$と書ける(ここで$t$は奇数)とし、$A\equiv a^t\pmod{p},D\equiv d^t\pmod{p}$と置く。
-$0\le k<s$について、$(AD^m)^{2^{s-1-k}}\equiv1\pmod{p}$ならば、$(AD^m)^{2^{s-1-(k+1)}}\equiv\pm1\pmod{p}$である。
-特に$-1$のとき、$m'=m+2^k$とすると、$(AD^{m'})^{2^{s-1-(k+1)}}\equiv1\pmod{p}$である。
+$0\le k<s$について、$(AD^m)^{2^{s-k}}\equiv1\pmod{p}$ならば、$(AD^m)^{2^{s-(k+1)}}\equiv\pm1\pmod{p}$である。
+特に$-1$のとき、$m'=m+2^k$とすると、$(AD^{m'})^{2^{s-(k+1)}}\equiv1\pmod{p}$である。
 \end{Prop}
 
-$k=0,m=0$のとき、$(AD^m)^{2^{s-1-k}}\equiv1\pmod{p}$を満たすので、あとは$k$を大きくしながら常に1になるように$m$を書き換えてやればよい。
+$k=0,m=0$のとき、$(AD^m)^{2^{s-k}}\equiv1\pmod{p}$を満たすので、あとは$k$を大きくしながら常に1になるように$m$を書き換えてやればよい。
 最終的に$AD^m\equiv1\pmod{p}$を満たす$m$が見つかるが、これは$2\mu$に他ならない。
 
 Tonelli-Shanksのアルゴリズムは、任意の奇素数$p$で正しく平方根を返すので\rProp{tonelli_shanks_algorithm}を実装するだけでもよいのだが、$p\equiv3\pmod{4}$ならもっと簡単な方法があるので、コードの簡潔さは劣るが高速化のためにはそちらを使った方が良い。
