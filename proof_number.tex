@@ -1,3 +1,15 @@
+\subsubsection{\rProp{tonelli_shanks_algorithm}の証明}
+\begin{prProof}{tonelli_shanks_algorithm}
+\rProp{sqrt1}より、$(AD^m)^{2^{s-k}}\equiv1\pmod{p}$ならば、$(AD^m)^{2^{s-(k+1)}}\equiv\pm1\pmod{p}$となるのは明らか。
+$(AD^m)^{2^{s-(k+1)}}\equiv-1\pmod{p}$のとき、
+\begin{align*}
+(AD^{m + 2^k})^{2^{s-(k+1)}} &\equiv (AD^m)^{2^{s-(k+1)}}\cdot D^{2^{k+(s-(k+1))}}\pmod{p}\\
+&\equiv (-1)\cdot D^{2^{s-1}}\pmod{p}
+\end{align*}
+となるが、$D$の位数は$2^s$なので、$D^{2^{s-1}}\equiv-1\pmod{p}$となる。
+よって、$(AD^{m'})^{2^{s-(k+1)}}\equiv1\pmod{p}$である。
+\end{prProof}
+
 \subsubsection{\rTheo{pepin}の証明}
 \begin{thProof}{pepin}
 必要条件は、Lucasの定理(\rTheo{Lucas_theorem})より明らか。
