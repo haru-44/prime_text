@@ -27,7 +27,7 @@ pre_text = """
 """
 post_text = '</body></html>'
 
-for file in glob.glob('../*.tex'):
+for file in glob.glob('../tex/*.tex'):
     name = os.path.splitext(os.path.basename(file))[0]
     if name in ['main', 'proof_number', 'proof_group']:
         continue
