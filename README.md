@@ -36,6 +36,7 @@
   * [2次篩法](https://haru-44.github.io/prime_text/html/quadratic_sieve_algorithm.html)
 * その他の方法
   * [Pollardのρ法](https://haru-44.github.io/prime_text/html/rho_method.html)
+  * [2次形式](https://haru-44.github.io/prime_text/html/quadratic_form.html)
   * [AKSテスト](https://haru-44.github.io/prime_text/html/aks_test.html)
   * [楕円曲線](https://haru-44.github.io/prime_text/html/elliptic_curve.html)
 
@@ -128,6 +129,7 @@
     * [n_times.py](https://github.com/haru-44/prime_text/blob/main/src/n_times.py)
   * その他
     * [split_int.py](https://github.com/haru-44/prime_text/blob/main/src/split_int.py)
+    * [quadratic_form_reduction.py](https://github.com/haru-44/prime_text/blob/main/src/quadratic_form_reduction.py)
 
 ## 著者
 

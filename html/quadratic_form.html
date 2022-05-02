@@ -1,0 +1,192 @@
+
+<html lang="ja">
+  <head>
+    <script type="text/x-mathjax-config">
+       MathJax.Hub.Config({TeX:{equationNumbers:{autoNumber:"AMS"}}});
+    </script>
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML,/www_func/MathJax/MyConfig.js">
+    </script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+  </head>
+  <body>
+  <strong>このページは、pdfファイル出力用に作成したtexファイルから機械的に変換されています。体裁不良がある場合は<a href="https://github.com/haru-44/prime_text/releases/latest/download/main.pdf">pdfファイル</a>をご覧ください。</strong>
+  <hr/>
+<h1>quadratic_form</h1>もし、\(n\)の2種類の異なる平方数の和で表すことができれば、素因数分解ができる。
+例えば、\(n=1000009\)は、\(n=1000^2+3^2\)と\(n=972^2+235^2\)という2種類の表し方がある。
+これを見つけることができれば、\(\gcd(n, 1000\cdot235 - 3\cdot972)\)を計算することによって、非自明な約数\(3413\)を発見できる。
+このように、\(n\)について2つの平方数の和を2種類得ることによって、素因数分解をするのが<strong>Euler法</strong>(Euler's factorization method)である。
+
+ここで、2つの疑問が湧き起こる。
+<ol>
+<li> すべての合成数\(n\)についてこのような表現があるのか。
+<li> 存在するとして簡単に見つけることができるのか。
+</ol>
+実の所、どちらも否定的だ。
+つまり、2つの平方数の和が2種類存在しない合成数があるし、存在したとしても簡単に見つける方法は知られていない。
+では、Euler法は使い物にならないのだろうか。
+実は、Euler法のアイディアを2元2次形式まで広げることによって、\(O(n^{1/3+\epsilon})\)のアルゴリズムを得られる。
+そのためには、まず2元2次形式が何者なのかを理解しなければならない。
+
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>定義</strong>)
+\begin{align*}
+f(x,y) = ax^2 + bxy + cy^2
+\end{align*}
+という形の2変数多項式を2元2次形式、あるいは単に2次形式(quadratic form)と呼ぶ。
+</div>
+
+\(ax^2 + 2bxy + cy^2\)を2次形式と呼ぶ流儀があるが、ここでは\(ax^2 + bxy + cy^2\)の形をそう呼ぶ。
+また、簡単のため\(f=(a,b,c)\)と表すこともある。
+何の変哲もない多項式に見えるが、数学の様々な分野において非常に重要な概念である。
+
+今、我々は\(x,y\)に整数を与えたとき、\(f(x,y)\)がどの整数を取るのか知りたい。
+例えば、\(4x^2+3xy+2y^2\)は、\(x=y=1\)のとき\(9\)になるが、\(x,y\)を整数の範囲でどんなに動かしても\(1\)にはならない。
+
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>定義</strong>)
+整数\(n\)が2次形式\(f(x,y)=ax^2+bxy+cy^2\)で表現可能であるとは、整数\(x,y\in\mathbb{Z}\)が存在して、\(n=f(x,y)\)を満たすことである。
+</div>
+
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>定義</strong>)
+2次形式\(f=(a,b,c),g=(a',b',c')\)が同値(equivalent)であるとは、表現可能な整数の集合が一致することを言う。
+</div>
+
+つまり、\(f=(a,b,c),g=(a',b',c')\)が同値であるときとはどのような時か、ということを知ることが当面の目標となる。
+そこで、2次方程式にも判別式があったように、2次形式にも判別式を導入する。
+
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>定義</strong>)
+\(D=b^2-4ac\)を\(f=(a,b,c)\)の判別式と呼ぶ。
+</div>
+
+判別式\(D\)が\(0\)のときは、ある1次形式の2乗となるため、1次形式の簡単な場合に帰着される。
+判別式\(D>0\)が平方数のときは、数学的に面白い問題ではない。
+などということが分かる以外にも、判別式には次の重要な性質がある。
+
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>命題</strong>)
+2次形式\(f=(a,b,c),g=(a',b',c')\)が同値ならば、2つの判別式は一致する。
+</div>
+
+しかし、注意が必要なのは、逆は成り立たないことだ。
+
+次に、同値な2次形式は1つの形で表したい。
+分数では、\(2/4\)も\(10/20\)も同じ数を表して、\(1/2\)とするのが良いように、2次形式でも標準的な形のようなものがあれば嬉しい。
+それが簡約形式と呼ばれるものだ。
+分数で言うところの既約分数にあたる。
+
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>定義</strong>)
+2次形式\((a,b,c)\)が簡約形式であるとは、次を満たすことを言う。
+\begin{align*}
+|b| \le |a| \le |c|
+\end{align*}
+</div>
+
+では、どのように簡約形式を見つければ良いのか？　
+
+<pre class="prettyprint">import math
+
+def quadratic_form_reduction(a, b, c):
+    """ 2次形式(a,b,c)の簡約形式を返す。
+
+    Args:
+        a, b, c (int): 2次形式のパラメータ。ただし、判別式Dは平方数でないとする。
+
+    Returns:
+        a, b, c (int): 簡約形式
+    """
+    D = b**2 - 4 * a * c
+    while True:
+        if abs(a) < abs(b):
+            u = math.floor((abs(a) - b) / (2 * a))
+            a, b, c = a, b + 2 * u * a, c + u * b + u**2 * a
+        if abs(a) <= abs(c):
+            break
+        else:
+            a, b, c = c, -b, a
+    return a, b, c
+</pre>
+
+簡約形式の嬉しさは、\(a,b,c\)の大きさが\(D\)によって制限されることである。
+\((a,b,c)\)が簡約形式であるとき、次を満たす。
+\begin{align*}
+|a| \le \sqrt{\frac{|D|}{3}}
+\end{align*}
+というのも、
+\begin{align*}
+|D| &= |b^2 - 4ac|\\
+&\ge \big| |b|^2 - 4|a||c| \big|\\
+&\ge 4|a||c| - |b|^2\\
+&\ge 4|a|^2 - |b|^2\\
+&\ge 4|a|^2 - |a|^2\\
+&=3|a|^2
+\end{align*}
+だからである。
+
+2次形式を通して、Euler法をもう一度眺めてみよう。
+Euler法は、分解したい数\(n\)の2次形式\((1,0,1)\)による異なる表示を求めている。
+一般に、\(i=1,2\)について
+\begin{align*}
+n = x_i^2 + y_i^2\\
+x_i \ge y_i \ge 0\\
+x_1 > x_2
+\end{align*}
+であれば、\(1<\gcd(x_1y_2 - y_1x_2, n) < n\)となり、素因数分解が成功する。
+
+既に述べたように、必ずしも合成数は2つの平方数の和として2通りに表されるわけではない。
+むしろ、稀と言っても良い。
+そこで、\(n\)の2次形式\((a,b,c)\)による異なる表示を求めることによって、素因数分解することを考える。
+実際には任意の2次形式を考えるわけではなく、ある程度制限されたものを考えるのだが、\((1,0,1)\)で考えていたEuler法とはどのように違うのだろうか。
+
+まずは、何やらよく分からない集合\(\mathcal{S}(D,n)\)を定義する。
+
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>定義</strong>)
+集合\(\mathcal{S}(D,n)\)を次のように定義する。
+\begin{align*}
+\mathcal{S}(D,n) = \{(u,v) \mid u^2 - Dv^2 \equiv 0\pmod{4n}\}
+\end{align*}
+</div>
+
+ここで、2次形式\(f=(a,b,c)\)は正整数\(n\)を表現可能であるとする。
+つまり、\(ax^2+bxy+cy^2=n\)を満たす\((x,y)\)が存在するわけで、この両辺に\(4a\)を掛けて整理すると、
+\begin{align*}
+(2ax + by)^2 -Dy^2 = 4an
+\end{align*}
+が得られる。
+\(u=2ax + by, v=y\)と置くと、\(u^2 - Dv^2\equiv0\pmod{4n}\)の解\((u,v)\)が得られる。
+つまり、適当な\(a,b,c,x,y\)は、\((u,v)\in\mathcal{S}(D,n)\)と対応することが分かる。
+
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>命題</strong>)
+任意の\((u,v),(u',v')\in\mathcal{S}(D,n)\)について、\(uv'\equiv u'v\pmod{2n}\)を満たす。
+</div>
+
+そこで、次のように\(h,A\)を設定する。
+<ul>
+<li> \(h\)は、\(h^2\equiv D\pmod{4n}\)の解とする。
+<li> \(A\)は、\(h^2=D+4An\)を満たすとする。
+</ul>
+これを用いて2次形式\(f=(A,h,n)\)を作る。
+\(x=0,y=1\)のとき\(n\)を表示し、対応する\(\mathcal{S}(D,n)\)の元は\((h,1)\)である。
+
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>命題</strong>)
+2次形式\(f=(A,h,n)\)を簡約して\(g=(a,b,c)\)を得たとし、対応する\(\mathcal{S}(D,n)\)の元は\((u,v)\)とする。
+このとき、\(u\equiv vh \pmod{2n}\)かつ、\(\gcd(v,n)=1\)である。
+</div>
+
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>命題</strong>)
+\(h_1,h_2\)を\(h^2\equiv D\pmod{4n}\)の解で、\(h_1\not\equiv\pm h_2\pmod{n}\)を満たすとする。
+上記の設定の下、\(\gcd(u_1v_2 - u_2v_1, n)\)は\(n\)の非自明な約数である。
+</div>
+
+以上より、\(4n\)を法とする\(D\)の平方根\(h_1,h_2\)を見つけることができれば、非自明な約数を得られることが分かった。
+\(h_1,h_2\)が存在することも、既に前節で見ている。
+では、\(h_1,h_2\)を探索すれば良いのかというと、話はそう単純ではない。
+McKeeは、逆に\((u,v)\)を探すことで目的を達成しようとした。
+簡約形式は、\(|a|\le\sqrt{|D|/3}\)を満たすから、すべての\(a\)で\(u^2\equiv4an\pmod{|D|}\)を満たす\(u\)を\(u\le2\sqrt{an}\)の範囲で探せばよい。
+
+この計算量に関しては次のように見積もることができる。
+<ul>
+<li> ある\(a\)に対して、\(u\)の候補は高々\(|D|^{\epsilon}+2\sqrt{an}/|D|^{1-\epsilon}\)
+<li> すべての\(a\)では、\(O(|D|^{1/2+\epsilon} + \sqrt{n}/|D|^{1/4-\epsilon})\)
+<li> \(|D|\)が\(n^{2/3}\)程度であれば、\(O(n^{1/3+\epsilon})\)
+</ul>
+
+\(D\)の決め方について説明していないが、上手く設定できる。
+</body></html>
