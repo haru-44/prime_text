@@ -15,12 +15,39 @@ Fibonacci数列やLucas数列がどのような振る舞いをするのかを調
 \end{enumerate}
 \end{Defi}
 
-環のうち、ある$a,b{\in}R$について$a \times b \neq b \times a$であるとき、特に\IND{非可換環}{ひかかんかん}(noncommutative ring)と呼ぶ。
+環のうち、ある$a,b{\in}R$について$a \times b \neq b \times a$であるとき、特に\IND{非可換環}{ひかかんかん}(noncommutative ring)と呼ぶ\Notes{非可換環の例として行列が挙げられる。}。
 その対比として、任意の$a,b{\in}R$について$a \times b = b \times a$である環を\IND{可換環}{かかんかん}(commutative ring)と呼ぶ。
 
-例えば、整数や$p$が素数であるときの$\mathbb{Z}_p$は環である。
-一方で、行列は非可換環である。
-多項式も環であり、特に断りなく一変数多項式を扱うが、多変数でも同様のことが言える。
+環は足し算・引き算・掛け算が可能であったが、体ではそれに加えて割り算も可能である。
+
+\begin{Defi}{\IND{体}{たい}, field}{field}
+集合$F$と二項演算$+,\times$について次の2つの条件が成り立つとき$(F,+,\times)$を\textbf{体}と呼ぶ。
+\begin{enumerate}
+ \item $(F,+,\times)$は環である。
+ \item (\textbf{逆元}の存在)任意の$a\in{F}\setminus\{e_{+}\}$について$a{\times}a^{-1}=a^{-1}{\times}a=e_{\times}$となる逆元$a^{-1}$が存在する。
+\end{enumerate}
+\end{Defi}
+
+\IND{斜体}{しやたい}(skew field)あるいは\IND{可除環}{かしよかん}(division ring)と呼ぶ流儀もあるが、これは積が可換かどうかに注目するときに登場する。
+ここで体と言ったときは、暗黙の裡に可換であるとする。
+さらに、要素が有限の体を\IND{有限体}{ゆうけんたい}(finite field)と呼ぶ。
+ちなみに、体を表す文字としてしばしば$K$が用いられるが、これはドイツ語名``Körper"から来ている。
+``Körper"は、「身体」という意味で日本語名の「体」は``Körper"の直訳である。
+
+\begin{Exam}{}{ring_field}\;
+\begin{itemize}
+ \item 実数$\mathbb{R}$、有理数$\mathbb{Q}$は体である。
+ \item 整数$\mathbb{Z}$は環である。
+ \item $\mathbb{Z}_n$は環である。
+ \item $p$が素数のとき、$\mathbb{Z}_p$は有限体である。
+\end{itemize}
+\end{Exam}
+
+有限体の表記にはいくつかの種類があって、$\mathbb{Z}_p$以外にも$\mathbb{Z}/p\mathbb{Z}, \mathbb{F}_p, GF(p)$等がある。
+ここでは\ruby{専}{もっぱ}ら$\mathbb{F}_p$の表記を用いる。
+
+次に、既知の環や体から新たな環・体を作る方法として、多項式を導入する。
+特に断りなく一変数多項式を扱うが、多変数でも同様のことが言える。
 
 \begin{Defi}{\IND{多項式環}{たこうしきかん}, polynomial ring}{polynomial ring}
 環$R$に係数を持つ不定元$x$に関する多項式
@@ -31,7 +58,8 @@ a_mx^m + \cdots + a_2x^2 + a_1x^1 + a_0
 これを多項式環と呼ぶ。
 \end{Defi}
 
-つまり、既存の環を基にして新たな環を構成できるわけだ。
+一応注意しておくが、体も環の一種なので体に係数として持つ多項式だって考えることができる。
+
 例えば、整数$\mathbb{Z}$は環であるから、整数係数多項式の集合$\mathbb{Z}[x]$は環である。
 具体的な数値で見てみると、$3x+2$や$5x^2+3$などがその元だ。
 加法や乗法は、通常の多項式の加法・乗法と変わりない。
@@ -50,7 +78,7 @@ $(3x+2)+(5x^2+3)=5x^2+3x+5$となるし、$(3x+2)(5x^2+3)=15x^3+10x^2+9x+6$と�
 \begin{Theo}{\IND{除法の原理}{しよほうのけんり}, division algorithm}{division_algorithm}
 任意の$a\in\mathbb{Z},b\in\mathbb{N}$に対して、
 \begin{align*}
-a = bq + r, 0 \le r < b
+a = bq + r, \quad 0 \le r < b
 \end{align*}
 となる整数$q,r$の組がただ1つ存在する。
 \end{Theo}
@@ -77,8 +105,7 @@ $x^2+1$で剰余算されるのだから、$x^2+1=0$である\Notes{整数にお
 
 これで多項式の剰余環を理解したつもりになられては困る。
 $\mathbb{R}[x]/(x^2+1)$の元は既に、実数$a,b \in \mathbb{R}$を使って$ax+b$と表せることは確認した。
-では、この$x$とは何者か？　$x^2=-1$という関係しか利用してこなかったが、$x$について解けば$x=\sqrt{-1}=i$なのだ！　
-つまり、$\mathbb{R}[x]/(x^2+1)$は複素数$\mathbb{C}$と一致する。
+では、この$x$とは何者か？　$x^2=-1$という関係しか利用してこなかったが、$x$について解けば$x=\sqrt{-1}=i$なのだ！　つまり、$\mathbb{R}[x]/(x^2+1)$は複素数$\mathbb{C}$と一致する。
 これまで複素数$\mathbb{C}$は、実数$\mathbb{R}$には存在しない元である虚数単位$i$を添加するして作る方法しか知らなった。
 しかし今、多項式から複素数を作るという新しい方法を知った。
 もっと言えば、新たな元を添加することと多項式の剰余は表裏一体の関係であるのだ。
@@ -105,6 +132,87 @@ $x^2=2$という関係\Notes{$x^2-2=0$という関係式から求めた。}を�
 \end{itemize}
 というような関係があることが分かる。
 
+$R[\alpha]$がどのような構造になるのか、ということは環論の重要な興味だが、特に体においては既約という概念によって整理される。
+
+\begin{Defi}{\IND{既約多項式}{きやくたこうしき}, irreducible polynomial}{irreducible_polynomial}
+$f(x)\in R[x]$が因数分解できない、つまり、$f(x)=g(x)k(x)$が成り立つのは、$\deg(g(x))=0$または$\deg(k(x))=0$となる場合に限るとき、$f(x)$を既約多項式と呼ぶ。
+\end{Defi}
+
+\begin{Theo}{}{}
+体$K$上の多項式環$K[x]$で、$n$次多項式$f(x)\in K[x]$とし、$\alpha$を$f(x)$の根の1つとする。
+\begin{enumerate}
+ \item $f(x)$が既約多項式であるとき、かつそのときのみ、$K[x]/(f(x))$は体である。
+ \item $f(x)$が既約多項式であるとき、かつそのときのみ、$\{a_0 + a_1\alpha + a_2\alpha^2 + \cdots + a_{n-1}\alpha^{n-1} : a_i \in K\}$は体である。
+ \item 1と2で定めた体は同型である。
+\end{enumerate}
+\end{Theo}
+
+有限体$\mathbb{F}_p$を考えよう。
+$\mathbb{F}_p$の位数は$p$で素数である。
+ここで、$k$次既約多項式$f(x)$が存在すると、$\mathbb{F}_p/(f(x))$は新たな体であり、$\mathbb{F}_{p^k}$や$q=p^k$と置いて$\mathbb{F}_q$と書く。
+
+\begin{Theo}{}{}
+素数$p$、自然数$k$、$q=p^k$とする。
+位数$q$の有限体は、同型を除いて$\mathbb{F}_q$ただ1つである。
+\end{Theo}
+
+$k$次既約多項式と言ってもいくつもあるが、驚くべきことに、どの既約多項式でも$\mathbb{F}_p/(f(x))$は同型なので、$\mathbb{F}_q$という表記の中に$f(x)$が何であるかを示さなくとも基本的に問題にならないのだ。
+もっとも、どのように表現されるかは既約多項式によって異なるので、具体的に実装しようとした場合は陽に現れる。
+あまり抽象論をしていても実感がないだろうから、例を示して$\mathbb{F}_q$を説明しよう。
+有限体$\mathbb{F}_2$において、$f(x)=x^4+x+1$は既約多項式である。
+ゆえに、有限体$\mathbb{F}_{2^4}=\{a_0 + a_1\alpha + a_2\alpha^2 + a_3\alpha^3 : a_i \in \mathbb{F}_2\}$は$\alpha^4+\alpha+1=0$という関係式を用いて、掛け算で4次以上の項が現れた場合は$\alpha^4=\alpha+1$に置き換えてやればよい。
+例えば、
+\begin{align*}
+(\alpha^3 + \alpha^2 + \alpha + 1) \times \alpha &= \alpha^4 + \alpha^3 + \alpha^2 + \alpha\\
+ &= (\alpha + 1) + \alpha^3 + \alpha^2 + \alpha\\
+ &= \alpha^3 + \alpha^2 + 1
+\end{align*}
+というふうに。
+一方、$g(x)=x^4+x^3+1$も4次の既約多項式で、$\mathbb{F}_2/(g(x))$は$\mathbb{F}_{2^4}$と同型になるが、
+\begin{align*}
+(\alpha^3 + \alpha^2 + \alpha + 1) \times \alpha &= \alpha^4 + \alpha^3 + \alpha^2 + \alpha\\
+ &= (\alpha^3 + 1) + \alpha^3 + \alpha^2 + \alpha\\
+ &= \alpha^2 + \alpha + 1
+\end{align*}
+となり、見かけ上の計算は異なる。
+
+$\mathbb{F}_q$の定数項のみを集めれば、$\mathbb{F}_p$に一致することを考えれば、$\mathbb{F}_p$は$\mathbb{F}_q$の部分体であることが分かる。
+
+\begin{Defi}{\IND{拡大体}{かくたいたい}(extension field), \IND{部分体}{ふふんたい}(subfield)}{extension field}
+2つの体$K, L$に、$K\subset L$という関係が成り立つとき、$K/L$と書く。
+そして、$L$は$K$の拡大体であると言い、$K$は$L$の部分体であると言う。
+\end{Defi}
+
+\begin{Defi}{\IND{素体}{そたい}, prime field}{prime field}
+部分体を持たない体を素体呼ぶ。
+\end{Defi}
+
+\begin{Prop}{}{prime field}
+任意の素体は、$\mathbb{Q}$または$\mathbb{F}_p$に同型である。
+\end{Prop}
+
+素体は同型を除いて、有理数体$\mathbb{Q}$か$\mathbb{F}_p$しか存在しないことが分かった。
+つまり、どんな体でも$\mathbb{Q}$か$\mathbb{F}_p$を部分として持っていることになる。
+体の世界は、案外狭いように感じられただろうか。
+標数という用語を定義すれば、素体のようすがもう少し詳しく描写できる。
+
+\begin{Defi}{\IND{標数}{ひようすう}, characteristic}{characteristic}
+体$\mathbb{F}$において、次を満たす$p$を$\mathbb{F}$の標数と呼ぶ。
+\begin{align*}
+\underbrace{1 + 1 + \cdots + 1}_{p \mbox{個}} = 0
+\end{align*}
+このような$p$がないときは$0$と定義する。
+\end{Defi}
+
+\begin{Prop}{}{prime field2}\;
+\begin{itemize}
+\item 体$\mathbb{F}$の標数が$0$のとき、$\mathbb{F}$は有理数体$\mathbb{Q}$と同型な部分体を持つ。
+\item 体$\mathbb{F}$の標数$p$が$0$でないとき、それは素数であり、$\mathbb{F}$は有限体$\mathbb{F}_p$と同型な部分体を持つ。
+\end{itemize}
+\end{Prop}
+
+つまり、標数が判明すれば素体が明らかになるわけだ。
+
 Fibonacci数列やLucas数列を計算するとき、\rAlgo{fibonacci_sequence}や\rAlgo{lucas_sequence}では定義の通り再帰的に計算していた。
 一方で、Fibonacci数列では
 \begin{align*}
@@ -118,11 +226,9 @@ V_n &= \alpha^n - \beta^n
 というような一般式も知られているので、こちらを基にアルゴリズムを記述することも可能ではないかという発想が生まれる。
 しかし、プログラミング経験のある諸兄なら、$\phi$のような無理数をそのまま扱って大丈夫かという危惧を覚えるだろう。
 そこで、この精妙な代数学の成果を利用する。
-計算すると厄介なものは、計算しない方がよい。
-Lucas数列における$\alpha$は、普通、整数にならないが、計算の過程を含めても$U_n$は、整数$i,j$を使って$i + j\alpha$と表される。
-再度の説明となるが、$\alpha$は$x^2-ax+b=0$の解の1つである。
-ここで、掛け算をしたときに、$\alpha^2$の項が生じ得るのではないか、という疑問が沸き起こる。
-$\alpha$は、$x^2-ax+b=0$の解であったことから、$\alpha^2-a\alpha+b=0$を満たす。
+整数$\mathbb{Z}$に$x^2-ax+b=0$の解の1つ$\alpha$を添加した環$\mathbb{Z}[\alpha]$を考え、この上で計算するのだ。
+$\mathbb{Z}[\alpha]$は整数$i,j$を使って$i + j\alpha$と表される元を持つ。
+掛け算するとき$\alpha$は、$x^2-ax+b=0$の解であったことから、$\alpha^2-a\alpha+b=0$を満たす。
 つまり、$\alpha^2=-b+a\alpha$と書き直せるのである。
 以上より、$i+j\alpha$の形同士の足し算とかけ算は、やはり$i+j\alpha$の形になる。
 \begin{align*}
