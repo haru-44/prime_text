@@ -26,10 +26,8 @@
   * [Pepinテスト](https://haru-44.github.io/prime_text/html/pepin_test.html)
   * [Pocklingtonテスト](https://haru-44.github.io/prime_text/html/pocklington_test.html)
 * Fibonacci数列
-  * [Fibonacci数列](https://haru-44.github.io/prime_text/html/fibonacci.html)
-  * [Lucas数列](https://haru-44.github.io/prime_text/html/lucas_sequence.html)
-  * [環](https://haru-44.github.io/prime_text/html/ring.html)
-  * [体](https://haru-44.github.io/prime_text/html/field.html)
+  * [Fibonacci数列とLucas数列](https://haru-44.github.io/prime_text/html/fibonacci.html)
+  * [環と体](https://haru-44.github.io/prime_text/html/ring.html)
   * [2次Frobeniusテスト](https://haru-44.github.io/prime_text/html/quadratic_frobenius_primality_test.html)
   * [Lucas-Lehmerテスト](https://haru-44.github.io/prime_text/html/lucas_lehmer_primality_test.html)
   * [Williamsのp+1法](https://haru-44.github.io/prime_text/html/p_plus_1.html)
