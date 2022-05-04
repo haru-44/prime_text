@@ -1,4 +1,3 @@
-
 <html lang="ja">
   <head>
     <script type="text/x-mathjax-config">
@@ -12,7 +11,8 @@
   <body>
   <strong>このページは、pdfファイル出力用に作成したtexファイルから機械的に変換されています。体裁不良がある場合は<a href="https://github.com/haru-44/prime_text/releases/latest/download/main.pdf">pdfファイル</a>をご覧ください。</strong>
   <hr/>
-<h1>riemann_miller</h1>Miller-Rabinテストでは\(a\)をランダムに選ぶと、「素数」と誤って判定してしまうのであった。
+<h1>riemann_miller</h1>
+<p>Miller-Rabinテストでは\(a\)をランダムに選ぶと、「素数」と誤って判定してしまうのであった。
 このような合成数\(n\)を\(a\)に対する<strong>強擬素数</strong>(strong pseudoprime)と呼ぶ。
 そのため、Miller-Rabinテストでは\(a\)を複数回選んで、誤る確率を極力小さくしようとした。
 しかし、\(a\)を選ぶ戦略はそれだけだろうか。
@@ -21,35 +21,35 @@
 \(a\)の選び方が、ランダムから小さいほうから順番に、と変わっただけだ。
 それだけなのだが、もし、例えば「\(n\)がどんな合成数でも、\(a<100\)でMiller-Rabinテストを実施すれば確実に合成数と判定される」となれば、これはもう確率的ではなく確定的な素数判定法だ。
 そのような可能性を考察するために、最小証拠という用語を定義しよう。
-
+</p>
 <div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>定義</strong>)
 合成数\(n\)に対する証拠は、\(a\)に対する\(n\)が強擬素数とならないような\(a\)である。
 証拠\(a\)の中で最小のものを最小証拠\(W(n)\)とする。
 </div>
 
-換言すれば、合成数が合成数ときちんと判別されるような\(a\)のことを証拠と呼ぶ。
+<p>換言すれば、合成数が合成数ときちんと判別されるような\(a\)のことを証拠と呼ぶ。
 簡単に分かることだが、\(m \mid n\)となる\(m\)は、\(n\)の証拠である。
 もし、任意の合成数\(n\)に対して\(W(n)=2\)ならば、\(a=2\)として、Miller-Rabinテストは1回の繰り返しのみで確定的に素数判定ができる。
 素数判定業界にとってはとてもありがたい話だが、それは夢物語だ。
-
+</p>
 <div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>定理</strong>)
 \(p\)を5よりも大きい素数とし、\(n=(4^p+1)/5\)とする。
 このとき、\(W(n)\neq2\)である。
 </div>
 
-更に残念なことに、\(W(n)\)は\(n\)の増加に伴って、ゆっくり増加し、上限が存在しないことが知られている。
+<p>更に残念なことに、\(W(n)\)は\(n\)の増加に伴って、ゆっくり増加し、上限が存在しないことが知られている。
 問題は、増加の「ゆっくり度」だ。
-
+</p>
 <div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>定理</strong>)
 一般Riemann予想の下で、任意の奇数の合成数\(n\)に対して、\(W(n)<2\ln^2(n)\)が成り立つ。
 </div>
 
-今、一般Riemann予想が何者なのかは置いておくが、予想が真だとすれば、Millerテストは素数判定問題に対する確定的多項式時間アルゴリズムである。
+<p>今、一般Riemann予想が何者なのかは置いておくが、予想が真だとすれば、Millerテストは素数判定問題に対する確定的多項式時間アルゴリズムである。
 というのも、\(n\)に対する最小証拠\(W(n)\)が\(2\ln^2(n)\)未満だというのだから、この範囲をしらみ潰しに調べればよいからだ。
-
-次に、一般Riemann予想について説明するが、本当に駆け足となるので、詳しく知りたい方は<strong>解析的整数論</strong>(analytic number theory)の教科書を読むこと。
+</p>
+<p>次に、一般Riemann予想について説明するが、本当に駆け足となるので、詳しく知りたい方は<strong>解析的整数論</strong>(analytic number theory)の教科書を読むこと。
 まずは、ゼータ関数をさらっと定義する。
-
+</p>
 <div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>定義</strong>)
 Riemannのゼータ関数とは、複素数\(s\)の関数\(\zeta(s)\)のことである。
 \begin{align*}
@@ -57,14 +57,14 @@ Riemannのゼータ関数とは、複素数\(s\)の関数\(\zeta(s)\)のこと�
 \end{align*}
 </div>
 
-歴史的には、変数\(s\)は、実数の場合が考察の対象であった。
+<p>歴史的には、変数\(s\)は、実数の場合が考察の対象であった。
 具体的な値として、次のようなものが計算されていた。
-<ul>
+</p><ul>
 <li> \(\zeta(1) = \frac{1}{1} + \frac{1}{2} + \frac{1}{3} + \cdots = \infty\)
 <li> \(\zeta(2) = \pi^2 / 6\)
 </ul>
 
-実数で考える限り、\(s=1\)で無限大となってしまい、\(s<1\)の領域を考えることができない。
+<p>実数で考える限り、\(s=1\)で無限大となってしまい、\(s<1\)の領域を考えることができない。
 しかし、Riemannは変数\(s\)を複素数として捉えることによって、\(s=1\)より「左側」の世界に足を踏み入れた。
 曰く、次の関係式が得られる。
 \begin{align*}
@@ -77,21 +77,21 @@ Riemannのゼータ関数とは、複素数\(s\)の関数\(\zeta(s)\)のこと�
 と定義されるが、これだけでは役割がよく分からない。
 むしろ、\(\Gamma(s+1) = s\Gamma(s)\)という性質が、階乗を複素数まで拡張したものであることを如実に表している。
 つまり、階乗\(n! = 1\cdot2\cdot3\cdot\cdots\cdot{n}\)は、\(\Gamma\)関数を使って\(\Gamma(n+1)=n!\)と表される。
-
-さて、上式から、\(s=-2,-4,-6,\ldots\)が、零点、つまり\(\zeta(s)=0\)となる点であることが分かる。
+</p>
+<p>さて、上式から、\(s=-2,-4,-6,\ldots\)が、零点、つまり\(\zeta(s)=0\)となる点であることが分かる。
 これを自明な零点と呼ぶ。
 \(0\le\Re(s)\le1\)以外の零点は、これですべてである。
 問題は、\(0\le\Re(s)\le1\)の範囲における零点(これを非自明な零点と呼ぶ)なのだが、これがかの有名なRiemann予想である。
-
+</p>
 <div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>予想</strong>)
 \(\zeta(s)\)の非自明な零点は、実部が1/2である。
 </div>
 
-Riemannのゼータ関数の零点は、素数分布に関して多くを語っている。
+<p>Riemannのゼータ関数の零点は、素数分布に関して多くを語っている。
 なぜそうなのか、というのはもっともな疑問であるが、ここでは触れない。
 一方で、一般Riemann予想(generalized Riemann hypothesis)は、剰余類中の素数分布について多くを語る。
 まず、Dirichlet指標を定義する。
-
+</p>
 <div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>定義</strong>)
 ある正整数\(D\)について、整数から複素数への関数\(\chi:\mathbb{Z}\to\mathbb{C}\)が、次を満たすとき、法\(D\)のDirichlet指標であると言う。
 <ul>
@@ -109,30 +109,30 @@ Riemannのゼータ関数の零点は、素数分布に関して多くを語っ�
 \(D\)が1より大きい奇数のとき、Jacobi記号\(\left(\frac{a}{D}\right)\)は、法\(D\)のDirichlet指標である。
 </div>
 
-このように、Dirichlet指標を定義したが、恒等関数\(\chi(n)=1\)もここに含まれる。
+<p>このように、Dirichlet指標を定義したが、恒等関数\(\chi(n)=1\)もここに含まれる。
 ちょっと特殊であるので、他のDirichlet指標と分けて考えたいときのために、主指標と呼ぶことにする。
-
+</p>
 <div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>定義</strong>)
 法\(D\)の主指標は、すべての元を1に移す、法\(D\)のDirichlet指標である。
 </div>
 
-Dirichletの\(L\)関数は、
+<p>Dirichletの\(L\)関数は、
 \begin{align*}
 L(s,\chi) = \sum_{n=1}^{\infty} \frac{\chi(n)}{n^s}
 \end{align*}
 と定義される。
 Riemannのゼータ関数では1だった分子がDirichlet指標\(\chi\)に置き換わっている。
 また、\(\chi\)を主指標とすれば、\(L(s, \chi)\)が\(\zeta(s)\)に一致することから、DirichletのL関数はRiemannのゼータ関数の一般化であることが分かる。
-
-Riemann予想と同様に、非自明な零点に関する予想がされている。
+</p>
+<p>Riemann予想と同様に、非自明な零点に関する予想がされている。
 それが一般Riemann予想である。
-
+</p>
 <div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>予想</strong>)
 \(L(s,\chi)\)の非自明な零点は、実部が1/2である。
 </div>
 
-そして、一般Riemann予想が正しいという仮定の下、次の定理がMillerテストの証明に使える。
-
+<p>そして、一般Riemann予想が正しいという仮定の下、次の定理がMillerテストの証明に使える。
+</p>
 <div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>定理</strong>)
 一般Riemann予想が正しいとする。
 このとき、任意の正の整数\(D\)と任意の主指標でない法\(D\)のDirichlet指標\(\chi\)に対して、次のような正整数\(n,m\)が存在する。
@@ -142,6 +142,8 @@ Riemann予想と同様に、非自明な零点に関する予想がされてい�
 </ul>
 </div>
 
-それでもなお、に辿り着いている気がしないのだが、Riemannのゼータ関数がとてもよく分からないことが分かったと思う。
+<p>それでもなお、に辿り着いている気がしないのだが、Riemannのゼータ関数がとてもよく分からないことが分かったと思う。
+</p>
+
 
 </body></html>

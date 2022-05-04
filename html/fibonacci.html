@@ -1,4 +1,3 @@
-
 <html lang="ja">
   <head>
     <script type="text/x-mathjax-config">
@@ -12,9 +11,10 @@
   <body>
   <strong>このページは、pdfファイル出力用に作成したtexファイルから機械的に変換されています。体裁不良がある場合は<a href="https://github.com/haru-44/prime_text/releases/latest/download/main.pdf">pdfファイル</a>をご覧ください。</strong>
   <hr/>
-<h1>fibonacci</h1>Fibonacci数列は、1202年Leonardo Fibonacciによって著わされた『算盤の書(Liber Abaci)』に記載された。
+<h1>fibonacci</h1>
+<p>Fibonacci数列は、1202年Leonardo Fibonacciによって著わされた『算盤の書(Liber Abaci)』に記載された。
 \(0,1,1,2,3,5,8,\ldots\)と続く数列{\url{https://oeis.org/A000045}}で、定義は次の通りである。
-
+</p>
 <div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>定義</strong>)
 Fibonacci数列\(\{F_n\}\)は、整数\(n\ge0\)について
 \begin{align*}
@@ -28,10 +28,10 @@ F_{n - 1} + F_{n - 2}, &\mbox{if } n \ge 2
 で定義される数列である。
 </div>
 
-Fibonacciは、ウサギの増え方に関する問題として扱った。
+<p>Fibonacciは、ウサギの増え方に関する問題として扱った。
 自然現象に数多く出現する数列として、数学を専門にしない人でも「Fibonacci数列」という名称は比較的聞いたことがあるかも知れない。
 しかし、自然界に出現することはFibonacci数列の一面でしかない。
-
+</p>
 <pre class="prettyprint">from functools import lru_cache
 
 
@@ -57,7 +57,7 @@ def fibonacci_sequence(n: int) -> int:
     return fibonacci_sequence(n - 1) + fibonacci_sequence(n - 2)
 </pre>
 
-上記のように、漸化式を地道に計算していく以外にも、一本の式でも求められる。
+<p>上記のように、漸化式を地道に計算していく以外にも、一本の式でも求められる。
 それがFibonacci数列の一般項と呼ばれるものだ。
 \begin{align*}
 F_n = \frac{\phi^n - (1 - \phi)^n}{\phi - (1 - \phi)}
@@ -71,8 +71,8 @@ F_n = \frac{\phi^n - (1 - \phi)^n}{\phi - (1 - \phi)}
 ちなみに、\(F_n\)の分母はあえて整理していない。
 驚くべきは、黄金数が整数(あるいは有理数)ではなく無理数であるということだ。
 右辺は無理数を含んでいるが、左辺は整数になるということは一見すると不可解である。
-
-実は、\(\phi\)が現れる裏には、特性方程式と呼ばれる方程式が存在する。
+</p>
+<p>実は、\(\phi\)が現れる裏には、特性方程式と呼ばれる方程式が存在する。
 導出過程には触れないが、Fibonacci数列の特性方程式は、\(x^2-x-1=0\)であり、この方程式の2つの解を\(\alpha, \beta\)と置くとFibonacci数列の一般項は
 \begin{align*}
 F_n = \frac{\alpha^n - \beta^n}{\alpha - \beta}
@@ -80,15 +80,15 @@ F_n = \frac{\alpha^n - \beta^n}{\alpha - \beta}
 とも書ける。
 実は、\(\alpha=\phi,\beta=(1-\phi)\)となるのであり、「単に\(\phi\)から\(\alpha, \beta\)に文字を書き換えただけではないか」という感覚はまったく正しくて、現段階で何ら益はない。
 後々で一般化するにあたり必要な考え方であり、とりあえずそういうものだ、と頭の片隅に置いておけばよい。
-
-Fibonacci数列の一般項は分かったが、面白みに欠ける。
+</p>
+<p>Fibonacci数列の一般項は分かったが、面白みに欠ける。
 一般項はこうです、ふーんそうなんだ、というのではやはりお仕着せ感がある。
 また、素数とも関わらないように思える。
 そういうわけだから、ちょっと手を動かしてみよう。
 何をするかというと、Fibonacci数列を素数\(p\)で割った余りを求めてみるのである。
 ちょっとやる気になった御仁はそのまま進めて、恐らく答えを知りたい大多数の人向けに、\(p=5,7,11\)での表を示しておく(表\ref{table:fibonacci_example})。
-
-\begin{table}[htb]\label{table:fibonacci_example}
+</p>
+<p>\begin{table}[htb]\label{table:fibonacci_example}
  \begin{center}
     \caption{Fibonacci数列を\(p\)で割った余り}
   \begin{tabular}{|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|}\hline
@@ -99,21 +99,21 @@ Fibonacci数列の一般項は分かったが、面白みに欠ける。
   \end{tabular}
   \end{center}
 \end{table}
-
-この観察から何が得られるか。
+</p>
+<p>この観察から何が得られるか。
 ゼロの出現する箇所を詳しく見てみると、\(F_0=0\)なので、最初は必ずゼロになる。
 その後、どのようにゼロが出現するかであるが、何かしらの法則性が隠れていそうな雰囲気を醸し出している。
-<ul>
+</p><ul>
  <li> \(p = 5\)のとき、\(F_0, F_5, F_{10}, F_{15}\) \(\Rightarrow\) 5間隔でゼロが現れる。
  <li> \(p = 7\)のとき、\(F_0, F_8, F_{16}\) \(\Rightarrow\) 8間隔でゼロが現れる。
  <li> \(p = 11\)のとき、\(F_0, F_{10}\) \(\Rightarrow\) 10間隔でゼロが現れる。
 </ul>
 
-なるほど、0が周期的に現れている。
+<p>なるほど、0が周期的に現れている。
 しかし、\(p=5\)のとき5間隔だから、\(p=7\)のときも7間隔かと思いきや、8間隔である。
 \(p+1\)間隔になることもあるのかと思ったら、\(p=11\)のときは10間隔である。
 これを明らかにするのが次の定理である。
-
+</p>
 <div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>定理</strong>)
 \(n\)が素数ならば、
 \begin{align*}
@@ -123,7 +123,7 @@ F_{n - \left(\frac{n}{5}\right)} \equiv 0 \pmod{n}
 ここで\(\left(\frac{n}{5}\right)\)はLegendre記号である。
 </div>
 
-\(\left(\frac{n}{5}\right)\)はLegendre記号だと言うのだから、次のように扱ってもよい。
+<p>\(\left(\frac{n}{5}\right)\)はLegendre記号だと言うのだから、次のように扱ってもよい。
 \begin{align*}
 \left(\frac{n}{5}\right) =
 \begin{cases}
@@ -132,18 +132,18 @@ F_{n - \left(\frac{n}{5}\right)} \equiv 0 \pmod{n}
 0, &\mbox{otherwise}
 \end{cases}
 \end{align*}
-
-例えば、\(n=5\)のとき、\(n\)は素数だから\(F_{5 - 0} = 0 \pmod{5}\)
+</p>
+<p>例えば、\(n=5\)のとき、\(n\)は素数だから\(F_{5 - 0} = 0 \pmod{5}\)
 が得られるが、これは既に計算されているように正しい。
 同様に、\(n=7\)のとき、\(n\)は素数だから
 \(F_{7 - (-1)} = F_{8} = 0 \pmod{7}\)
 も正しいし、\(n=11\)のとき、\(n\)は素数だから
 \(F_{11 - 1} = F_{10} = 0 \pmod{11}\)も正しい。
-
-「素数ならば斯くなる数式を満たす」という形の定理は、そのまま素数判定に利用できることは既に見た。
+</p>
+<p>「素数ならば斯くなる数式を満たす」という形の定理は、そのまま素数判定に利用できることは既に見た。
 Fibonacci数列もまた、(実用的かはともかく)素数判定に用いることができる。
 この素数判定も、合成数を誤って「素数」と判定することがあり得る。
-
+</p>
 <pre class="prettyprint">from fibonacci_sequence import fibonacci_sequence
 from legendre_symbol import legendre_symbol
 
@@ -169,59 +169,146 @@ def fibonacci_pseudoprime_test(n: int) -> str:
     return 'probable prime'
 </pre>
 
-<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>証明</strong>)
-Fibonacci数列の一般項は、
+<p>Fibonacci数列を使って素数判定ができた。
+Lucas数列はFibonacci数列の一般化であるが、ならば同様にLucas数列でも素数判定ができるのではないか。
+そういう思考を働かせて、Lucas数列を導入する。
+ちなみにLucas<strong>数</strong>というのもあって、混乱しやすいこと甚だしい。
+ここで使うのは、Lucas<strong>数列</strong>だからお間違いのないように。
+</p>
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>定義</strong>)
+Lucas数列\(\{U_n\},\{V_n\}\)は、次のように定義される数列である。
 \begin{align*}
-F_n = \frac{\alpha^n - \beta^n}{\sqrt{5}}
+U_n =
+\begin{cases}
+0, &\mbox{if } n = 0\\
+1, &\mbox{if } n = 1\\
+aU_{n - 1} - bU_{n - 2}, &\mbox{if } n \ge 2
+\end{cases}
 \end{align*}
-とも書ける{\(\alpha-\beta=\sqrt{5}\)に注意}。
-両辺に\(2^n\sqrt{5}\)を掛けて、\(\alpha,\beta\)を展開すると、
 \begin{align*}
-2^n\sqrt{5}F_n = (1+\sqrt{5})^n - (1-\sqrt{5})^n
+V_n =
+\begin{cases}
+2, &\mbox{if } n = 0\\
+a, &\mbox{if } n = 1\\
+aV_{n - 1} - bV_{n - 2}, &\mbox{if } n \ge 2
+\end{cases}
 \end{align*}
-となる。
-右辺の各項に二項定理を適用すると、右辺はそれぞれ
+あるいは、同値であるが、
 \begin{align*}
-{n \choose 0}\sqrt{5}^0       &+& {n \choose 1}\sqrt{5}^1       &+ \cdots +& {n \choose n-1}\sqrt{5}^{n-1}           &+& {n \choose n}\sqrt{5}^n\\
-{n \choose 0}(-1)^0\sqrt{5}^0 &+& {n \choose 1}(-1)^1\sqrt{5}^1 &+ \cdots +& {n \choose n-1}(-1)^{n-1}\sqrt{5}^{n-1} &+& {n \choose n}(-1)^n\sqrt{5}^n
+U_n &= \frac{\alpha^n - \beta^n}{\alpha - \beta}\\
+V_n &= \alpha^n - \beta^n
 \end{align*}
-となって、上から下を引くと奇数乗の項のみが残る。
-つまり、
-\begin{align}
-\label{catalan_equation_fibonacci_prime}
-2^n F_n = 2 \left[ {n \choose 1} + {n \choose 3}5 + {n \choose 5}5^2 + \cdots \right]
-\end{align}
-を得る。
-
-式(\ref{catalan_equation_fibonacci_prime})に\(n=p-1\)を代入すると、
+と定義される数列である。ここで、\(\alpha, \beta\)は、2次方程式\(x^2-ax+b=0\)の解
 \begin{align*}
-2^{p-1}F_{p-1} = 2 \left[ {p-1 \choose 1} + {p-1 \choose 3}5 + {p-1 \choose 5}5^2 + \cdots \right]
+\alpha &= \frac{a+\sqrt{\Delta}}{2}\\
+\beta &= \frac{a-\sqrt{\Delta}}{2}
 \end{align*}
-となるが、\(p\)が素数のとき、\(0 < k < p\)において
-\begin{align*}
-{p-1 \choose k} \equiv (-1)^k \pmod{p}
-\end{align*}
-であることと、等比数列の和の公式より、
-\begin{align*}
-2^{p-1}F_{p-1} &\equiv -2 (1 + 5 + \cdots + 5^{(p-3)/2}) \pmod{p}\\
-&\equiv -2 \frac{5^{(p-1)/2} - 1}{5-1}\pmod{p}
-\end{align*}
-を得る。
-\(5^{(p-1)/2}\pmod{p}\)は、\(p\equiv\pm1\pmod{5}\)のとき、1となるから、このとき\(F_{p-1}\equiv 0\pmod{p}\)を得る。
-
-同様に、式(\ref{catalan_equation_fibonacci_prime})に\(n=p+1\)を代入すると、
-\begin{align*}
-2^{p+1}F_{p+1} = 2 \left[ {p+1 \choose 1} + {p+1 \choose 3}5 + {p+1 \choose 5}5^2 + \cdots \right]
-\end{align*}
-となるが、\(p\)が素数のとき、\(1 < k < p\)において
-\begin{align*}
-{p+1 \choose k} \equiv 0 \pmod{p}
-\end{align*}
-であるから、
-\begin{align*}
-2^{p+1}F_{p+1} \equiv 2 (1 + 5^{(p-1)/2}) \pmod{p}
-\end{align*}
-を得る。
-\(5^{(p-1)/2}\pmod{p}\)は、\(p\equiv\pm2\pmod{5}\)のとき、\(-1\)となるから、このとき\(F_{p+1}\equiv 0\pmod{p}\)を得る。
+である。ただし、\(\Delta=a^2 - 4b\)は平方数でないとする。
 </div>
+
+<p>一応、後々のために\(\{V_n\}\)も一緒に述べたが、一旦\(\{U_n\}\)のみで考えることにする。
+</p>
+<pre class="prettyprint">from functools import lru_cache
+
+
+@lru_cache(maxsize=None)
+def lucas_sequence(n: int, a: int, b: int) -> int:
+    """ Lucas数列のn番目U_nを計算する。
+
+    Args:
+        n (int): n番目のLucas数列を求める
+        a, b (int): Lucas数列のパラメータ
+
+    Returns:
+        int: n番目のLucas数列の値
+
+    Examples:
+        >>> lucas_sequence(4, 3, 2)
+        15
+        >>> lucas_sequence(5, 6, 7)
+        589
+    """
+    if n <= 1:
+        return n
+    return a * lucas_sequence(n - 1, a, b) - b * lucas_sequence(n - 2, a, b)
+</pre>
+
+<p>Lucas数列はFibonacci数列の一般化であると言ったが、\(a=1, b=-1\)のとき、\(U_n\)はFibonacci数列に一致する。
+\begin{align*}
+\alpha &= \frac{1 + \sqrt{1^2 - 4 \times (-1)^2}}{2}\\
+&= \frac{1 + \sqrt{5}}{2}\\
+&= \phi
+\end{align*}
+</p>
+<p>Lucas数列にも、Fibonacci数列が持っていた素数に関する性質がある。
+ここで、\(\left(\frac{a}{p}\right)\)はLegendre記号である。
+</p>
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>定理</strong>)
+\(\Delta=a^2-4b\)は平方数でないとする。\(n\)が\(\gcd(n, 2b\Delta)=1\)を満たす素数ならば、
+\begin{align*}
+U_{n - \left(\frac{\Delta}{n}\right)} \equiv 0 \pmod{n}
+\end{align*}
+が成り立つ。
+</div>
+
+<p>Lucas数列がFibonacci数列の一般化だというのだから、定理もまた一般化されているはずである。
+Fibonacci数列の場合を考えてみる。
+\(\Delta = 1^2-4\times(-1)^2=5\)であるから、\(\left(\frac{\Delta}{n}\right)\)は、\(\left(\frac{5}{n}\right)\)となる。
+平方剰余の相互法則()より、分子と分母（分数ではないので、このような呼称は適切ではないが）が反転可能である。
+</p>
+<p>\(n\)は素数と仮定しているから、5も\(n\)も素数であるとしてよい。
+\(n=2, 5\)の場合を棚上げにして、平方剰余の相互法則を適用してみる。
+\begin{align*}
+\left(\frac{5}{n}\right) \bigg(\frac{n}{5}\bigg) &= (-1)^{\frac{5-1}{2}\cdot\frac{n-1}{2}}\\
+&= (-1)^{n-1}\\
+&= 1
+\end{align*}
+\(n-1\)は常に偶数になるから、\((-1)^{n-1}\)は常に\(1\)になる。
+よって、\(\left(\frac{5}{n}\right)\)と\(\left(\frac{n}{5}\right)\)は常に同じ値になる（Legendre記号は\(0\)を除き\(-1,1\)しかとらないことに注意）。
+\(n=2, 5\)のときも、個別に値を調べれば\(\left(\frac{2}{5}\right) = \left(\frac{5}{2}\right) = -1\)であるから一致する。
+つまり、Lucas数列での定理は、Fibonacci数列の定理の一般化である。
+</p>
+<p>Fibonacci数列のときと同じように、定理から素数判定アルゴリズムを作ることができる。
+</p>
+<pre class="prettyprint">import math
+
+from legendre_symbol import legendre_symbol
+from lucas_sequence import lucas_sequence
+
+
+def lucas_sequence_test(n: int, a: int, b: int) -> int:
+    """ Lucas数列の性質を用いて、素数判定を行う。
+
+    Args:
+        n    (int): 素数判定を行う対象の整数
+        a, b (int): Lucas数列のパラメータ
+
+    Returns:
+        string: 'composite number' = nは合成数
+                'probable prime'   = nはおそらく素数
+
+    Examples:
+        >>> lucas_sequence_test(101, 2, -3) # 101は素数
+        'probable prime'
+        >>> lucas_sequence_test(323, 2, -3) # 323 = 17 * 19
+        'composite number'
+        >>> # パラメータによっては、合成数でも'probable prime'と出力する
+        >>> lucas_sequence_test(323, -10, -5)
+        'probable prime'
+    """
+    delta = a**2 - 4 * b
+    condition = math.gcd(n, 2 * b * delta)
+    assert condition != n
+    if condition != 1:
+        return 'composite number'
+    if lucas_sequence(n - legendre_symbol(delta, n), a, b) % n != 0:
+        return 'composite number'
+    return 'probable prime'
+</pre>
+
+<p>やはりこの素数判定法も、合成数を誤って「素数」と判定してしまうことがある。
+例えば、\(323=17\times19\)は、合成数であるが、\(a=-10,b=-5\)のとき``probable prime"を返す。
+</p>
+
+
 </body></html>

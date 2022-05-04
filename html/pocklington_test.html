@@ -1,4 +1,3 @@
-
 <html lang="ja">
   <head>
     <script type="text/x-mathjax-config">
@@ -12,10 +11,11 @@
   <body>
   <strong>このページは、pdfファイル出力用に作成したtexファイルから機械的に変換されています。体裁不良がある場合は<a href="https://github.com/haru-44/prime_text/releases/latest/download/main.pdf">pdfファイル</a>をご覧ください。</strong>
   <hr/>
-<h1>pocklington_test</h1>Lucasテストでは、\(n-1\)の素因数が<strong>完全に</strong>分かっている必要があった。
+<h1>pocklington_test</h1>
+<p>Lucasテストでは、\(n-1\)の素因数が<strong>完全に</strong>分かっている必要があった。
 では、一部のみが判明している場合はどうなのだろうか。
 まずは簡単な形を見てみる。
-
+</p>
 <div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>定理</strong>)
 \(n-1=q^mR\)とする。
 ただし、\(q\)は素数とし、\(m\ge1\)かつ\(q\)は\(R\)を割り切らないとする。
@@ -28,8 +28,8 @@ a^{n-1} \equiv 1 \pmod{n}\\
 \end{align*}
 </div>
 
-つまり、\(n-1\)を1種類の素数\(q\)で割れるだけ割った場合を考えている。
-
+<p>つまり、\(n-1\)を1種類の素数\(q\)で割れるだけ割った場合を考えている。
+</p>
 <div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>例</strong>)
 \(n = 1991\)は、\(n-1=5\times398\)である。
 \(a=42\)とすると、
@@ -65,11 +65,11 @@ a^{n-1} \equiv 1 \pmod{n}\\
 であり、が言う通りである。
 </div>
 
-このように、\(n-1\)の素因数分解の一部でも分かると、\(n\)の素因数の形を限定できる可能性がある。
+<p>このように、\(n-1\)の素因数分解の一部でも分かると、\(n\)の素因数の形を限定できる可能性がある。
 素数1種類の場合を考えたが、一般化を試みよう。
 以降、\(n-1=FR\)で、\(F\)の素因数は完全に分かっているとする。
 \(q^m\)が\(F\)に変わってもほぼ同じことが言える。
-
+</p>
 <div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>定理</strong>)
 \(n-1=FR\)とする。
 次を満たすような\(a>1\)が存在すれば、\(n\)の各素因数は\(lF+1\)(ただし、\(l\ge1\))の形をしている。
@@ -82,18 +82,18 @@ a^{n-1} \equiv 1 \pmod{n}\\
 \end{align*}
 </div>
 
-この定理は、素数という用語が出てこないし、素数判定には利用できないように思える。
+<p>この定理は、素数という用語が出てこないし、素数判定には利用できないように思える。
 しかし、\(F\)に制約を加えることによって、用に立つ。
-
+</p>
 <div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>系</strong>)
 の条件を満たす\(a\)が存在し\(F\ge\sqrt{n}\)ならば、\(n\)は素数である。
 </div>
 
-ちょっと考えれば当たり前の事なのだが、の条件を満たしたということは、すべての素因数が\(lF+1\)の形なのである。
+<p>ちょっと考えれば当たり前の事なのだが、の条件を満たしたということは、すべての素因数が\(lF+1\)の形なのである。
 更に\(F\ge\sqrt{n}\)なのだから、すべての素因数は\(\sqrt{n}\)より大きい。
 こんなことは合成数ではあり得ない。
 これが、<strong>Pocklingtonテスト</strong>(Pocklington test)と呼ばれる素数判定法である。
-
+</p>
 <pre class="prettyprint">import math
 import random
 
@@ -142,14 +142,14 @@ def pocklington_test(n: int, k: int = 10) -> str:
     return 'possibly composite'
 </pre>
 
-Pocklingtonテストを利用して、特殊な形の数についての素数判定を行ってみよう。
+<p>Pocklingtonテストを利用して、特殊な形の数についての素数判定を行ってみよう。
 例えば、次のような場合を考えてみる。
 Fermat数\(F_{11}\)の因数として、\(119\times2^{13}+1=974849\)が知られているが、974849が素数であることは、一目で分からない。
 もちろん、この程度の桁数ならば造作もなく他の素数判定法により確認できる。
 しかし、もっと良い方法として<strong>Prothテスト</strong>(Proth test)が知られている。
 Prothテストは、\(n = m2^s+1\)の形の数についての素数判定法である。
 また、このような形の数を<strong>Proth数</strong>(Proth number)と呼び、素数であるProth数を<strong>Proth素数</strong>(Proth prime)と呼ぶ。
-
+</p>
 <div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>定理</strong>)
 \(n=m2^s+1\)とし(\(m\)は奇数で、\(m<2^s\))、\(a\)は\(\left(\frac{a}{n}\right)=-1\)を満たすとする。
 \(n\)が素数であるとき、かつそのときに限り、
@@ -160,8 +160,8 @@ a^{(n-1)/2} \equiv -1 \pmod{n}
 ただし、\(\left(\frac{a}{n}\right)\)はJacobi記号である。
 </div>
 
-必要十分条件であるから、\(a\)さえ見つかれば確実に素数だと言える。
-
+<p>必要十分条件であるから、\(a\)さえ見つかれば確実に素数だと言える。
+</p>
 <pre class="prettyprint">import random
 
 from jacobi_symbol import jacobi_symbol
@@ -199,10 +199,12 @@ def proth_test(m: int, s: int, k: int = 10) -> str:
     return 'possibly composite'
 </pre>
 
-Prothテストは、Pepinテストの拡張と考えることもできる。
+<p>Prothテストは、Pepinテストの拡張と考えることもできる。
 Prothテストにおいて\(k=1,a=3\)とすれば、Pepinテストになるからである。
-
-\(\left(\frac{a}{n}\right)=-1\)となる\(a\)は、全体の半分ほど存在しているため、実用的にはそれほど試行せずに見つけられる。
+</p>
+<p>\(\left(\frac{a}{n}\right)=-1\)となる\(a\)は、全体の半分ほど存在しているため、実用的にはそれほど試行せずに見つけられる。
 このように、運が悪いといつまでも終了しないが、平均的には時間がかからずに終了し、出力される答えは常に正しい乱択アルゴリズムは<strong>ラスベガス法</strong>(Las Vegas algorithm)と総称される。
 最大の素数を発見する競争では、Mersenne数がトップをひた走るが、Mersenne数でない数の中ではProth素数が最大である{2022年現在、\(10223\times2^{31172165}+1\)が、Mersenne数でない数の中で最大の素数(2016年発見)。\url{https://primes.utm.edu/primes/page.php?id=122473}}。
+</p>
+
 </body></html>

@@ -10,8 +10,7 @@ for g in glob.glob('../src/*.py'):
         src_dic[name] = r
 
 
-pre_text = """
-<html lang="ja">
+pre_text = """<html lang="ja">
   <head>
     <script type="text/x-mathjax-config">
        MathJax.Hub.Config({TeX:{equationNumbers:{autoNumber:"AMS"}}});
@@ -95,7 +94,30 @@ for file in glob.glob('../tex/*.tex'):
         text = pattern.sub(lambda m: '<pre class="prettyprint">' +
                            src_dic[m.groups(0)[0]] + '</pre>', text)
 
-        text = f'<h1>{name}</h1>' + text
+        lines = text.split('\n')
+        text = '<p>'
+        tags = -1
+        for line in lines:
+            if tags == -1:
+                for idx, t in enumerate(['<ul>', '<ol>', '<div ', '<pre ']):
+                    if t in line:
+                        tags = idx
+                        text += '</p>'
+                        break
+            if tags == -1 and line == '':
+                text += '</p>\n<p>'
+            else:
+                text += line + '\n'
+            if tags != -1:
+                for idx, t in enumerate(['</ul>', '</ol>', '</div>', '</pre>']):
+                    if t in line and idx == tags:
+                        tags = -1
+                        text += '<p>'
+                        break
+        text += '</p>\n'
+        text = text.replace('<p></p>', '')
+
+        text = f'<h1>{name}</h1>\n' + text
         text = pre_text + text + post_text
 
     with open(f'../html/{name}.html', mode='w', encoding='utf-8') as f:
