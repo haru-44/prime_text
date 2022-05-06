@@ -47,6 +47,7 @@ for file in glob.glob('../tex/*.tex'):
         text = re.sub('\\\\rExam{.+?}', '', text)
         text = re.sub('\\\\rAlgo{.+?}', '', text)
         text = re.sub('\\\\cite{.+?}', '', text)
+        text = re.sub('\\\\url{(.+?)}', '<a href="\\1">\\1</a>', text)
         text = re.sub('\\\\Notes', '', text)
 
         text = re.sub('\\\\begin{itemize}', '<ul>', text)
