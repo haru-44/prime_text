@@ -1,5 +1,6 @@
 import math
 
+
 def quadratic_form_reduction(a, b, c):
     """ 2次形式(a,b,c)の簡約形式を返す。
 
