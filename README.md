@@ -34,6 +34,7 @@
 * 篩
   * [Eratosthenesの篩](https://haru-44.github.io/prime_text/html/sieve.html)
   * [2次篩法](https://haru-44.github.io/prime_text/html/quadratic_sieve_algorithm.html)
+  * [数体篩法](https://haru-44.github.io/prime_text/html/number_field_sieve.html)
 * その他の方法
   * [Pollardのρ法](https://haru-44.github.io/prime_text/html/rho_method.html)
   * [2次形式](https://haru-44.github.io/prime_text/html/quadratic_form.html)
@@ -86,6 +87,8 @@
   * 楕円曲線法
     * [elliptic_curve_method.py](https://github.com/haru-44/prime_text/blob/main/src/elliptic_curve_method.py)
     * [elliptic_curve_method_fast.py](https://github.com/haru-44/prime_text/blob/main/src/elliptic_curve_method_fast.py)
+  * 2次篩法
+  * 数体篩法
 * その他補助関数
   * 約数, 倍数
     * [gcd.py](https://github.com/haru-44/prime_text/blob/main/src/gcd.py)
