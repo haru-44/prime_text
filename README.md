@@ -68,8 +68,6 @@
     * [lucas_lehmer_primality_test.py](https://github.com/haru-44/prime_text/blob/main/src/lucas_lehmer_primality_test.py)
   * AKSテスト
     * [aks_test.py](https://github.com/haru-44/prime_text/blob/main/src/aks_test.py)
-    * [PolynomialCyclotomic.py](https://github.com/haru-44/prime_text/blob/main/src/PolynomialCyclotomic.py)
-    * [get_r_for_aks.py](https://github.com/haru-44/prime_text/blob/main/src/get_r_for_aks.py)
 * 素因数分解アルゴリズム
   * 試し割
     * [trial_division.py](https://github.com/haru-44/prime_text/blob/main/src/trial_division.py)
