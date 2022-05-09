@@ -1,0 +1,147 @@
+<html lang="ja">
+  <head>
+    <script type="text/x-mathjax-config">
+       MathJax.Hub.Config({TeX:{equationNumbers:{autoNumber:"AMS"}}});
+    </script>
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML,/www_func/MathJax/MyConfig.js">
+    </script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+  </head>
+  <body>
+  <strong>このページは、pdfファイル出力用に作成したtexファイルから機械的に変換されています。体裁不良がある場合は<a href="https://github.com/haru-44/prime_text/releases/latest/download/main.pdf">pdfファイル</a>をご覧ください。</strong>
+  <hr/>
+<h1>ring_of_integer</h1>
+<p>2次篩法では、\(x^2\equiv y^2 \pmod{n}\)という関係を見つけるために、\(x^2\bmod{n}\)が\(B\)-smoothな数を探したのであった。
+このとき、右辺のみを素因数分解したが、両辺とも素因数分解をするというのが数体篩法の基本的なアイディアである。
+しかし、2次篩法で見たような式の作り方では、左辺を素因数分解するなど意味のない行為に見える。
+</p>
+<p>例えば、\(16 + 6\sqrt{-10}\)は、\((-2+2\sqrt{-10})(2-1\sqrt{-10})\)という分解を持つ。
+素因数分解をする数を\(n=299\)としたとき、\(\phi\)を「\(\alpha=\sqrt{-10}\)を\(m=17\)で置き換えて\(n=299\)で剰余算する」という変換とする。
+\begin{align*}
+16 + 6\sqrt{-10} &= (-2+2\sqrt{-10})(2-1\sqrt{-10})\\
+&\downarrow \phi \\
+118 &\equiv 32 \times 284\pmod{299}\\
+2 \times 59 &\equiv 2^7 \times 71 \pmod{299}
+\end{align*}
+何が何だか分からないが、なぜか両辺で異なる素因数分解が出来てしまった。
+このような式を集めれば、2次篩法のときのように、\(x^2\equiv y^2 \pmod{n}\)を求められる。
+</p>
+<p>例だけ見ても、釈然としないだろう。
+この裏にある、数々の数学的な理屈を説明していこうと思う。
+</p>
+<p>例えば\(\sqrt{2}\)は、整数\(\mathbb{Z}\)に属さない。
+では、\(\mathbb{Z}\)に\(\sqrt{2}\)を「添加」するとどうなるか。
+つまり、整数と\(\sqrt{2}\)との加減乗が成す環を考える。
+これを\(\mathbb{Z}[\sqrt{2}]\)と書くことにするが、これには\(\ldots,-2,-1,0,1,2,\ldots\)はもちろん、\((3-\sqrt{2})(4+3\sqrt{2})\)等も属する。
+自明なことではないが、\(\mathbb{Z}[\sqrt{2}]\)の元はすべて
+\begin{align*}
+\{ a + b\sqrt{2} : a, b \in \mathbb{Z}\}
+\end{align*}
+と書ける。
+同じように、\(\mathbb{Q}\)に\(\sqrt{2}\)を添加したものが\(\mathbb{Q}(\sqrt{2})\)である。
+もちろん元はすべて\(\{ a + b\sqrt{2} : a, b \in \mathbb{Q}\}\)で表される。
+なぜ括弧の種類が違うのか疑問に思うかも知れないが、環と体で区別するのが慣例なのだ。
+\(\mathbb{Z}[\sqrt{2}]\)は環で、\(\mathbb{Q}(\sqrt{2})\)は体である。
+</p>
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>定義</strong>)
+\(m\)を平方因子を含まない、0,1以外の整数とする。
+\begin{align*}
+\mathbb{Q}(\sqrt{m}) = \{a + b\sqrt{m} : a,b \in\mathbb{Q}\}
+\end{align*}
+は体を成し、これを2次体と呼ぶ。
+特に、\(m\)が正のとき<strong>実2次体</strong>(real quadratic field)、負のとき<strong>虚2次体</strong>(imaginary quadratic field)と呼ぶ。
+</div>
+
+<p>普通、整数\(\mathbb{Z}\)を拡張したものとして有理数\(\mathbb{Q}\)が紹介される。
+ここでは逆に、\(\mathbb{Q}\)から\(\mathbb{Z}\)を構成する方法を2次体で真似てみる。
+有理数\(r=b/a\)が整数であるとは、\(r\)は方程式\(ax-b=0\)の根であって、\(a=1\)のとき、かつそのときに限る。
+同様に、2次体\(K\)の元\(\alpha\)が整数であるとは、\(\alpha\)は方程式\(ax^2+bx+c=0\)の根であって、\(a=1\)のとき、かつそのときに限る、と定義することが自然である。
+すると、\(\mathbb{Q}(\sqrt{2})\)の「整数」は\(\mathbb{Z}[\sqrt{2}]\)であるといった関係が見えてくるのである。
+</p>
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>定義</strong>)
+体\(K\)は、
+\begin{align*}
+K = \{a_0 + a_1\alpha + a_2\alpha^2 + \cdots + a_{n-1}\alpha^{n-1} + a_n\alpha^n : a_0,\ldots,a_{n-1},a_n \in \mathbb{Q}\}
+\end{align*}
+と書けるとする。
+このとき、\(K\)の整数環\(\mathcal{O}_K\)を次のように定義する。
+\begin{align*}
+\mathcal{O}_K = \{\alpha : a_0 + a_1\alpha + a_2\alpha^2 + \cdots + a_{n-1}\alpha^{n-1} + \alpha^n = 0, a_0,\ldots,a_{n-1} \in \mathbb{Q}\}
+\end{align*}
+</div>
+
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>例</strong>)\;
+<ul>
+ <li> 有理数体\(\mathbb{Q}\)の整数環\(\mathcal{O}_{\mathcal{Q}}\)は整数環\(\mathbb{Z}\)に等しい。
+ <li> 2次体\(K=\mathbb{Q}(\sqrt{2})\)のとき、整数環\(\mathcal{O}_K\)は\(\mathbb{Z}[\sqrt{2}]\)に等しい。
+ <li> 2次体\(K=\mathbb{Q}(\sqrt{-1})\)のとき、整数環\(\mathcal{O}_K\)は\(\mathbb{Z}[\sqrt{-1}]\)に等しい。
+</ul>
+</div>
+
+<p>なお、代数的整数論の文脈では、整数環の元を「整数」と呼ぶ都合上、本来的な術語である整数は有理整数と呼ぶ。
+</p>
+<p>こうした例を見ると、すべての\(K=\mathbb{Q}(\sqrt{m})\)で、\(\mathcal{O}_K=\mathbb{Z}[\sqrt{m}]\)となるように予測してしまうが、そうではない。
+</p>
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>命題</strong>)
+\(K=\mathbb{Q}(\sqrt{m})\)は、\(m\equiv2,3\pmod{4}\)のとき、\(\mathcal{O}_K=\mathbb{Z}[\sqrt{m}]\)となり、\(m\equiv1\pmod{4}\)のとき、\(\mathcal{O}_K=\mathbb{Z}[\frac{1+\sqrt{m}}{2}]\)となる。
+</div>
+
+<p>以上の通り、2次体から整数が定義できた。
+ということは、素数も定義できるのではないかと思い当たるのである。
+しかし、有理整数における素数の概念が、整数環にもそのまま通用するとは限らない。
+例えば、有理整数において\(7\)は素数だが、\(\mathbb{Z}[\sqrt{2}]\)においては
+\begin{align*}
+7 = (3 + \sqrt{2})(3 - \sqrt{2})
+\end{align*}
+と分解できるため、素数ではない。
+整数環における素数に相当するものとして<strong>素元</strong>(prime element)が存在し、\(\mathbb{Z}[\sqrt{2}]\)では
+\begin{align*}
+7 = (3 - \sqrt{2})(3 + 2\sqrt{2})(3 + \sqrt{2})(3 - 2\sqrt{2})
+\end{align*}
+という一意分解性を具備する。
+このように\(\mathbb{Z}[\sqrt{2}]\)では、有理整数の素数が必ずしも素元とはならないものの、素元による分解は一意的という有理整数に似た性質を持っている。
+しかし、一般の整数環においては、必ずしも一意分解であるとは限らない。
+</p>
+<p>それは面白くもない、と匙を投げてはいけない。
+一意分解性はないが、実は整数環においては、素イデアル分解の一意性が成り立つ。
+素数は元であったのに対して、イデアルは集合である点に注意が必要だ。
+有理整数の場合は、「\(3\)の倍数の集合」や「\(5\)の倍数の集合」がイデアルの例である。
+</p>
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>定義</strong>)
+2次体\(\mathbb{Q}(\sqrt{m})\)の元\(\alpha=a+b\sqrt{m}\)に対して、共役\(\alpha'\)を次のように定義する。
+\begin{align*}
+\alpha' = a - b\sqrt{m}
+\end{align*}
+</div>
+
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>定義</strong>)
+2次体\(\mathbb{Q}(\sqrt{m})\)の元\(\alpha=a+b\sqrt{m}\)に対して、ノルム\(N(\alpha)\)とトレース\(T(\alpha)\)を次のように定義する。
+\begin{align*}
+N(\alpha) &= \alpha\alpha' = a^2 - mb^2\\
+T(\alpha) &= \alpha + \alpha' = 2a
+\end{align*}
+</div>
+
+<p>高校数学のテクニックとしてよく知られているように、複素数は2行2列の行列で表される。
+つまり、\(x+iy\)という元は
+\begin{align*}
+\begin{pmatrix}
+x & -y \\
+y & x
+\end{pmatrix}
+\end{align*}
+に対応する。
+一般に、2次体\(\mathbb{Q}(\sqrt{m})\)の元\(\alpha=a+b\sqrt{m}\)に対して、
+\begin{align*}
+\begin{pmatrix}
+x & my \\
+y & x
+\end{pmatrix}
+\end{align*}
+が対応する。
+</p>
+<p>そうしたときに、2次体のノルムは行列式に、トレースは行列のトレースに対応することが分かる。
+</p>
+
+</body></html>
