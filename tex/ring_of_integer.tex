@@ -14,7 +14,7 @@
 このような式を集めれば、2次篩法のときのように、$x^2\equiv y^2 \pmod{n}$を求められる。
 
 例だけ見ても、釈然としないだろう。
-この裏にある、数々の数学的な理屈を説明していこうと思う。
+この裏にある、数々の数学的な理屈を説明していきたい。
 
 例えば$\sqrt{2}$は、整数$\mathbb{Z}$に属さない。
 では、$\mathbb{Z}$に$\sqrt{2}$を「添加」するとどうなるか。
@@ -25,7 +25,7 @@
 \{ a + b\sqrt{2} : a, b \in \mathbb{Z}\}
 \end{align*}
 と書ける。
-同じように、$\mathbb{Q}$に$\sqrt{2}$を添加したものが$\mathbb{Q}(\sqrt{2})$である。
+同じように、有理数$\mathbb{Q}$に$\sqrt{2}$を添加したものが$\mathbb{Q}(\sqrt{2})$である。
 もちろん元はすべて$\{ a + b\sqrt{2} : a, b \in \mathbb{Q}\}$で表される。
 なぜ括弧の種類が違うのか疑問に思うかも知れないが、環と体で区別するのが慣例なのだ。
 $\mathbb{Z}[\sqrt{2}]$は環で、$\mathbb{Q}(\sqrt{2})$は体である。
@@ -46,26 +46,27 @@ $m$を平方因子を含まない、0,1以外の整数とする。
 すると、$\mathbb{Q}(\sqrt{2})$の「整数」は$\mathbb{Z}[\sqrt{2}]$であるといった関係が見えてくるのである。
 
 \begin{Defi}{\IND{整数環}{せいすうかん}, ring of integers}{ring_of_integers}
-体$K$は、
+2次体$K=\mathbb{Q}(m)$に対して、
 \begin{align*}
-K = \{a_0 + a_1\alpha + a_2\alpha^2 + \cdots + a_{n-1}\alpha^{n-1} + a_n\alpha^n : a_0,\ldots,a_{n-1},a_n \in \mathbb{Q}\}
+\mathcal{O}_K = \{\alpha \in K : a_0 + a_1\alpha + \alpha^2 = 0, a_0,a_1 \in \mathbb{Q}\}
 \end{align*}
-と書けるとする。
-このとき、$K$の整数環$\mathcal{O}_K$を次のように定義する。
+あるいは同じことだが、\rDefi{norm_trace}を使って、
 \begin{align*}
-\mathcal{O}_K = \{\alpha : a_0 + a_1\alpha + a_2\alpha^2 + \cdots + a_{n-1}\alpha^{n-1} + \alpha^n = 0, a_0,\ldots,a_{n-1} \in \mathbb{Q}\}
+\mathcal{O}_K = \{\alpha \in K : T(\alpha) \in \mathbb{Z} \mbox{ かつ } N(\alpha) \in \mathbb{Z}\}
 \end{align*}
+と定義される$\mathcal{O}_K$を$K$の整数環と呼び、$\mathcal{O}_K$の元を整数と呼ぶ。
 \end{Defi}
+
+代数的整数論の文脈では、整数環の元を「整数」と呼ぶ都合上、本来的な術語である整数は有理整数と呼ぶ。
+本節でもこれに倣うため注意すること。
 
 \begin{Exam}{}{ring_of_integers}\;
 \begin{itemize}
  \item 有理数体$\mathbb{Q}$の整数環$\mathcal{O}_{\mathcal{Q}}$は整数環$\mathbb{Z}$に等しい。
- \item 2次体$K=\mathbb{Q}(\sqrt{2})$のとき、整数環$\mathcal{O}_K$は$\mathbb{Z}[\sqrt{2}]$に等しい。
- \item 2次体$K=\mathbb{Q}(\sqrt{-1})$のとき、整数環$\mathcal{O}_K$は$\mathbb{Z}[\sqrt{-1}]$に等しい。
+ \item 2次体$K=\mathbb{Q}(\sqrt{2})$の整数環$\mathcal{O}_K$は、$\mathbb{Z}[\sqrt{2}]$に等しい。
+ \item 2次体$K=\mathbb{Q}(\sqrt{-1})$の整数環$\mathcal{O}_K$は、$\mathbb{Z}[\sqrt{-1}]$に等しい。
 \end{itemize}
 \end{Exam}
-
-なお、代数的整数論の文脈では、整数環の元を「整数」と呼ぶ都合上、本来的な術語である整数は有理整数と呼ぶ。
 
 こうした例を見ると、すべての$K=\mathbb{Q}(\sqrt{m})$で、$\mathcal{O}_K=\mathbb{Z}[\sqrt{m}]$となるように予測してしまうが、そうではない。
 
@@ -74,25 +75,9 @@ $K=\mathbb{Q}(\sqrt{m})$は、$m\equiv2,3\pmod{4}$のとき、$\mathcal{O}_K=\ma
 \end{Prop}
 
 以上の通り、2次体から整数が定義できた。
-ということは、素数も定義できるのではないかと思い当たるのである。
-しかし、有理整数における素数の概念が、整数環にもそのまま通用するとは限らない。
-例えば、有理整数において$7$は素数だが、$\mathbb{Z}[\sqrt{2}]$においては
-\begin{align*}
-7 = (3 + \sqrt{2})(3 - \sqrt{2})
-\end{align*}
-と分解できるため、素数ではない。
-整数環における素数に相当するものとして\IND{素元}{そけん}(prime element)が存在し、$\mathbb{Z}[\sqrt{2}]$では
-\begin{align*}
-7 = (3 - \sqrt{2})(3 + 2\sqrt{2})(3 + \sqrt{2})(3 - 2\sqrt{2})
-\end{align*}
-という一意分解性を具備する。
-このように$\mathbb{Z}[\sqrt{2}]$では、有理整数の素数が必ずしも素元とはならないものの、素元による分解は一意的という有理整数に似た性質を持っている。
-しかし、一般の整数環においては、必ずしも一意分解であるとは限らない。
-
-それは面白くもない、と匙を投げてはいけない。
-一意分解性はないが、実は整数環においては、素イデアル分解の一意性が成り立つ。
-素数は元であったのに対して、イデアルは集合である点に注意が必要だ。
-有理整数の場合は、「$3$の倍数の集合」や「$5$の倍数の集合」がイデアルの例である。
+ならば、一般的な整数(ここでは有理整数と呼ぶのであった)と同様に、約数や合同という概念が定義できるのではないかと期待できる。
+ここからは、ひたすらに有理整数で行った概念を整数に当てはめる作業が始まる。
+退屈だと思う人もいるかもしれないが、有理整数と異なる点も多々あるので、気を引き締めてかからないと混乱する。
 
 \begin{Defi}{\IND{共役}{きようやく}(conjugate)}{conjugate}
 2次体$\mathbb{Q}(\sqrt{m})$の元$\alpha=a+b\sqrt{m}$に対して、共役$\alpha'$を次のように定義する。
@@ -109,6 +94,7 @@ T(\alpha) &= \alpha + \alpha' = 2a
 \end{align*}
 \end{Defi}
 
+共役、ノルム、トレースは整数環の定義にも表れる基本的な概念である。
 高校数学のテクニックとしてよく知られているように、複素数は2行2列の行列で表される。
 つまり、$x+iy$という元は
 \begin{align*}
@@ -126,5 +112,70 @@ y & x
 \end{pmatrix}
 \end{align*}
 が対応する。
-
 そうしたときに、2次体のノルムは行列式に、トレースは行列のトレースに対応することが分かる。
+
+これを踏まえたうえで、ようやく約数と倍数を定義しよう。
+
+\begin{Defi}{\IND{約数}{やくすう}(divisor), \IND{倍数}{はいすう}(multiple)}{ring_divisor_multiple}
+整数$\alpha,\beta\in\mathcal{O}_K$に対して、$\alpha=\beta\gamma$なる整数$\gamma\in\mathcal{O}_K$が存在するとき、$\beta$は$\alpha$を割り切ると言い、$\beta \mid \alpha$と書き、$\beta$を$\alpha$の約数、$\alpha$を$\beta$の倍数と呼ぶ。
+逆に、このような$\gamma$が存在しないとき、$\beta \nmid \alpha$と書く。
+\end{Defi}
+
+\begin{Exam}{}{ring_divisor_multiple}
+$\mathbb{Z}[\sqrt{3}]$において、
+\begin{itemize}
+ \item $1+3\sqrt{3} \mid 11+7\sqrt{3}$
+ \begin{itemize}
+  \item $(1+3\sqrt{3})(2+\sqrt{3})=11+7\sqrt{3}$を満たす。
+ \end{itemize}
+ \item $1-2\sqrt{3} \nmid 2-3\sqrt{3}$
+ \begin{itemize}
+  \item $\beta=1-2\sqrt{3}, \alpha=2-3\sqrt{3}$と置く。もし、$\alpha=\beta\gamma$を満たす$\gamma$が存在するなら$N(\alpha)=N(\beta\gamma)=N(\beta)N(\gamma)$を満たす。$N(\beta)=13, N(\alpha)=31$より、$N(\gamma)=31/13$でなければならないが、そのような$\gamma$は$\mathbb{Z}[\sqrt{3}]$に存在しない。
+ \end{itemize}
+\end{itemize}
+\end{Exam}
+
+例からも分かる通り、約数かどうかを判定するために、ノルムは有用なツールである。
+
+\begin{Prop}{}{}
+整数$\alpha,\beta\in\mathcal{O}_K$において、$\beta \mid \alpha$ならば$N(\beta) \mid N(\alpha)$である。
+\end{Prop}
+
+一般に逆は成り立たない。
+例えば、$N(8+12\sqrt{17}) \mid N(37-19\sqrt{17})$だが、$8+12\sqrt{17} \nmid 37-19\sqrt{17}$である。
+$N(\beta) \mid N(\alpha)$から、$N(\alpha/\beta)\in\mathbb{Z}$が言えても、$T(\alpha/\beta)$が有理整数になることは言えないのである。
+
+約数と倍数は、有理整数と考え方に違いはない。
+そのまま公約数、最大公約数を定義できると思ったなら甘い。
+まずは単数を定義する。
+
+\begin{Defi}{\IND{単数}{たんすう}, unit}{ring_unit}
+$\varepsilon\in\mathcal{O}_K$が、次の同値な定義を満たすとき、$\varepsilon$を単数と呼ぶ。
+\begin{itemize}
+ \item $\varepsilon$は1の約数
+ \item $1/\varepsilon \in\mathcal{O}_K$
+ \item $N(\varepsilon) = \pm1$
+\end{itemize}
+\end{Defi}
+
+単数は有理整数で言う所の$\pm1$に相当する概念である。
+実際、単数はすべての整数の約数である。
+
+\begin{Defi}{\IND{同伴}{とうはん}, associate}{ring_associate}
+$\alpha,\beta\in\mathcal{O}_K$に対して、$\alpha=\varepsilon\beta$となる単数$\varepsilon$が存在するとき、$\alpha,\beta$は同伴であると言う。
+同じことだが、$\alpha \mid \beta$かつ$\beta \mid \alpha$を満たすことが、$\alpha,\beta$が同伴であることの必要十分条件である。
+\end{Defi}
+
+有理整数では、$\alpha \mid \beta$かつ$\beta \mid \alpha$なら$\alpha=\beta$であったが、整数においては同伴であるだけで、必ずしも$\alpha=\beta$を導けるわけではない。
+
+\begin{Defi}{\IND{自明な約数}{しめいなやくすう}, trivial divisors}{ring_trivial_divisors}
+$\alpha\in\mathcal{O}_K$に対して、
+\begin{itemize}
+ \item $\mathcal{O}_K$の単数
+ \item $\alpha$と同伴な整数
+\end{itemize}
+は常に$\alpha$の約数であり、これらを$\alpha$の自明な約数と呼ぶ。
+\end{Defi}
+
+有理整数において、$n$の自明な約数は$1,n$(厳密には$-1,-n$もある)だけであったが、整数環においては有理整数の常識では考えられないような\kenten{自明な}約数がごく普通に登場する。
+
