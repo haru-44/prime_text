@@ -24,7 +24,7 @@
 そういう割り切りがあった。
 一方で、AKSテストは実用に耐えられないほど遅い。
 しかし、理論研究においては重要な成果である。
-計算複雑性の分野において、素数判定問題はそれまで\(\mathbf{NP}\cap\mathbf{co-NP}\)というクラスに属することが知られていた。
+計算複雑性の分野において、素数判定問題はそれまで\(\mathbf{NP}\cap\mathbf{coNP}\)というクラスに属することが知られていた。
 AKSテストは、素数判定問題が\(\mathbf{P}\)に属することを示すものであり、AKSテストを発表した論文のタイトルも``PRIMES is in P"であった。
 \(\mathbf{P}\)や\(\mathbf{NP}\)が何なのか、ということはここでは触れない。
 </p>
@@ -59,6 +59,8 @@ f(x)^3 &= x^6 + 0 \cdot x^4 + 0\cdot x^2 + 2\\
 f(x^3) &= x^6 + 2
 \end{align*}
 なので、めでたく一致する。
+\(n=3\)で計算したが、これがもっと大きな数であれば\(f(x)^n\)や\(f(x^n)\)の次数も自ずと大きくなり、次数の大きさは記憶領域の使用量に直結する。
+少なくとも\(n\)個の変数を保持しなければならないなんて、ちょっと考えただけで実用的でないことが分かる。
 なお、Fermatの小定理()は、この定理の特別な場合(\(f(x)\)が定数関数)になる。
 </p>
 <p>特に次の定理は、素数であるための必要十分条件を与える。
@@ -71,9 +73,8 @@ f(x^3) &= x^6 + 2
 \(n=3,a=1\)のとき、\((x+1)^3=x^3+3x^2+3x+1\equiv x^3+1\pmod{3}\)。一方、\(n=4,a=3\)のとき、\((x+3)^4=x^4+12x^3+54x^2+108x+81\not\equiv x^4+3\pmod{4}\)。
 </div>
 
-<p>ただし、これをそのまま素数判定法とするには無理がある。
-というのも、計算が困難であるという問題があるのである。
-\((x+a)^n\)を展開すれば、\(n\)次の式になるから、\(n\)個の変数で管理する必要があるわけだ。
+<p>これをそのまま素数判定法とするのも、やはり無理がある。
+先ほどと同様に\((x+a)^n\)を展開すれば、\(n\)次の式になるから、\(n\)個の変数で管理する必要があるわけだ。
 これでは多項式時間どころの話ではない。
 これを緩和するために、多項式を剰余算することを考える。
 </p>
@@ -98,53 +99,9 @@ AKSテストは、\(x^r-1\)を選ぶことが適切だと言う。
 となる。
 直感的には、指数部で\(\bmod{3}\)すればよい。
 </p>
-<pre class="prettyprint">class PolynomialCyclotomic():
-    def __init__(self, r:int, n:int, coefs:dict={}):
-        """
-        Args:
-            r (int): 剰余する多項式 x^r-1 のパラメータ
-            n (int):
-            coefs (dict): 多項式の係数。次数をキーとする。
-        """
-        self.r = r
-        self.n = n
-        self.f = [0] * r
-        for coef, val in coefs.items():
-            self.f[coef % r] += val % n
-
-    def __eq__(self, other):
-        assert self.r == other.r and self.n == other.n
-        return self.f == other.f
-
-    def __ne__(self, other):
-        return not (self == other)
-
-    def __mul__(self, other):
-        assert self.r == other.r and self.n == other.n
-        result = PolynomialCyclotomic(self.r, self.n)
-        for i in range(self.r):
-            for j in range(self.r):
-                coef = (i + j) % self.r
-                result.f[coef] += self.f[i] * other.f[j]
-                result.f[coef] %= self.n
-        return result
-
-    def __pow__(self, other):
-        if other == 0:
-            return self.identityElement()
-        if other % 2 == 0:
-            return (self * self) ** (other // 2)
-        else:
-            return self * (self ** (other - 1))
-
-    def identityElement(self):
-        """ 乗法単位元を返す
-        """
-        element = PolynomialCyclotomic(self.r, self.n)
-        element.f[0] = 1
-        return element
-</pre>
-
+<p>そして、AKSテストでは累乗数の判定が苦手なので、別途判定する。
+判定それ自体は、\(n\)の\(k\)乗根をとった後、\(k\)乗して\(n\)に一致するかを確認するだけなので簡単だ。
+</p>
 <pre class="prettyprint">import math
 
 from nth_root_int import nth_root_int
@@ -175,35 +132,35 @@ def is_perfect_power(n: int) -> bool:
     return False
 </pre>
 
+<p>AKSテストの要となるのが次の定理だ。
+</p>
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>定理</strong>)
+整数\(n\ge2\)、正整数\(r\)は\(n\)と互いに素で、\(ord_r(n)>\lg^2{n}\)を満たすとする。
+さらに、\(0\le a \le\sqrt{\varphi(r)}\lg{n}\)を満たす任意の\(a\)に対して、
+\begin{align*}
+(x+a)^n \equiv x^n + a \pmod{x^r-1, n}
+\end{align*}
+を満たすとする。
+\(n\)に素因数\(p>\sqrt{\varphi(r)}\lg{n}\)が存在するならば、\(n\)は\(p\)の累乗数である。
+</div>
+
+<p>この定理から、\(0\le a \le\sqrt{\varphi(r)}\lg{n}\)を満たす任意の\(a\)に対して\((x+a)^n \equiv x^n + a \pmod{x^r-1, n}\)を満たしたとき、次の3パターンに分けられることが分かる。
+</p><ol>
+ <li> \(n\)は\(n=p^m\)という形の累乗数である。
+ <li> 合成数で、\(\sqrt{\varphi(r)}\lg{n}\)以下に素因数を持つ。
+ <li> 素数である。
+</ol>
+
+<p>なので、これらを愚直に確認すればよい。
+AKSテストの実装は次のようになる。
+</p>
 <pre class="prettyprint">import math
 
 from sympy.ntheory import n_order
 
-
-def get_r_for_aks(n: int) -> int:
-    """ rは、n のZ_r^*での位数がlog2(n)**2 より大きくなる最小の整数。
-
-    Args:
-        n (int): rを求める対象の自然数
-
-    Returns:
-        r (int or string): rは、ord_r(n) > log2(n)**2を満たす最小の整数
-                           'composite number' : rの探索中に、nが合成数であることが判明した
-    """
-    minimum_order = int(math.log2(n)**2)
-    for r in range(minimum_order, n):
-        if math.gcd(n, r) != 1:
-            return 'composite number'
-        if n_order(n, r) > minimum_order:
-            return r
-    return n
-</pre>
-
-<pre class="prettyprint">import math
-
-from get_r_for_aks import get_r_for_aks
 from is_perfect_power import is_perfect_power
-from PolynomialCyclotomic import PolynomialCyclotomic
+from n_times import n_times
+from sqrt_int import sqrt_int
 from totient_function import totient_function
 
 
@@ -225,42 +182,49 @@ def aks_test(n: int) -> str:
         >>> aks_test(111)
         'composite number'
     """
+    def _mul(poly_1, poly_2):
+        result = [0] * r
+        for i in range(r):
+            for j in range(r):
+                coef = (i + j) % r
+                result[coef] += poly_1[i] * poly_2[j]
+                result[coef] %= n
+        return result
+
     if is_perfect_power(n):
         return 'composite number'
-    r = get_r_for_aks(n)
-    if r == 'composite number':
-        return r
+
+    r = n
+    minimum_order = int(math.log2(n)**2)
+    for r_ in range(minimum_order, n):
+        if math.gcd(n, r_) != 1:
+            return 'composite number'
+        if n_order(n, r_) > minimum_order:
+            r = r_
+
     threshold = int(math.sqrt(totient_function(r)) * math.log2(n)) + 1
     if any(n % p == 0 for p in range(2, threshold)):  # thresholdまで試し割を行う
         return 'composite number'
-    for a in range(1, threshold):
+    if sqrt_int(n) < threshold:
+        return 'prime number'
+
+    for a in range(threshold):
+        # (x + a)^n
+        poly_1 = [0] * r
+        poly_1[0] = a % n
+        poly_1[1] = 1
+        poly_1 = n_times(poly_1, n, _mul)
+
+        # x^n + a
+        poly_2 = [0] * r
+        poly_2[0] = a % n
+        poly_2[n % r] += 1
+
         # (x + a)^n と x^n + a が mod x^r - 1, n で合同でないならば合成数と判定する
-        if PolynomialCyclotomic(r, n, {0: a, 1: 1})**n != \
-           PolynomialCyclotomic(r, n, {0: a, n: 1}):
+        if poly_1 != poly_2:
             return 'composite number'
     return 'prime number'
 </pre>
-
-<p>何の説明もなしに、アルゴリズムを実装した。
-ここからはその理屈を説明しよう。
-理屈は、次の定理によって説明できる。
-</p>
-<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>定理</strong>)
-整数\(n\ge2\)、正整数\(r\)は\(n\)と互いに素で、\(ord_r(n)>\lg^2{n}\)を満たすとする。
-さらに、\(0\le a \le\sqrt{\varphi(r)}\lg{n}\)を満たす任意の\(a\)に対して、
-\begin{align*}
-(x+a)^n \equiv x^n + a \pmod{x^r-1, n}
-\end{align*}
-を満たすとする。
-\(n\)に素因数\(p>\sqrt{\varphi(r)}\lg{n}\)が存在するならば、\(n\)は\(p\)の累乗数である。
-</div>
-
-<p>この定理から、\(0\le a \le\sqrt{\varphi(r)}\lg{n}\)を満たす任意の\(a\)に対して\((x+a)^n \equiv x^n + a \pmod{x^r-1, n}\)を満たしたとき、次の3パターンに分けられることが分かる。
-</p><ol>
- <li> \(n\)は\(n=p^m\)という形の累乗数である。
- <li> 合成数で、\(\sqrt{\varphi(r)}\lg{n}\)以下に素因数を持つ。
- <li> 素数である。
-</ol>
 
 <p>アルゴリズムでは、1のケースを最初に除外し、2のケースを試し割によって除外しているのだ。
 そういうわけで、この定理が成り立てば、アルゴリズムが正しく素数を判定することは理解できたと思う。
