@@ -120,6 +120,7 @@
     * [sieve_of_eratosthenes.py](https://github.com/haru-44/prime_text/blob/main/src/sieve_of_eratosthenes.py)
     * [b_smooth_sieve.py](https://github.com/haru-44/prime_text/blob/main/src/b_smooth_sieve.py)
     * [factor_sieve.py](https://github.com/haru-44/prime_text/blob/main/src/factor_sieve.py)
+    * [sieve_of_sundaram.py](https://github.com/haru-44/prime_text/blob/main/src/sieve_of_sundaram.py)
   * 楕円曲線
     * [EllipticCurveAffine.py](https://github.com/haru-44/prime_text/blob/main/src/EllipticCurveAffine.py)
     * [elliptic_curve_order.py](https://github.com/haru-44/prime_text/blob/main/src/elliptic_curve_order.py)
