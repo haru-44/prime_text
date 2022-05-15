@@ -180,6 +180,18 @@ $n=15$で試してみたが、すべての合成数$n$で同じようなこと�
 \end{itemize}
 \end{Theo}
 
+1つ目の条件は、$n$が無平方数であると言い換えることもできる。
+
+\begin{Defi}{\IND{無平方数}{むへいほうすう}, square-free integer}{square-free}
+正整数$n$が1より大きいどんな平方数でも割り切れないとき、無平方数、または平方因子を持たない数と呼ぶ。
+同じことだが、
+\begin{itemize}
+ \item $n$の任意の素因数$p$について、$p^2 \nmid n$
+ \item $n=\prod_{i=1}^r p_i^{e_i}$と素因数分解できるとき、任意の$1\le i \le r$について$e_i=1$
+\end{itemize}
+などと定義してもよい。
+\end{Defi}
+
 \begin{Exam}{}{}
 561は、$561=3^1\cdot 11^1 \cdot17^1$と素因数分解できる。
 \begin{itemize}
