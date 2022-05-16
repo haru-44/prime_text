@@ -20,6 +20,8 @@ def totient_function(n: int, n_is_prime: bool = False) -> int:
         >>> totient_function(1323)
         756
     """
+    if n == 1:
+        return 1
     if n_is_prime:
         return n - 1
     ps = factorint(n)
