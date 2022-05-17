@@ -131,3 +131,57 @@ smoothな数を篩うことは結構重要で、後で紹介する2次篩法な�
 つまり、\rAlgo{b_smooth_sieve}で配列に保持するのは$\log$を取った値にすれば、毎回掛け算をする必要がなく、足し算で済む。
 こうすると、実数で扱うため、計算機上では誤差が避けられないが、「$B$-smoothかどうかを(ほぼ正しく)判別したい」という目的において大きな問題ではない。
 
+さて、これらEratosthenesの篩の類似物を扱う一般的な枠組みは考えられないだろうか。
+実際、数え上げ問題など威力を発揮する定式化は存在するのだが、本稿の目的を外れすぎるのも良くない。
+程よい一般化として次の問題を考えよう。
+
+正整数から整数への関数$g$が与えられたとき、$f$を
+\begin{align*}
+f(n) = \sum_{d \mid n}g(d)
+\end{align*}
+と定義する。
+$f(1),f(2),\ldots,f(n)$をすべて求めよ、という問題は、$g(1),g(2),\ldots,g(n)$の計算コストを無視すれば、定義通り実装したとしても$O(n\log{n})$で済む。
+しかし、Eratosthenesの篩と同様に考えれば、$O(\log{\log{n}})$で済むので、より早い。
+
+\Algo{}{divisor_transform}{c.f., \rAlgo{sieve_of_eratosthenes}}
+
+このアルゴリズムはどのようなときに使えばよいのだろうか。
+あからさまにそういう形をしている、約数関数から見てみよう。
+
+\begin{Defi}{\IND{約数関数}{やくすうかんすう}, divisor function}{divisor_function}
+自然数$n$に対して約数関数$\sigma_x(n)$を次のように定義する。
+\begin{align*}
+\sigma_x(n) = \sum_{d \mid n} d^x
+\end{align*}
+特に$\sigma_0(n)$は$n$の約数の個数を、$\sigma_1(n)$は$n$の約数の総和を、それぞれ意味する。
+\end{Defi}
+
+よって、$f(n)=1$とすれば、$g(n)=\sigma_0(n)$となるし、$f(n)=n$とすれば$g(n)=\sigma_1(n)$となる。
+
+ところで、アルゴリズムを見れば分かる通り、別に総和である必要はない。
+結合法則と交換法則さえ備わっていればいいので、$\max$や$\min$などで考えてもアルゴリズムは適用できる。
+
+例えば、
+\begin{align*}
+g(n) &=
+\begin{cases}
+n, &\mbox{if } n \mbox{ is prime}\\
+1, &\mbox{oterwise}
+\end{cases}
+\\
+f(n) &= \max_{d \mid n}g(d)
+\end{align*}
+と定義すれば、$f(n)$は$n$を割り切る最大の素数が得られるし、
+\begin{align*}
+g(n) &=
+\begin{cases}
+n, &\mbox{if } n \mbox{ is prime}\\
+\infty, &\mbox{oterwise}
+\end{cases}
+\\
+f(n) &= \min_{d \mid n}g(d)
+\end{align*}
+なら、$f(n)$は$n$を割り切る最小の素数が得られる。
+これらも$O(\log{\log{n}})$で列挙できる。
+これら自体は既に具体的な示しているので驚くに当たらないが、包括的なアルゴリズムで表現できる点が目を見張る。
+
