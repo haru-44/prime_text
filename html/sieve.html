@@ -6,7 +6,7 @@
     <script type="text/javascript" async
         src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML,/www_func/MathJax/MyConfig.js">
     </script>
-    <script type="text/javascript" src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?lang=py&skin=sunburst"></script>
   </head>
   <body>
   <strong>このページは、pdfファイル出力用に作成したtexファイルから機械的に変換されています。体裁不良がある場合は<a href="https://github.com/haru-44/prime_text/releases/latest/download/main.pdf">pdfファイル</a>をご覧ください。</strong>
@@ -20,6 +20,27 @@
  <li> 5の倍数は素数を素数でないとして消し込む……
 </ul>
 <p>とすることで、素数のみが残る。
+実装としては、長さ\(n+1\)の配列を用意{オリジンの差異を吸収するための\(+1\)だ。}し、配列の\(k\)番目が\(k\)が素数かを管理する。
+2以上をすべて素数として、アルゴリズムを開始し、\(\sqrt{n}\)まで動けば、\(n\)未満の素数が明らかになる。
+配列の書き換え回数は2のときは\(n/2\)回、3のときは\(n/3\)回というようになるから、すべて足すと、
+\begin{align*}
+\frac{n}{2} + \frac{n}{3} + \frac{n}{5} + \cdots + \frac{n}{\sqrt{n}} = n\left(\frac{1}{2}+\frac{1}{3}+\frac{1}{5}+\cdots+\frac{1}{\sqrt{n}}\right)
+\end{align*}
+となり、\(\sqrt{n}\)までの素数の逆数和が現れる。
+素数の逆数和
+\begin{align*}
+\sum_p \frac{1}{p}
+\end{align*}
+は発散することは非常に有名で、素数が無限に存在することの別証明にもなる{もしも有限なら発散しない。逆に、収束するからといって有限であることは言えない。双子素数の逆数の和は<strong>Brun定数</strong>(Brun's constant)に収束するが、双子素数が有限個であるという証明にはならない。}。
+発散するにはするのだが、その速度はとても遅い。
+具体的には
+\begin{align*}
+\sum_{p\le n}\frac{1}{p} = O(\log{\log{n}})
+\end{align*}
+くらいだ。
+以上より、Eratosthenesの篩の計算量は\(O(n\log{\log{n}})\)であることが分かる。
+1つに対する素数判定を行うには大仰だが、複数回の素数判定を行う場合には効果を発揮する。
+1度リストを作ってしまえば、1回の素数判定は\(O(1)\)で可能だからだ。
 </p>
 <pre class="prettyprint">from typing import List
 
@@ -52,9 +73,172 @@ def sieve_of_eratosthenes(n: int) -> List[bool]:
     return sieve_list
 </pre>
 
-<p>1つに対する素数判定を行うには大仰だが、複数回の素数判定を行う場合には効果を発揮する。
+<p>素数を列挙するためのアルゴリズムとして、Eratosthenesの篩が紹介されることは多いが、それ以外のアルゴリズムが紹介されることは少ない。
+Eratosthenesの篩でも十分実用的であり、マニアックな改良まで紹介する必要がないからであろう。
+そういう所に突っ込んでいくべきであろう。
 </p>
-<p>篩のアイディアは、素数判定以外にも利用できる。
+<p><strong>Sundaramの篩</strong>(sieve of Sundaram)の基本的なアイディアは、奇数の積を篩う。
+最初から偶数は無視することにすれば、リストのサイズは半分に減って、インデックスは\(2x+1\)の読み替えを必要とする。
+任意の奇数の合成数は、\((2i+1)(2j+1)=2(i+j+2ij)+1\)の形で表されることに注意しよう。
+\(i,j\)が\((2i+1)(2j+1)\le n\)を満たす範囲を動けば、\(n\)以下のすべての合成数をチェックすることができる。
+一般性を失うことなく\(i\le j\)を仮定して良いし、\((2i+1)\)は\(\sqrt{n}\)まで動けば十分であることはすぐ分かる。
+実装は、オリジンの問題と変数の使い方の問題によって複雑に見えるが、実態は上記を忠実にコードに落とし込んでいるだけである。
+</p>
+<pre class="prettyprint">from typing import List
+
+from sqrt_int import sqrt_int
+
+
+def sieve_of_sundaram(n: int) -> List[int]:
+    """ Sundaramの篩によって、2<p<=n を満たす素数pのリストを生成する
+
+    Args:
+        n (int): 生成する素数の最大値。n > 2
+
+    Returns:
+        List[int]: 3からnまでの素数リスト
+
+    Examples:
+        >>> sieve_of_sundaram(23)
+        [3, 5, 7, 11, 13, 17, 19, 23]
+        >>> sieve_of_sundaram(3)
+        [3]
+    """
+    sieve_len = (n - 3) // 2 + 1
+    sieve = [True] * sieve_len
+    for i in range((sqrt_int(n) - 3) // 2 + 1):
+        odd = 2 * i + 3
+        for j in range((odd * odd - 3) // 2, sieve_len, odd):
+            # この地点で odd と (2*j+3)//odd を観察すれば、
+            # すべての奇数の積を走っていることが分かる。
+            sieve[j] = False
+    return [2 * idx + 3 for idx, is_prime in enumerate(sieve) if is_prime]
+</pre>
+
+<p><strong>Atkinの篩</strong>(sieve of Atkin)は、次の定理を使う。
+</p>
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>定理</strong>)
+\(n\)を無平方数とする。
+<ol>
+ <li> \(n \equiv 1\pmod{4}\)ならば、\(n\)が素数である必要十分条件は、\(\sharp\{(x,y): x>0,y>0,4x^2+y^2=n\}\)が奇数になることである。
+ <li> \(n \equiv 1\pmod{6}\)ならば、\(n\)が素数である必要十分条件は、\(\sharp\{(x,y): x>0,y>0,3x^2+y^2=n\}\)が奇数になることである。
+ <li> \(n \equiv 11\pmod{12}\)ならば、\(n\)が素数である必要十分条件は、\(\sharp\{(x,y): x>y>0,3x^2-y^2=n\}\)が奇数になることである。
+</ol>
+</div>
+
+<p>まず、\(n\)が無平方数であるという前提を無視して、この定理を使う。
+\(x,y\)が自然数を走れば、\(n\)になるような個数が判明し、「素数っぽい」ものがチェックできる。
+このときの「素数っぽい」とは、無平方数なら確実に素数だが、平方因子を持つ数が誤って素数と扱われているかもしれない。
+そこで、最後の仕上げとして平方因子を持つ数を篩う。
+具体的には、リストを小さい方から見て、\(p\)が「素数」ならば真に素数で問題なく、そこから\(k\)を動かして、\(kp^2\)を「合成数」とする。
+最初に「素数っぽい」とチェックした合成数は、より小さい真の素数によって既に篩われているので、誤って「素数」と判定されることはない。
+</p>
+<p>これでアルゴリズムの方針が分かった。
+\(n>3\)が素数ならば、\(n \% 12\) は1,5,7,11のいずれかであるので、
+</p><ul>
+ <li> \(n \% 12 = 1,5\) ならの1を使う。
+ <li> \(n \% 12 = 7\) ならの2を使う。
+ <li> \(n \% 12 =11\) ならの3を使う。
+</ul>
+<p>というように、\(n\)の種類によって使用する式の役割分担ができる。
+</p>
+<p>これを実装するだけでもAtkinの篩を名乗って差し支えないのだが、\(x,y\)について範囲を限定することによって高速化を試みよう。
+</p>
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>命題</strong>)\;
+<ol>
+ <li> \(4x^2+y^2 \equiv 1,5 \pmod{12}\)を満たすとき、\(y\)は奇数である。
+ <li> \(3x^2+y^2 \equiv 7 \pmod{12}\)を満たすとき、\(x\)は奇数で\(y\)は偶数である。
+ <li> \(3x^2-y^2 \equiv 11 \pmod{12}\)を満たすとき、\(x\)と\(y\)の偶奇は異なる。
+</ol>
+</div>
+
+<p>さらに、剰余が1か5を判定するのもエレガントではないので、次の命題より9でないことを判定することに代替しよう。
+</p>
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>命題</strong>)
+\(x\)は正整数、\(y\)は正の奇数とする。
+\(4x^2+y^2 \bmod{12}\)は1,5,9のいずれかをとる。
+</div>
+
+<p>実装を考えたとき、加算よりも乗算の方がコストがかかるので\(x^2,y^2\)というような計算も極力少なくしたい。
+そこで、加算で2乗を計算したいのだが、奇数の2乗、\(1^2,3^2,5^2,\ldots\)は次の漸化式で計算できる。
+\begin{align*}
+a_{k} = (2k+1)^2 =
+\begin{cases}
+a_{k-1} + 8k, &\mbox{if } k > 0\\
+1, &\mbox{if } k = 0
+\end{cases}
+\end{align*}
+同様に偶数の2乗、\(2^2,4^2,6^2,\ldots\)は次の漸化式で計算できる。
+\begin{align*}
+a_k = (2(k+1))^2 =
+\begin{cases}
+a_{k-1} + (12 + 8k), &\mbox{if } k > 0\\
+4, &\mbox{if } k = 0
+\end{cases}
+\end{align*}
+</p>
+<pre class="prettyprint">import math
+from typing import List
+
+
+def sieve_of_atkin(n: int) -> List[bool]:
+    """ Atkinの篩によって、nまでの素数リストを生成する
+
+    Args:
+        n (int): 生成する素数の最大値。n >= 5
+
+    Returns:
+        sieve_list (list[bool]): nが素数   <=> sieve_list[n] == True
+                                 nが合成数 <=> sieve_list[n] == False
+
+    Examples:
+        >>> sieve_list = sieve_of_atkin(100)
+        >>> sieve_list[5]
+        True
+        >>> sieve_list[12]
+        False
+    """
+    sieve_list = [False] * (n + 1)
+    sq_n = math.sqrt(n)
+
+    for x in range(1, int(sq_n/2) + 1):
+        z = 4*x**2 + 1  # 4x^2+y^2, y=1
+        y_delta = 8
+        while z <= n:
+            if z % 12 != 9:  # z % 12 in [1, 5]
+                sieve_list[z] ^= True
+            z += y_delta
+            y_delta += 8
+
+    for x in range(1, int(sq_n/math.sqrt(3)) + 1, 2):
+        z = 3*x**2 + 4  # 3x^2+y^2, y=2
+        y_delta = 12
+        while z <= n:
+            if z % 12 == 7:
+                sieve_list[z] ^= True
+            z += y_delta
+            y_delta += 8
+
+    for x in range(2, int(sq_n/math.sqrt(2)) + 1):
+        z = 2*x*(x+1) - 1  # 3x^2-y^2, y=x-1
+        y_delta = 4*x - 8
+        while 0 <= y_delta and z <= n:
+            if z % 12 == 11:
+                sieve_list[z] ^= True
+            z += y_delta
+            y_delta -= 8
+
+    for r in range(5, int(sq_n) + 1, 2):
+        if sieve_list[r]:
+            for idx in range(r**2, n+1, r**2):
+                sieve_list[idx] = False
+    sieve_list[2] = sieve_list[3] = True
+    return sieve_list
+</pre>
+
+<p>Atkinの篩の計算量は\(O(n/\log{\log{n}})\)でEratosthenesの篩よりも優れる。
+それでもその簡明さ故か、Eratosthenesの篩の応用例は多く素数列挙といえばEratosthenesの篩なのである。
+Eratosthenesの篩の考え方を応用すれば、篩う対象は素数でなくともよい。
 例えば、与えられた数の素因数分解も可能だ。
 リストに記録するのは、「最後に割られた数」である。
 </p>
@@ -131,6 +315,86 @@ def b_smooth_sieve(n: int, B: int) -> List[int]:
 「掛け算が足し算になる」というのは、単純な計算コストという面でも有利だ。
 つまり、で配列に保持するのは\(\log\)を取った値にすれば、毎回掛け算をする必要がなく、足し算で済む。
 こうすると、実数で扱うため、計算機上では誤差が避けられないが、「\(B\)-smoothかどうかを(ほぼ正しく)判別したい」という目的において大きな問題ではない。
+</p>
+<p>さて、これらEratosthenesの篩の類似物を扱う一般的な枠組みは考えられないだろうか。
+実際、数え上げ問題など威力を発揮する定式化は存在するのだが、本稿の目的を外れすぎるのも良くない。
+程よい一般化として次の問題を考えよう。
+</p>
+<p>正整数から整数への関数\(g\)が与えられたとき、\(f\)を
+\begin{align*}
+f(n) = \sum_{d \mid n}g(d)
+\end{align*}
+と定義する。
+\(f(1),f(2),\ldots,f(n)\)をすべて求めよ、という問題は、\(g(1),g(2),\ldots,g(n)\)の計算コストを無視すれば、定義通り実装したとしても\(O(n\log{n})\)で済む。
+しかし、Eratosthenesの篩と同様に考えれば、\(O(\log{\log{n}})\)で済むので、より早い。
+</p>
+<pre class="prettyprint">from sieve_of_eratosthenes import sieve_of_eratosthenes
+
+
+def divisor_transform(n: int, g):
+    """ f(n) = \sum_{d \mid n} g(d) を計算する
+
+    Args:
+        n (int): 求める最大値
+        g (func): intからTへの関数
+
+    Returns:
+        f_list (List[Optional[T]]): [None, f(1), f(2), ..., f(n)]というリスト
+                                    f_list[0]はインデックスを揃えるためのダミー
+
+    Examples:
+        >>> from totient_function import totient_function
+        >>> divisor_transform(11, totient_function)
+        [None, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+    """
+    sieve_list = sieve_of_eratosthenes(n)
+    f_list = [None] + [g(k) for k in range(1, n+1)]
+    for p in range(2, n+1):
+        if sieve_list[p]:
+            for k in range(1, n//p + 1):
+                f_list[k * p] += f_list[k]
+    return f_list
+</pre>
+
+<p>このアルゴリズムはどのようなときに使えばよいのだろうか。
+あからさまにそういう形をしている、約数関数から見てみよう。
+</p>
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>定義</strong>)
+自然数\(n\)に対して約数関数\(\sigma_x(n)\)を次のように定義する。
+\begin{align*}
+\sigma_x(n) = \sum_{d \mid n} d^x
+\end{align*}
+特に\(\sigma_0(n)\)は\(n\)の約数の個数を、\(\sigma_1(n)\)は\(n\)の約数の総和を、それぞれ意味する。
+</div>
+
+<p>よって、\(f(n)=1\)とすれば、\(g(n)=\sigma_0(n)\)となるし、\(f(n)=n\)とすれば\(g(n)=\sigma_1(n)\)となる。
+</p>
+<p>ところで、アルゴリズムを見れば分かる通り、別に総和である必要はない。
+結合法則と交換法則さえ備わっていればいいので、\(\max\)や\(\min\)などで考えてもアルゴリズムは適用できる。
+</p>
+<p>例えば、
+\begin{align*}
+g(n) &=
+\begin{cases}
+n, &\mbox{if } n \mbox{ is prime}\\
+1, &\mbox{oterwise}
+\end{cases}
+\\
+f(n) &= \max_{d \mid n}g(d)
+\end{align*}
+と定義すれば、\(f(n)\)は\(n\)を割り切る最大の素数が得られるし、
+\begin{align*}
+g(n) &=
+\begin{cases}
+n, &\mbox{if } n \mbox{ is prime}\\
+\infty, &\mbox{oterwise}
+\end{cases}
+\\
+f(n) &= \min_{d \mid n}g(d)
+\end{align*}
+なら、\(f(n)\)は\(n\)を割り切る最小の素数が得られる。
+これらも\(O(\log{\log{n}})\)で列挙できる。
+これら自体は既に具体的な示しているので驚くに当たらないが、包括的なアルゴリズムで表現できる点が目を見張る。
 </p>
 
 

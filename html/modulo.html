@@ -6,7 +6,7 @@
     <script type="text/javascript" async
         src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML,/www_func/MathJax/MyConfig.js">
     </script>
-    <script type="text/javascript" src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?lang=py&skin=sunburst"></script>
   </head>
   <body>
   <strong>このページは、pdfファイル出力用に作成したtexファイルから機械的に変換されています。体裁不良がある場合は<a href="https://github.com/haru-44/prime_text/releases/latest/download/main.pdf">pdfファイル</a>をご覧ください。</strong>
@@ -192,6 +192,18 @@ a^{n-1} \not\equiv 1 \pmod{n}
  <li> \(p^2 \nmid n\)
  <li> \((p − 1) \mid (n-1)\)
 </ul>
+</div>
+
+<p>1つ目の条件は、\(n\)が無平方数であると言い換えることもできる。
+</p>
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>定義</strong>)
+正整数\(n\)が1より大きいどんな平方数でも割り切れないとき、無平方数、または平方因子を持たない数と呼ぶ。
+同じことだが、
+<ul>
+ <li> \(n\)の任意の素因数\(p\)について、\(p^2 \nmid n\)
+ <li> \(n=\prod_{i=1}^r p_i^{e_i}\)と素因数分解できるとき、任意の\(1\le i \le r\)について\(e_i=1\)
+</ul>
+などと定義してもよい。
 </div>
 
 <div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>例</strong>)
