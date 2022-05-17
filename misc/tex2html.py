@@ -12,6 +12,7 @@ for g in glob.glob('../src/*.py'):
 
 pre_text = """<html lang="ja">
   <head>
+    <title>HTML_TITLE</title>
     <script type="text/x-mathjax-config">
        MathJax.Hub.Config({TeX:{equationNumbers:{autoNumber:"AMS"}}});
     </script>
@@ -119,7 +120,8 @@ for file in glob.glob('../tex/*.tex'):
         text = text.replace('<p></p>', '')
 
         text = f'<h1>{name}</h1>\n' + text
-        text = pre_text + text + post_text
+        pre_text_ = re.sub('(HTML_TITLE)', name, pre_text)
+        text = pre_text_ + text + post_text
 
     with open(f'../html/{name}.html', mode='w', encoding='utf-8') as f:
         f.write(text)
