@@ -1,3 +1,4 @@
+\subsubsection{定義}
 整数の世界において平方数とは、整数の2乗の形で表される数である。
 例えば、$4, 9, 16, 25$は平方数である。
 同じように、剰余の世界でも平方数を考えることができる。
@@ -90,6 +91,7 @@ Legendre記号を使えば、例えば、\rProp{quadratic_residue_product}の1�
 \end{align*}
 と書き直せる\Notes{厳密には$a\equiv0\pmod{p}$のケースを議論していないが、脇に除ける。}。
 
+\subsubsection{平方剰余の相互法則}
 これまで平方剰余の性質について見てきたが、整数$a$と奇素数$p$が与えられたとき、$a$が$p$を法とする平方剰余か否かを判別する(別の言い方をすれば、Legendre記号$\left(\frac{a}{p}\right)$の値を得る)にはどうしたらよいだろうか。
 愚直には、1～$p-1$までの数をそれぞれ2乗し、$a$になるかを確認すればよい。
 $p$が小さいうちは何とかなるかもしれないが、$p$が大きくなると手に負えそうにない。
@@ -132,6 +134,7 @@ $p,q$を2より大きい素数とする。
 しかし、これから進む道は別の道である。
 Legendre記号を拡張することによって、素数を法とする平方剰余の判定を更に高速化できないか、という方向を考えるのである。
 
+\subsubsection{Jacobi記号}
 まず、Jacobi記号を定義する。
 
 \begin{Defi}{\IND{Jacobi記号}{Jacobiきこう}, Jacobi symbol}{Jacobi_symbol}
@@ -214,6 +217,7 @@ $n,m$を互いに素な1より大きい奇数とする。
 $m$が素数のとき、$\left(\frac{a}{m}\right)$は、\rAlgo{legendre_symbol}も\rAlgo{jacobi_symbol}でも同じ結果になるが、$m$が合成数のとき\textbf{一致しないこともある}。
 素数と合成数で異なる挙動を示すということは、素数判定に使えるのではないかというアイディアが浮かぶ。
 
+\subsubsection{Solovay-Strassenテスト}
 \IND{Solovay-Strassenテスト}{Solovay-Strassenてすと}(Solovay-Strassen primality test)\cite{DBLP:journals/siamcomp/SolovayS77}は、Legendre記号とJacobi記号の振舞いの違いに着目する\Notes{Legendre記号は合成数に対して定義されていないため、正確を期すならば、「Legendre記号を求めるための計算とJacobi記号の振舞いの違い」と言うべきだろうが、その点は甘受頂きたい。}。
 $n$が素数の場合、この2つは常に一致するが、合成数の場合はそうではない。
 $a$の値によって一致することもあるし、一致しないこともある。
@@ -233,6 +237,7 @@ $\mathcal{S}$をLegendre記号とJacobi記号が一致する$a$の集合とす�
 部分群の位数は、群の位数を割り切る。
 よって、$\mathcal{S}$が$\mathbb{Z}_n^*$の真部分群ならば、少なくとも$\sharp\mathcal{S}\le\sharp\mathbb{Z}_n^*/2$が言える。
 
+\subsubsection{Tonelli-Shanksのアルゴリズム}
 余勢を駆って、具体的な平方根を求めるアルゴリズムにも言及しよう。
 Legendre記号は平方剰余かを判定できたが、それがどんな数かは分からなかった。
 \IND{Tonelli-Shanksのアルゴリズム}{Tonelli-Shanksのあるこりすむ}(Tonelli-Shanks algorithm)は素数$p$を法とする$a$の平方根を具体的に求めるアルゴリズムである。
@@ -260,7 +265,7 @@ a^{(t+1)/2}D^{\mu} &\equiv a^{1/2} \pmod{p}
 \end{align*}
 となって$a$の平方根は$a^{(t+1)/2}D^{\mu}$であることが分かる。
 
-となれば、次は$D,\mu$を求める方法を考えるわけだが、ここでは次が正しいとしてアルゴリズムを与える。
+となれば、次は$D,\mu$を求める方法を考えるわけだが、ここでは次の命題が正しいとしてアルゴリズムを与える。
 
 \begin{Prop}{}{tonelli_shanks_algorithm}
 $p$を奇素数、$d\in\mathbf{QNR}_p$とする。

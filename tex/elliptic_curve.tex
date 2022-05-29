@@ -1,3 +1,4 @@
+\subsubsection{定義}
 まず、「楕円曲線」とは、
 \begin{align}
 \label{eq:elliptic_curve_1}
@@ -107,6 +108,7 @@ E(\mathbb{Q}) \cong \mathbb{Z}_2 \times \mathbb{Z}_2
 \end{align*}
 という群である。
 
+\subsubsection{群の構造}
 有理数体$\mathbb{Q}$上の楕円曲線$E(\mathbb{Q})$がどのような群になるかということに関して、\IND{Mordellの定理}{Mordellのていり}(Mordell's theorem)が有名であるが、有限体$\mathbb{F}_q$上の楕円曲線$E(\mathbb{F}_q)$においても類似の結果が知られている。
 
 \begin{Theo}{\cite{Cassels1966DiophantineEW}}{cassels}
@@ -189,6 +191,7 @@ p+1-2\sqrt{p} < \sharp E(\mathbb{F}_{p}) < p+1+2\sqrt{p}
 \end{center}
 \end{table}
 
+\subsubsection{楕円曲線の実装}
 数学上の様態は理解が進んだかと思うが、これをプログラムに落とし込もうと思うと無限遠点$O$をどう扱うかなど、考える要素はいくつもある。
 ここで紹介する実装方法は4種類である。
 \begin{description}
@@ -242,7 +245,8 @@ Q = \left[\prod_{p} p^a\right] P
 とすれば、(楕円曲線上での)加法1回で済む。
 これは、$k$倍算するよりもはるかに高速だが、より高速化する方法を後に述べる。
 
-また、アフィン座標ではなく、射影座標や修正射影座標で点を表すというのも1つの手だ。
+\subsubsection{Montgomery座標での実装}
+高速化には、アフィン座標ではなく、射影座標や修正射影座標で点を表すというのも1つの手だ。
 しかし、更に突き詰めると、もはや$y$座標を考えなくても良いという結論に至る。
 それがMontgomery座標である。
 $y$座標を考えなくとも大丈夫なのかというと、実際、任意の加法ができないのだが、楕円曲線法で求められているのは$k$倍算であるので十分である。
