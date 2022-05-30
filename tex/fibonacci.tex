@@ -1,3 +1,4 @@
+\subsubsection{Fibonacci数列}
 Fibonacci数列は、1202年Leonardo Fibonacciによって著わされた『算盤の書(Liber Abaci)』に記載された。
 $0,1,1,2,3,5,8,\ldots$と続く数列\Notes{\url{https://oeis.org/A000045}}で、定義は次の通りである。
 
@@ -44,6 +45,7 @@ F_n = \frac{\alpha^n - \beta^n}{\alpha - \beta}
 実は、$\alpha=\phi,\beta=(1-\phi)$となるのであり、「単に$\phi$から$\alpha, \beta$に文字を書き換えただけではないか」という感覚はまったく正しくて、現段階で何ら益はない。
 後々で一般化するにあたり必要な考え方であり、とりあえずそういうものだ、と頭の片隅に置いておけばよい。
 
+\subsubsection{Fibonacci数列と素数}
 Fibonacci数列の一般項は分かったが、面白みに欠ける。
 一般項はこうです、ふーんそうなんだ、というのではやはりお仕着せ感がある。
 また、素数とも関わらないように思える。
@@ -96,12 +98,12 @@ $\left(\frac{n}{5}\right)$はLegendre記号だと言うのだから、次のよ�
 \end{cases}
 \end{align*}
 
-例えば、$n=5$のとき、$n$は素数だから$F_{5 - 0} = 0 \pmod{5}$
+例えば、$n=5$のとき、$n$は素数だから$F_{5 - 0} \equiv 0 \pmod{5}$
 が得られるが、これは既に計算されているように正しい。
 同様に、$n=7$のとき、$n$は素数だから
-$F_{7 - (-1)} = F_{8} = 0 \pmod{7}$
+$F_{7 - (-1)} = F_{8} \equiv 0 \pmod{7}$
 も正しいし、$n=11$のとき、$n$は素数だから
-$F_{11 - 1} = F_{10} = 0 \pmod{11}$も正しい。
+$F_{11 - 1} = F_{10} \equiv 0 \pmod{11}$も正しい。
 
 「素数ならば\ruby{斯}{か}くなる数式を満たす」という形の定理は、そのまま素数判定に利用できることは既に見た。
 Fibonacci数列もまた、(実用的かはともかく)素数判定に用いることができる。
@@ -109,6 +111,7 @@ Fibonacci数列もまた、(実用的かはともかく)素数判定に用いる
 
 \Algo{Fibonacci数列テスト}{fibonacci_pseudoprime_test}{c.f., \rAlgo{fibonacci_sequence}, \rAlgo{legendre_symbol}}
 
+\subsubsection{Lucas数列}
 Fibonacci数列を使って素数判定ができた。
 Lucas数列はFibonacci数列の一般化であるが、ならば同様にLucas数列でも素数判定ができるのではないか。
 そういう思考を働かせて、Lucas数列を導入する。
@@ -150,7 +153,7 @@ V_n &= \alpha^n + \beta^n
 
 \Algo{Lucas数列}{lucas_sequence}{}
 
-Lucas数列はFibonacci数列の一般化であると言ったが、$a=1, b=-1$のとき、$U_n$はFibonacci数列に一致する。
+Lucas数列はFibonacci数列の一般化であると言ったが、$a=1, b=-1$のとき、$U_n$はFibonacci数列に一致する\Notes{なお、$a=1, b=-1$のときの$V_n$がLucas数と呼ばれる。}。
 \begin{align*}
 \alpha &= \frac{1 + \sqrt{1^2 - 4 \times (-1)^2}}{2}\\
 &= \frac{1 + \sqrt{5}}{2}\\
