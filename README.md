@@ -31,6 +31,7 @@
   * [2次Frobeniusテスト](https://haru-44.github.io/prime_text/html/quadratic_frobenius_primality_test.html)
   * [Lucas-Lehmerテスト](https://haru-44.github.io/prime_text/html/lucas_lehmer_primality_test.html)
   * [Williamsのp+1法](https://haru-44.github.io/prime_text/html/p_plus_1.html)
+  * [2次Frobeniusテスト等の実装](https://haru-44.github.io/prime_text/html/implementation_frobenius_test.html)
 * 篩
   * [Eratosthenesの篩](https://haru-44.github.io/prime_text/html/sieve.html)
   * [2次篩法](https://haru-44.github.io/prime_text/html/quadratic_sieve_algorithm.html)
@@ -38,6 +39,7 @@
   * [数体篩法](https://haru-44.github.io/prime_text/html/number_field_sieve.html)
 * その他の方法
   * [Pollardのρ法](https://haru-44.github.io/prime_text/html/rho_method.html)
+  * [Baillie-PSWテスト](https://haru-44.github.io/prime_text/html/baillie_psw_test.html)
   * [2次形式](https://haru-44.github.io/prime_text/html/quadratic_form.html)
   * [AKSテスト](https://haru-44.github.io/prime_text/html/aks_test.html)
   * [楕円曲線](https://haru-44.github.io/prime_text/html/elliptic_curve.html)
@@ -67,6 +69,8 @@
   * 2次Frobeniusテスト
   * Lucas-Lehmerテスト
     * [lucas_lehmer_primality_test.py](https://github.com/haru-44/prime_text/blob/main/src/lucas_lehmer_primality_test.py)
+  * Baillie-PSWテスト
+    * [baillie_psw_test.py](https://github.com/haru-44/prime_text/blob/main/src/baillie_psw_test.py)
   * AKSテスト
     * [aks_test.py](https://github.com/haru-44/prime_text/blob/main/src/aks_test.py)
 * 素因数分解アルゴリズム
