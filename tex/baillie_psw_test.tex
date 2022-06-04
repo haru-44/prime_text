@@ -1,4 +1,21 @@
+\IND{Baillie-PSWテスト}{Baillie-PSWてすと}(Baillie-PSW primality test)は、大雑把に言えばMiller-RabinテストとLucas数列テストを組み合わせた素数判定法である。
+Baillie-PSWテストという名称は、発明者であるRobert Baillie, Carl Pomerance, John Selfridge, Samuel Wagstaffからきている。
+元々、3人が発明したPSWテストが存在し、Baillieが改良を加えたため、このような名称となっている。
 
-\Algo{Baillie-PSWテスト}{baillie_psw_test}{c.f., \rAlgo{jacobi_symbol}, \rAlgo{quadratic_frobenius_test}, \rAlgo{sqrt_int}}
+Miller-RabinテストもLucas数列テストも、誤って素数と判定されてしまう合成数が存在するが、両方を突破する合成数は感覚的は少ないと推定できるだろう。
+もちろん、無闇矢鱈にテストを繰り返せば合成数であるという疑いは徐々に晴れていくものの、それでは芸がない。
+Miller-Rabinテストにおいて、$a=2$の場合に誤って素数と判定されてしまう合成数は、$2047, 3277, 4033,\ldots$等である\Notes{\url{https://oeis.org/A001262}}。
+一方、適切にパラメータ$a,b$を設定されたLucas数列テストにおいて、誤って素数と判定されてしまう合成数は、$5459, 5777, 10877,\ldots$等である\Notes{\url{https://oeis.org/A217255}}。
+この2つを試して間違うときというのは、この2つの数列に共通の数が含まれていた場合のみである。
+(現在検証されている範囲では)$2^64$までなら確実に素数か合成数かを判定できるし、これ以上についても、そのような合成数は未だ発見されていない。
 
+Lucas数列テストにおける、適切なパラメータ設定の方法は、いくつかあるが重要なのは$\Delta=a^2-4b$が$\left(\frac{\Delta}{n}\right)=-1$を満たすということだ。
+\cite{selfridge_method}では$\Delta$を決定するための2つの方法が紹介されている。
+\begin{itemize}
+ \item $\Delta$を$5,-7,9,-11,\ldots$の順番に$\left(\frac{\Delta}{n}\right)=-1$を満たしているかを試して、最初に見つけた$\Delta$にt対して$a=1,b=(1-\Delta)/4$とする。
+ \item $\Delta$を$5,9,13,17,\ldots$の順番に$\left(\frac{\Delta}{n}\right)=-1$を満たしているかを試して、最初に見つけた$\Delta$に対して、$a$を$\sqrt{\Delta}$を超える最小の奇数、$b=(a^2-\Delta)/4$とする。
+\end{itemize}
+同論文では、1つ目の方法で$\Delta$を決定するまでの試行回数の期待値は、$3.147\cdots$に収束することも証明されている(\cite{selfridge_method}定理9)。
+
+\Algo{Baillie-PSWテスト}{baillie_psw_test}{c.f., \rAlgo{jacobi_symbol}, \rAlgo{miller_rabin_test}, \rAlgo{quadratic_frobenius_test}, \rAlgo{sqrt_int}}
 

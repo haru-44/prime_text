@@ -1,10 +1,11 @@
 import bisect
 import random
+from typing import List
 
 from split_int import split_int
 
 
-def miller_rabin_test(n: int, k: int = 10) -> str:
+def miller_rabin_test(n: int, k: int = 10, a_list: List[int] = None) -> str:
     """ Miller-Rabinテストを用いて、n>2が素数かを判定する。
     nが小さい場合は、既知の底を使って、確定的に素数判定を行う。
 
@@ -15,6 +16,7 @@ def miller_rabin_test(n: int, k: int = 10) -> str:
         k (int): 試行回数。既定値を10としたが、特に意味はない。
                  nが2^64未満なら不使用。
                  合成数だが'probable prime'と判定する確率は高々4^{-k}
+        a_list(List[int]): 使用する底を指定する。指定した場合はkは無視される。
 
     Returns:
         string: 'composite number' = nは合成数
@@ -60,12 +62,15 @@ def miller_rabin_test(n: int, k: int = 10) -> str:
                                                 450775,
                                                 9780504,
                                                 1795265022])]
-    idx = bisect.bisect([num for num, _ in deterministic_list], n)
-    deterministic = idx < len(deterministic_list)
-    if deterministic:
-        a_list = deterministic_list[idx][1]
+    if a_list is None:
+        idx = bisect.bisect([num for num, _ in deterministic_list], n)
+        deterministic = idx < len(deterministic_list)
+        if deterministic:
+            a_list = deterministic_list[idx][1]
+        else:
+            a_list = [random.randrange(2, n) for _ in range(k)]
     else:
-        a_list = [random.randrange(2, n) for _ in range(k)]
+        deterministic = False
     for a in a_list:
         if pow(a, m, n) != 1 and all(pow(a, 2**t * m, n) != n - 1 for t in range(s)):
             return 'composite number'

@@ -1,4 +1,5 @@
 from jacobi_symbol import jacobi_symbol
+from miller_rabin_test import miller_rabin_test
 from quadratic_frobenius_test import quadratic_frobenius_test
 from sqrt_int import sqrt_int
 
@@ -25,12 +26,11 @@ def baillie_psw_test(n: int) -> str:
     for p in [2, 3, 5, 7]:
         if n % p == 0:
             return 'composite number'
-    # 底2のFermatテスト
-    if pow(2, n - 1, n) != 1:
+    # 底2のMiller-Rabinテスト
+    if miller_rabin_test(n, a_list=[2]) == 'composite number':
         return 'composite number'
     # nが平方数の場合、次ステップで探すdeltaが見つからない
-    # どのようなnを想定するかにもよるが、deltaがなかなか見つからない
-    # 場合にのみチェックするなどでもよい
+    # どのようなnを想定するかにもよるが、deltaがなかなか見つからない場合にのみチェックするなどでもよい
     if sqrt_int(n)**2 == n:
         return 'composite number'
     delta = 5
