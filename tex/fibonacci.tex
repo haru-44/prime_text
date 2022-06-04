@@ -45,6 +45,79 @@ F_n = \frac{\alpha^n - \beta^n}{\alpha - \beta}
 実は、$\alpha=\phi,\beta=(1-\phi)$となるのであり、「単に$\phi$から$\alpha, \beta$に文字を書き換えただけではないか」という感覚はまったく正しくて、現段階で何ら益はない。
 後々で一般化するにあたり必要な考え方であり、とりあえずそういうものだ、と頭の片隅に置いておけばよい。
 
+ちなみに、地道な計算はすぐに限界を来す。
+一般に、線形漸化式
+\begin{align*}
+\theta_n = a_1\theta_{n-1} + a_2\theta_{n-2} + \cdots + a_d\theta_{n-d}
+\end{align*}
+は、
+\begin{align*}
+\begin{pmatrix}
+\theta_{n}\\
+\theta_{n+1}\\
+\vdots\\
+\theta_{n+d-1}
+\end{pmatrix}
+=
+\begin{pmatrix}
+0 & 1 & 0 & \cdots & 0\\
+0 & 0 & 1 & \cdots & 0\\
+\vdots & \vdots & \ddots& \ddots & \vdots\\
+0 &0&\cdots&0& 1\\
+a_d & a_{d-1} & \cdots & a_{2} & a_{1}
+\end{pmatrix}^n
+\begin{pmatrix}
+\theta_0\\
+\theta_1\\
+\vdots\\
+\theta_{d-1}
+\end{pmatrix}
+\end{align*}
+が成り立つ\Notes{$n=1$の場合を考えてみると、$d-1$行目まで右辺の縦ベクトルの要素を1つ上にスライドさせ、$d$行目では定義式を使って左辺縦ベクトルの$d$行目を作っていることが分かる。}。
+よって、Fibonacci数列の場合は、
+\begin{align*}
+\begin{pmatrix}
+F_{n} \\
+F_{n+1}
+\end{pmatrix} = 
+\begin{pmatrix}
+0 & 1 \\
+1 & 1
+\end{pmatrix}^n
+\begin{pmatrix}
+0 \\
+1
+\end{pmatrix}
+\end{align*}
+となるので、
+\begin{align*}
+\begin{pmatrix}
+F_{n-1} & F_n \\
+F_{n} & F_{n+1}
+\end{pmatrix} = 
+\begin{pmatrix}
+0 & 1 \\
+1 & 1
+\end{pmatrix}^n
+\end{align*}
+あるいは同じことだが
+\begin{align*}
+\begin{pmatrix}
+F_{n+1} & F_n \\
+F_{n} & F_{n-1}
+\end{pmatrix} = 
+\begin{pmatrix}
+1 & 1 \\
+1 & 0
+\end{pmatrix}^n
+\end{align*}
+が得られる\Notes{線形漸化式から行列を構成した方法を思い返せば、行の要素を上下逆転させても結果は変わらないことが分かる。}。
+よって、行列のべき乗演算ができればFibonacci数列が求められるわけで、それを実現したのが次の実装だ。
+
+\Algo{Fibonacci数列(行列版)}{fibonacci_sequence_matrix}{c.f., \rAlgo{n_times}}
+
+行列を使ったFibonacci数列の計算は、\kenten{Fibonacci数列の計算する上では}有用だが、素数判定という文脈においてはさほど触れなくてもよい知識なので、このくらいで次に進む。
+
 \subsubsection{Fibonacci数列と素数}
 Fibonacci数列の一般項は分かったが、面白みに欠ける。
 一般項はこうです、ふーんそうなんだ、というのではやはりお仕着せ感がある。
@@ -106,10 +179,19 @@ $F_{7 - (-1)} = F_{8} \equiv 0 \pmod{7}$
 $F_{11 - 1} = F_{10} \equiv 0 \pmod{11}$も正しい。
 
 「素数ならば\ruby{斯}{か}くなる数式を満たす」という形の定理は、そのまま素数判定に利用できることは既に見た。
-Fibonacci数列もまた、(実用的かはともかく)素数判定に用いることができる。
-この素数判定も、合成数を誤って「素数」と判定することがあり得る。
+Fibonacci数列もまた、(実用的かはともかく)素数判定に用いることができる\Notes{\rAlgo{fibonacci_pseudoprime_test}の実装は\rTheo{fibonacci_prime}を愚直に実装しているが、後で別の実装も紹介する。}。
 
 \Algo{Fibonacci数列テスト}{fibonacci_pseudoprime_test}{c.f., \rAlgo{fibonacci_sequence}, \rAlgo{legendre_symbol}}
+
+この素数判定も、合成数を誤って「素数」と判定することがあり得る\Notes{小さい方から、$25, 60, 120, 125,\ldots$と続く。\url{https://oeis.org/A090820}}が、他の素数判定法と組み合わせることが可能である。
+例えば、
+\begin{itemize}
+ \item $n \equiv \pm 2 \pmod{5}$
+ \item 底$a=2$のFermatテスト(\rAlgo{fermat_test})で素数と判定される。
+ \item Fibonacci数列テスト(\rAlgo{fibonacci_pseudoprime_test})で素数と判定される。
+\end{itemize}
+となるような合成数$n$は見つかっていない。
+これは、素数判定に関する\IND{Selfridge予想}{Selfridgeよそう}(Selfridge's conjecture)あるいは\IND{PSW予想}{PSWよそう}として知られ、真であることまたは反例を見つけた者に620ドルの賞金が送られることになっている\cite{A_Computational_Perspective}。
 
 \subsubsection{Lucas数列}
 Fibonacci数列を使って素数判定ができた。
