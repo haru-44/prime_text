@@ -116,7 +116,7 @@ F_{n} & F_{n-1}
 
 \Algo{Fibonacci数列(行列版)}{fibonacci_sequence_matrix}{c.f., \rAlgo{n_times}}
 
-行列を使ったFibonacci数列の計算は、\kenten{Fibonacci数列の計算する上では}有用だが、素数判定という文脈においてはさほど触れなくてもよい知識なので、このくらいで次に進む。
+行列を使ったFibonacci数列の計算は、Fibonacci数列の計算する上では有用だが、素数判定という文脈においてはさほど触れなくてもよい知識なので、このくらいで次に進む。
 
 \subsubsection{Fibonacci数列と素数}
 Fibonacci数列の一般項は分かったが、面白みに欠ける。
@@ -183,7 +183,7 @@ Fibonacci数列もまた、(実用的かはともかく)素数判定に用いる
 
 \Algo{Fibonacci数列テスト}{fibonacci_pseudoprime_test}{c.f., \rAlgo{fibonacci_sequence}, \rAlgo{legendre_symbol}}
 
-この素数判定も、合成数を誤って「素数」と判定することがあり得る\Notes{小さい方から、$25, 60, 120, 125,\ldots$と続く。\url{https://oeis.org/A090820}}が、他の素数判定法と組み合わせることが可能である。
+この素数判定も、合成数を誤って「素数」と判定することがあり得る\Notes{小さい方から、$25, 60, 120, 125,\ldots$と続く。\url{https://oeis.org/A241505}}が、他の素数判定法と組み合わせることが可能である。
 例えば、
 \begin{itemize}
  \item $n \equiv \pm 2 \pmod{5}$

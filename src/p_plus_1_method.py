@@ -29,7 +29,7 @@ def p_plus_1_method(n: int, *, B: int, a: int = 5) -> int:
     v = a
     for prime in primerange(1, B + 1):
         l = math.floor(math.log(n) / math.log(prime))
-        v = lucas_sequence_v(v, prime**l, n)
+        v, _ = lucas_sequence_v(v, prime**l, n)
     d = math.gcd(v - 2, n)
     if 1 < d < n:
         return d

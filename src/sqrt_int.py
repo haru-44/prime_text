@@ -1,7 +1,7 @@
 def sqrt_int(n: int) -> int:
     """ 整数nに対して、sqrt(n)の整数部分を返す。
 
-    計算量 O(ln ln n)
+    計算量 O(ln n)
 
     Args:
         n (int): 平方根を取る対象の自然数

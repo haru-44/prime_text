@@ -114,6 +114,7 @@
     * [chainese_remainder_theorem.py](https://github.com/haru-44/prime_text/blob/main/src/chainese_remainder_theorem.py)
   * Fibonacci数列
     * [fibonacci_sequence.py](https://github.com/haru-44/prime_text/blob/main/src/fibonacci_sequence.py)
+    * [fibonacci_sequence_matrix.py](https://github.com/haru-44/prime_text/blob/main/src/fibonacci_sequence_matrix.py)
     * [lucas_sequence.py](https://github.com/haru-44/prime_text/blob/main/src/lucas_sequence.py)
     * [lucas_sequence_v.py](https://github.com/haru-44/prime_text/blob/main/src/lucas_sequence_v.py)
   * 篩

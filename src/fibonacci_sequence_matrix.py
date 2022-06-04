@@ -12,9 +12,9 @@ def fibonacci_sequence_matrix(n: int) -> int:
              ここで、F_0 = 0, F_1 = 1, F_2 = 1, ... である。
 
     Examples:
-        >>> fibonacci_sequence_fast(5)
+        >>> fibonacci_sequence_matrix(5)
         5
-        >>> fibonacci_sequence_fast(11)
+        >>> fibonacci_sequence_matrix(11)
         89
     """
     def _matrix_mul(a, b):

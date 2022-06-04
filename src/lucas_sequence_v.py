@@ -1,5 +1,8 @@
-def lucas_sequence_v(v_j: int, k: int, n: int) -> int:
-    """ Lucas数列 V_j mod nから、V_jk mod nを計算する。
+from typing import Tuple
+
+
+def lucas_sequence_v(v_j: int, k: int, n: int) -> Tuple[int, int]:
+    """ Lucas数列 V_j mod nから、(V_jk mod n, V_j(k+1) mod n)を計算する。
 
     ここで、V_0 = 2, V_1 = a, V_j = aV_{j-1} - V_{j-2} (注: b=1)
 
@@ -9,13 +12,16 @@ def lucas_sequence_v(v_j: int, k: int, n: int) -> int:
         n (int): 正整数
 
     Returns:
-        int: jk 番目のLucas数列 V_jk mod n
+        int, int: jk 番目のLucas数列 V_jk mod n と V_j(k+1) mod n の組
 
     Examples:
-        >>> lucas_sequence_v(5, 3, 100) # V_1 = 5, V_2 = 23, V_3 = 110
-        10
-        >>> lucas_sequence_v(47, 2, 1000) # (V_1 = 7,) V_2 = 47, V_3 = 322, V_4 = 2207
-        207
+        >>> # V_1 = 5, V_2 = 23, V_3 = 110, V_4 = 527
+        >>> lucas_sequence_v(5, 3, 100)
+        (10, 27)
+        >>> # (V_1 = 7,) V_2 = 47, V_3 = 322, V_4 = 2207, V_5 = 15127
+        >>> # V_6 = 103682
+        >>> lucas_sequence_v(47, 2, 1000)
+        (207, 682)
     """
     x, y = v_j, (v_j**2 - 2) % n
     # kの2進数表記の上位ビットから下位ビットに向かって回す
@@ -25,4 +31,4 @@ def lucas_sequence_v(v_j: int, k: int, n: int) -> int:
             x, y = (x * y - v_j) % n, (y**2 - 2) % n
         else:
             x, y = (x**2 - 2) % n, (x * y - v_j) % n
-    return x
+    return x, y
