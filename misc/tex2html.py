@@ -35,6 +35,7 @@ for file in glob.glob('../tex/*.tex'):
         text = f.read()
         text = re.sub('\$(.+?)\$', '\(\\1\)', text)
 
+        text = re.sub('\\\\subsubsection{(.+?)}', '<h2>\\1</h2>', text)
         text = re.sub('\\\\IND{(.+?)}{.+?}', '<strong>\\1</strong>', text)
         text = re.sub('\\\\kenten{(.+?)}', '<strong>\\1</strong>', text)
         text = re.sub('\\\\textbf{(.+?)}', '<strong>\\1</strong>', text)
