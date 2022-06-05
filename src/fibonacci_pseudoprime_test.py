@@ -18,6 +18,8 @@ def fibonacci_pseudoprime_test(n: int) -> str:
         >>> fibonacci_pseudoprime_test(323)
         'probable prime'
     """
+    if n > 5 and n % 5 == 0:
+        return 'composite number'
     if fibonacci_sequence(n - legendre_symbol(n, 5)) % n != 0:
         return 'composite number'
     return 'probable prime'

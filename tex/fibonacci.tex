@@ -179,11 +179,15 @@ $F_{7 - (-1)} = F_{8} \equiv 0 \pmod{7}$
 $F_{11 - 1} = F_{10} \equiv 0 \pmod{11}$も正しい。
 
 「素数ならば\ruby{斯}{か}くなる数式を満たす」という形の定理は、そのまま素数判定に利用できることは既に見た。
-Fibonacci数列もまた、(実用的かはともかく)素数判定に用いることができる\Notes{\rAlgo{fibonacci_pseudoprime_test}の実装は\rTheo{fibonacci_prime}を愚直に実装しているが、後で別の実装も紹介する。}。
+\IND{Fibonacci擬素数テスト}{Fibonacciきそすうてすと}は\rTheo{fibonacci_prime}を利用した素数判定アルゴリズムである。
+\rAlgo{fibonacci_pseudoprime_test}の実装では実用に堪えないが、コンセプトは理解できると思う。
+実用的な実装は、\rAlgo{quadratic_frobenius_test}を参照すること。
 
-\Algo{Fibonacci数列テスト}{fibonacci_pseudoprime_test}{c.f., \rAlgo{fibonacci_sequence}, \rAlgo{legendre_symbol}}
+\Algo{Fibonacci擬素数テスト}{fibonacci_pseudoprime_test}{c.f., \rAlgo{fibonacci_sequence}, \rAlgo{legendre_symbol}}
 
-この素数判定も、合成数を誤って「素数」と判定することがあり得る\Notes{小さい方から、$25, 60, 120, 125,\ldots$と続く。\url{https://oeis.org/A241505}}が、他の素数判定法と組み合わせることが可能である。
+Fibonacci擬素数テストでも、合成数を誤って「素数」と判定することがあり得て、これを\IND{Fibonacci擬素数}{Fibonacciきそすう}(Fibonacci pseudoprime)と呼ぶ\Notes{奇数のFibonacci擬素数は\url{https://oeis.org/A081264}, 偶数のFibonacci擬素数は\url{https://oeis.org/A141137}}。
+
+また、他の素数判定法と組み合わせることが可能である。
 例えば、
 \begin{itemize}
  \item $n \equiv \pm 2 \pmod{5}$
@@ -271,9 +275,20 @@ $n=2, 5$のときも、個別に値を調べれば$\left(\frac{2}{5}\right) = \l
 つまり、Lucas数列での定理は、Fibonacci数列の定理の一般化である。
 
 Fibonacci数列のときと同じように、定理から素数判定アルゴリズムを作ることができる。
+それが\IND{Lucas擬素数テスト}{Lucasきそすうてすと}だ。
+こちらも効率的な実装は\rAlgo{quadratic_frobenius_test}に譲る。
 
-\Algo{Lucas数列テスト}{lucas_sequence_test}{c.f., \rAlgo{legendre_symbol}, \rAlgo{lucas_sequence}}
+\Algo{Lucas擬素数テスト}{lucas_sequence_test}{c.f., \rAlgo{legendre_symbol}, \rAlgo{lucas_sequence}}
 
 やはりこの素数判定法も、合成数を誤って「素数」と判定してしまうことがある。
+これを\IND{Lucas擬素数}{Lucasきそすう}(Lucas pseudoprime)と呼ぶ。
 例えば、$323=17\times19$は、合成数であるが、$a=-10,b=-5$のとき``probable prime"を返す。
 
+さらに、FermatテストからMiller-Rabinテストを考えたのと同じように、Lucas擬素数テストから強Lucas擬素数テストを考えることができる。
+つまり、$n - \left(\frac{\Delta}{n}\right)$を$2^s\cdot m$と表現する(ここで、$m$は奇数)とき、素数$n$は、次のうち少なくとも1つは満たす。
+\begin{itemize}
+ \item $U_m \equiv 0 \pmod{n}$
+ \item $V_{2^t\cdot m} \equiv 0 \pmod{n}$, ここで$0\le t<s$
+\end{itemize}
+これにすらパスする合成数は\IND{強Lucas擬素数}{きようLucasきそすう}(strong Lucas pseudoprime)と呼ばれる。
+$n$がパラメータ$(a,b)$の強Lucas擬素数なら、パラメータ$(a,b)$のLuacs擬素数でもある。

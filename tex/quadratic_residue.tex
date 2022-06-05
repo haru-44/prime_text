@@ -211,31 +211,21 @@ $n,m$を互いに素な1より大きい奇数とする。
 \Algo{Jacobi記号}{jacobi_symbol}{}
 
 \rAlgo{jacobi_symbol}は、\rAlgo{legendre_symbol}より高速に計算できる。
-そして、\rProp{jacobi1}より素数の範囲においてはLegendre記号とJacobi記号は一致する。
+そして、\rProp{jacobi1}より素数の範囲においてLegendre記号とJacobi記号は一致する。
 ならば、Legendre記号$\left(\frac{a}{p}\right)$を計算する際は、\rAlgo{jacobi_symbol}を使った方がよい、というのがJacobi記号を導入した1つの成果である。
 一方で、別の見方もできる。
 $m$が素数のとき、$\left(\frac{a}{m}\right)$は、\rAlgo{legendre_symbol}も\rAlgo{jacobi_symbol}でも同じ結果になるが、$m$が合成数のとき\textbf{一致しないこともある}。
 素数と合成数で異なる挙動を示すということは、素数判定に使えるのではないかというアイディアが浮かぶ。
 
 \subsubsection{Solovay-Strassenテスト}
-\IND{Solovay-Strassenテスト}{Solovay-Strassenてすと}(Solovay-Strassen primality test)\cite{DBLP:journals/siamcomp/SolovayS77}は、Legendre記号とJacobi記号の振舞いの違いに着目する\Notes{Legendre記号は合成数に対して定義されていないため、正確を期すならば、「Legendre記号を求めるための計算とJacobi記号の振舞いの違い」と言うべきだろうが、その点は甘受頂きたい。}。
+\IND{Solovay-Strassenテスト}{Solovay-Strassenてすと}(Solovay-Strassen primality test)\cite{DBLP:journals/siamcomp/SolovayS77}は、Eulerの規準とJacobi記号の振舞いの違いに着目する。
 $n$が素数の場合、この2つは常に一致するが、合成数の場合はそうではない。
 $a$の値によって一致することもあるし、一致しないこともある。
 この一致する$a$と一致しない$a$は、丁度半分ずつ存在するので、$a$をランダムに選べば$1/2$の確率で合成数であることが分かるのである。
 
 \Algo{Solovay-Strassenテスト}{solovay_strassen_test}{c.f., \rAlgo{legendre_symbol}, \rAlgo{jacobi_symbol}}
 
-なぜ、 $n$が合成数の場合、Legendre記号とJacobi記号が一致する$a$が、丁度全体の半分存在するのであろうか。
-$\mathcal{S}$をLegendre記号とJacobi記号が一致する$a$の集合とする。
-つまり、
-\begin{align*}
-\mathcal{S} = \left\{a \in \mathbb{Z}_n^* : \left(\frac{a}{n}\right) \equiv a^{(n-1)/2} \pmod{n}\right\}
-\end{align*}
-とする。
-ここで$ \left(\frac{a}{n}\right)$はJacobi記号である。
-このとき、$\mathcal{S}$は$\mathbb{Z}_n^*$の部分群であり、$n$が奇数の合成数のとき$\mathcal{S}$は$\mathbb{Z}_n^*$の真部分群となる。
-部分群の位数は、群の位数を割り切る。
-よって、$\mathcal{S}$が$\mathbb{Z}_n^*$の真部分群ならば、少なくとも$\sharp\mathcal{S}\le\sharp\mathbb{Z}_n^*/2$が言える。
+Solovay-Strassenテストを突破する合成数を\IND{Euler-Jacobi擬素数}{Euler-Jacobiきそすう}(Euler-Jacobi pseudoprime)と呼ぶ\Notes{単にEuler擬素数と呼ぶ流儀もある。}。
 
 \subsubsection{Tonelli-Shanksのアルゴリズム}
 余勢を駆って、具体的な平方根を求めるアルゴリズムにも言及しよう。
