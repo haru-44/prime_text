@@ -221,3 +221,26 @@ na = \underbrace{a \dagger a \dagger \cdots \dagger a }_{n\text{ times}}
 つまり、$a, 2a, 2^2a, 2^3a, \ldots$は、それぞれ直前の値から$2^{k+1}a = 2^ka \dagger 2^ka$と計算できるし、例えば、$n=13=1+4+8$なら、$a \dagger 2^2a \dagger 2^3a$を計算すれば$13a$が得られる。
 
 \Algo{演算の$n$回適用}{n_times}{}
+
+\subsubsection{擬素数}
+一般に、確率的素数判定アルゴリズムで誤って素数と判定する合成数を\IND{擬素数}{ぎそすう}(pseudoprime)と呼ぶ。
+Fermatテストでも同様の擬素数を考えることができるが、Fermatテストは底$a$によって間違うかどうかが変わるので、「底$a$における」という枕詞が付く。
+
+\begin{Defi}{\IND{Fermat擬素数}{Fermatぎそすう}, Fermat pseudoprime}{fermat_pseudoprime}
+合成数$n$が$a>1$において
+\begin{align*}
+a^{n} \equiv 1 \pmod{n}
+\end{align*}
+を満たすとき、$n$は底$a$のFermat擬素数と呼ぶ。
+また、底$a$のFermat擬素数の集合を$\mbox{psp}(a)$と書く。
+\end{Defi}
+
+Fermat擬素数は単に擬素数と呼ばれることもあるが、ここではしっかりとFermat擬素数と呼ぼう。
+
+\begin{Exam}{}{}\;
+\begin{itemize}
+ \item 底2のFermat擬素数psp(2)は $341, 561, 645, 1105,\ldots$ である\Notes{\url{https://oeis.org/A001567}}。これは\IND{Poulet数}{Pouletすう}(Poulet numbers)あるいは\IND{Sarrus数}{Sarrusすう}(Sarrus numbers)と呼ばれる。
+ \item 底3のFermat擬素数psp(3)は $91, 121, 286, 671,\ldots$ である\Notes{\url{https://oeis.org/A005935}}。
+\end{itemize}
+\end{Exam}
+
