@@ -114,9 +114,9 @@ F_{n} & F_{n-1}
 が得られる\Notes{線形漸化式から行列を構成した方法を思い返せば、行の要素を上下逆転させても結果は変わらないことが分かる。}。
 よって、行列のべき乗演算ができればFibonacci数列が求められるわけで、それを実現したのが次の実装だ。
 
-\Algo{Fibonacci数列(行列版)}{fibonacci_sequence_matrix}{c.f., \rAlgo{n_times}}
+\Algo{行列の積}{matrix_mul}{}
 
-行列を使ったFibonacci数列の計算は、Fibonacci数列の計算する上では有用だが、素数判定という文脈においてはさほど触れなくてもよい知識なので、このくらいで次に進む。
+\Algo{Fibonacci数列(行列版)}{fibonacci_sequence_matrix}{c.f., \rAlgo{matrix_mul}, \rAlgo{n_times}}
 
 \subsubsection{Fibonacci数列と素数}
 Fibonacci数列の一般項は分かったが、面白みに欠ける。
