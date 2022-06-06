@@ -49,3 +49,23 @@ def test_lucas_pseudoprimes():
             assert ans == 'probable prime'
         else:
             assert ans == 'composite number'
+
+
+def test_frobenius_pseudoprimes():
+    """ x^2-x-1のFrobenius擬素数を10000未満について調べる
+
+    Notes:
+        https://oeis.org/A212424
+    """
+    pseudoprimes = [4181, 5777, 6721]
+    for n in range(2, 10000):
+        if math.gcd(n, 10) != 1:
+            continue
+        ans = quadratic_frobenius_test(n, a=1, b=-1)
+        print(n, ans)
+        if isprime(n):
+            assert ans == 'probable prime'
+        elif n in pseudoprimes:
+            assert ans == 'probable prime'
+        else:
+            assert ans == 'composite number'
