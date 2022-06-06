@@ -17,7 +17,6 @@ def test_odd_fibonacci_pseudoprimes():
         if math.gcd(n, 10) != 1:
             continue
         ans = quadratic_frobenius_test(n, a=1, b=-1, method='lucas')
-        print(n, ans)
         if isprime(n):
             assert ans == 'probable prime'
         elif n in pseudoprimes:
@@ -42,7 +41,6 @@ def test_lucas_pseudoprimes():
         if math.gcd(n, 2*a*b*(a**2-4*b)) != 1:
             continue
         ans = quadratic_frobenius_test(n, a, b, method='lucas')
-        print(n, ans)
         if isprime(n):
             assert ans == 'probable prime'
         elif n in pseudoprimes:
@@ -62,7 +60,6 @@ def test_frobenius_pseudoprimes():
         if math.gcd(n, 10) != 1:
             continue
         ans = quadratic_frobenius_test(n, a=1, b=-1)
-        print(n, ans)
         if isprime(n):
             assert ans == 'probable prime'
         elif n in pseudoprimes:

@@ -235,9 +235,11 @@ V_n &= \alpha^n + \beta^n
 である。ただし、$\Delta=a^2 - 4b$は平方数でないとする。
 \end{Defi}
 
-一応、後々のために$\{V_n\}$も一緒に述べたが、一旦$\{U_n\}$のみで考えることにする。
-
 \Algo{Lucas数列}{lucas_sequence}{}
+
+Lucas数列でもFibonacci数列と同様に、行列のべき乗で計算できる。
+
+\Algo{Lucas数列$V_n$(行列版)}{lucas_sequence_matrix}{c.f., \rAlgo{matrix_mul}, \rAlgo{n_times}}
 
 Lucas数列はFibonacci数列の一般化であると言ったが、$a=1, b=-1$のとき、$U_n$はFibonacci数列に一致する\Notes{なお、$a=1, b=-1$のときの$V_n$がLucas数と呼ばれる。}。
 \begin{align*}
