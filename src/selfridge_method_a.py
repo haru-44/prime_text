@@ -4,7 +4,7 @@ from jacobi_symbol import jacobi_symbol
 
 
 def selfridge_method_a(n: int) -> Tuple[int, int]:
-    """ SelfridgeのMethod Aを用いて、Lucas擬素数テストの適切なパラメータを得る。
+    """ Selfridgeの方法Aを用いて、Lucas擬素数テストの適切なパラメータを得る。
 
     Args:
         n (int): 平方数ではない奇数
@@ -13,6 +13,7 @@ def selfridge_method_a(n: int) -> Tuple[int, int]:
         a(int), b(int): Lucas擬素数テストのためのパラメータ。
                         合成数であることが判明した場合は(0, 0)
     """
+    assert n % 2 == 1
     delta = 5
     diff = -2
     while True:
