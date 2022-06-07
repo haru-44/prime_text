@@ -2,7 +2,7 @@ import math
 
 from inverse_mod import inverse_mod
 from jacobi_symbol import jacobi_symbol
-from lucas_sequence_v import lucas_sequence_v
+from lucas_sequence_chain import lucas_sequence_chain_b
 from sqrt_int import sqrt_int
 
 
@@ -35,7 +35,7 @@ def quadratic_frobenius_test(n: int, a: int, b: int, method: str = 'frobenius') 
     inv_b = inverse_mod(b, n)
     A = (a**2 * inv_b - 2) % n
     m = (n - jacobi_symbol(delta, n)) // 2
-    v_m, v_mp1 = lucas_sequence_v(A, m, n)
+    v_m, v_mp1 = lucas_sequence_chain_b(A, m, n)
     if (A * v_m) % n != (2 * v_mp1) % n:
         return 'composite number'
     if method == 'lucas':
