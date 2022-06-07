@@ -180,11 +180,6 @@ $F_{11 - 1} = F_{10} \equiv 0 \pmod{11}$も正しい。
 
 「素数ならば\ruby{斯}{か}くなる数式を満たす」という形の定理は、そのまま素数判定に利用できることは既に見た。
 \IND{Fibonacci擬素数テスト}{Fibonacciきそすうてすと}は\rTheo{fibonacci_prime}を利用した素数判定アルゴリズムである。
-\rAlgo{fibonacci_pseudoprime_test}の実装では実用に堪えないが、コンセプトは理解できると思う。
-実用的な実装は、\rAlgo{quadratic_frobenius_test}を参照すること。
-
-\Algo{Fibonacci擬素数テスト}{fibonacci_pseudoprime_test}{c.f., \rAlgo{fibonacci_sequence}, \rAlgo{legendre_symbol}}
-
 Fibonacci擬素数テストでも、合成数を誤って「素数」と判定することがあり得て、これを\IND{Fibonacci擬素数}{Fibonacciきそすう}(Fibonacci pseudoprime)と呼ぶ\Notes{奇数のFibonacci擬素数は\url{https://oeis.org/A081264}, 偶数のFibonacci擬素数は\url{https://oeis.org/A141137}}。
 
 また、他の素数判定法と組み合わせることが可能である。
@@ -192,7 +187,7 @@ Fibonacci擬素数テストでも、合成数を誤って「素数」と判定�
 \begin{itemize}
  \item $n \equiv \pm 2 \pmod{5}$
  \item 底$a=2$のFermatテスト(\rAlgo{fermat_test})で素数と判定される。
- \item Fibonacci数列テスト(\rAlgo{fibonacci_pseudoprime_test})で素数と判定される。
+ \item Fibonacci数列テストで素数と判定される。
 \end{itemize}
 となるような合成数$n$は見つかっていない。
 これは、素数判定に関する\IND{Selfridge予想}{Selfridgeよそう}(Selfridge's conjecture)あるいは\IND{PSW予想}{PSWよそう}として知られ、真であることまたは反例を見つけた者に620ドルの賞金が送られることになっている\cite{A_Computational_Perspective}。
@@ -239,7 +234,7 @@ V_n &= \alpha^n + \beta^n
 
 Lucas数列でもFibonacci数列と同様に、行列のべき乗で計算できる。
 
-\Algo{Lucas数列$V_n$(行列版)}{lucas_sequence_matrix}{c.f., \rAlgo{matrix_mul}, \rAlgo{n_times}}
+\Algo{Lucas数列(行列版)}{lucas_sequence_matrix}{c.f., \rAlgo{matrix_mul}, \rAlgo{n_times}}
 
 Lucas数列はFibonacci数列の一般化であると言ったが、$a=1, b=-1$のとき、$U_n$はFibonacci数列に一致する\Notes{なお、$a=1, b=-1$のときの$V_n$がLucas数と呼ばれる。}。
 \begin{align*}
@@ -279,8 +274,6 @@ $n=2, 5$のときも、個別に値を調べれば$\left(\frac{2}{5}\right) = \l
 Fibonacci数列のときと同じように、定理から素数判定アルゴリズムを作ることができる。
 それが\IND{Lucas擬素数テスト}{Lucasきそすうてすと}だ。
 こちらも効率的な実装は\rAlgo{quadratic_frobenius_test}に譲る。
-
-\Algo{Lucas擬素数テスト}{lucas_sequence_test}{c.f., \rAlgo{legendre_symbol}, \rAlgo{lucas_sequence}}
 
 やはりこの素数判定法も、合成数を誤って「素数」と判定してしまうことがある。
 これを\IND{Lucas擬素数}{Lucasきそすう}(Lucas pseudoprime)と呼ぶ。

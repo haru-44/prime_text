@@ -5,7 +5,7 @@ from n_times import n_times
 
 
 def lucas_sequence_matrix_u(n: int, a: int, b: int, mod: Optional[int] = None) -> int:
-    """ Lucas数列のn番目V_nを計算する。(行列計算を用いたバージョン)
+    """ Lucas数列のn番目U_nを計算する。(行列計算を用いたバージョン)
 
     Args:
         n (int): n番目とn+1番目のLucas数列を求める。n > 0
