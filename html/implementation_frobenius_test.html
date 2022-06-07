@@ -1,0 +1,96 @@
+<html lang="ja">
+  <head>
+    <title>implementation_frobenius_test</title>
+    <script type="text/x-mathjax-config">
+       MathJax.Hub.Config({TeX:{equationNumbers:{autoNumber:"AMS"}}});
+    </script>
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML,/www_func/MathJax/MyConfig.js">
+    </script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?lang=py&skin=sunburst"></script>
+  </head>
+  <body>
+  <strong>このページは、pdfファイル出力用に作成したtexファイルから機械的に変換されています。体裁不良がある場合は<a href="https://github.com/haru-44/prime_text/releases/latest/download/main.pdf">pdfファイル</a>をご覧ください。</strong>
+  <hr/>
+<h1>implementation_frobenius_test</h1>
+<p>最後に、これまで学んだ知識で、Fibonacci数列テスト、Lucas数列テスト、2次Frobeniusテストを改めて実装する。
+</p>
+<pre class="prettyprint">import math
+
+from inverse_mod import inverse_mod
+from jacobi_symbol import jacobi_symbol
+from lucas_sequence_chain import lucas_sequence_chain_b
+from sqrt_int import sqrt_int
+
+
+def quadratic_frobenius_test(n: int, a: int, b: int, method: str = 'frobenius') -> str:
+    """ 2次FrobeniusテストまたはFibonacci数列テスト、Lucas数列テストを用いて、n > 1が素数かを判定する。
+
+        method='frobenius'      => 2次Frobeniusテスト
+        method='lucas'          => Lucas数列テスト
+        method='lucas',a=1,b=-1 => Fibonacci数列テスト
+
+    Args:
+        n (int): 素数判定する対象の自然数。2ab(a^2-4b)とは互いに素であることが前提
+        a (int), b(int): パラメータ。a^2-4bは平方数でないように設定する。
+        method (str): 素数判定法の種類 'frobenius' or 'lucas'
+
+    Returns:
+        str: 'probable prime'   = nはおそらく素数
+             'composite number' = nは合成数
+
+    Examples:
+        >>> # 1891はFibonacci数列テストで誤って素数と判定される
+        >>> quadratic_frobenius_test(n=1891, a=1, b=-1, method='lucas')
+        'probable prime'
+        >>> quadratic_frobenius_test(n=1891, a=1, b=-1, method='frobenius')
+        'composite number'
+    """
+    delta = a**2 - 4*b
+    assert sqrt_int(delta)**2 != delta
+    assert math.gcd(n, 2*a*b*delta) == 1
+    inv_b = inverse_mod(b, n)
+    A = (a**2 * inv_b - 2) % n
+    m = (n - jacobi_symbol(delta, n)) // 2
+    v_m, v_mp1 = lucas_sequence_chain_b(A, m, n)
+    if (A * v_m) % n != (2 * v_mp1) % n:
+        return 'composite number'
+    if method == 'lucas':
+        return 'probable prime'
+    if (pow(b, (n-1)//2, n) * v_m) % n == 2:
+        return 'probable prime'
+    else:
+        return 'composite number'
+</pre>
+
+<pre class="prettyprint">from typing import Tuple
+
+from jacobi_symbol import jacobi_symbol
+
+
+def selfridge_method_a(n: int) -> Tuple[int, int]:
+    """ Selfridgeの方法Aを用いて、Lucas擬素数テストの適切なパラメータを得る。
+
+    Args:
+        n (int): 平方数ではない奇数
+
+    Returns:
+        a(int), b(int): Lucas擬素数テストのためのパラメータ。
+                        合成数であることが判明した場合は(0, 0)
+    """
+    assert n % 2 == 1
+    delta = 5
+    diff = -2
+    while True:
+        jacobi = jacobi_symbol(delta, n)
+        if jacobi == -1:
+            return 1, (1 - delta) // 4
+        if jacobi == 0 and abs(delta) != n:
+            return 0, 0
+        delta = diff - delta
+        diff *= -1
+</pre>
+
+
+
+</body></html>

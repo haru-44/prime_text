@@ -13,7 +13,8 @@
   <strong>このページは、pdfファイル出力用に作成したtexファイルから機械的に変換されています。体裁不良がある場合は<a href="https://github.com/haru-44/prime_text/releases/latest/download/main.pdf">pdfファイル</a>をご覧ください。</strong>
   <hr/>
 <h1>quadratic_residue</h1>
-<p>整数の世界において平方数とは、整数の2乗の形で表される数である。
+<p><h2>定義</h2>
+整数の世界において平方数とは、整数の2乗の形で表される数である。
 例えば、\(4, 9, 16, 25\)は平方数である。
 同じように、剰余の世界でも平方数を考えることができる。
 ただし、剰余の世界では「平方数」ではなく「平方剰余」と呼んでいる。
@@ -105,7 +106,8 @@ Legendre記号\(\left(\frac{a}{p}\right)\)は、整数\(a\)及び奇素数\(p\)�
 \end{align*}
 と書き直せる{厳密には\(a\equiv0\pmod{p}\)のケースを議論していないが、脇に除ける。}。
 </p>
-<p>これまで平方剰余の性質について見てきたが、整数\(a\)と奇素数\(p\)が与えられたとき、\(a\)が\(p\)を法とする平方剰余か否かを判別する(別の言い方をすれば、Legendre記号\(\left(\frac{a}{p}\right)\)の値を得る)にはどうしたらよいだろうか。
+<p><h2>平方剰余の相互法則</h2>
+これまで平方剰余の性質について見てきたが、整数\(a\)と奇素数\(p\)が与えられたとき、\(a\)が\(p\)を法とする平方剰余か否かを判別する(別の言い方をすれば、Legendre記号\(\left(\frac{a}{p}\right)\)の値を得る)にはどうしたらよいだろうか。
 愚直には、1～\(p-1\)までの数をそれぞれ2乗し、\(a\)になるかを確認すればよい。
 \(p\)が小さいうちは何とかなるかもしれないが、\(p\)が大きくなると手に負えそうにない。
 実はわりと簡単に計算することができる次の方法が知られていて、それが<strong>Eulerの規準</strong>(Euler's criterion)とも呼ばれている。
@@ -170,7 +172,8 @@ Legendre記号\(\left(\frac{a}{p}\right)\)は、整数\(a\)及び奇素数\(p\)�
 しかし、これから進む道は別の道である。
 Legendre記号を拡張することによって、素数を法とする平方剰余の判定を更に高速化できないか、という方向を考えるのである。
 </p>
-<p>まず、Jacobi記号を定義する。
+<p><h2>Jacobi記号</h2>
+まず、Jacobi記号を定義する。
 </p>
 <div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>定義</strong>)
 Jacobi記号\(\left(\frac{a}{m}\right)\)は、整数\(a\)及び奇数\(m\)について
@@ -259,23 +262,25 @@ Jacobi記号とLegendre記号の関係を知るには、次の2つの性質が�
         >>> jacobi_symbol(5, 11)
         1
     """
+    a %= m
     if a == 0:
         return 1 if m == 1 else 0
     if a % 2 == 1:
         sign = -1 if a % 4 == m % 4 == 3 else 1
-        return sign * jacobi_symbol(m % a, a)
+        return sign * jacobi_symbol(m, a)
     sign = -1 if m % 8 == 3 or m % 8 == 5 else 1
     return sign * jacobi_symbol(a // 2, m)
 </pre>
 
 <p>は、より高速に計算できる。
-そして、より素数の範囲においてはLegendre記号とJacobi記号は一致する。
+そして、より素数の範囲においてLegendre記号とJacobi記号は一致する。
 ならば、Legendre記号\(\left(\frac{a}{p}\right)\)を計算する際は、を使った方がよい、というのがJacobi記号を導入した1つの成果である。
 一方で、別の見方もできる。
 \(m\)が素数のとき、\(\left(\frac{a}{m}\right)\)は、もでも同じ結果になるが、\(m\)が合成数のとき<strong>一致しないこともある</strong>。
 素数と合成数で異なる挙動を示すということは、素数判定に使えるのではないかというアイディアが浮かぶ。
 </p>
-<p><strong>Solovay-Strassenテスト</strong>(Solovay-Strassen primality test)は、Legendre記号とJacobi記号の振舞いの違いに着目する{Legendre記号は合成数に対して定義されていないため、正確を期すならば、「Legendre記号を求めるための計算とJacobi記号の振舞いの違い」と言うべきだろうが、その点は甘受頂きたい。}。
+<p><h2>Solovay-Strassenテスト</h2>
+<strong>Solovay-Strassenテスト</strong>(Solovay-Strassen primality test)は、Eulerの規準とJacobi記号の振舞いの違いに着目する。
 \(n\)が素数の場合、この2つは常に一致するが、合成数の場合はそうではない。
 \(a\)の値によって一致することもあるし、一致しないこともある。
 この一致する\(a\)と一致しない\(a\)は、丁度半分ずつ存在するので、\(a\)をランダムに選べば\(1/2\)の確率で合成数であることが分かるのである。
@@ -311,19 +316,10 @@ def solovay_strassen_test(n: int, k: int = 10) -> str:
     return 'probable prime'
 </pre>
 
-<p>なぜ、 \(n\)が合成数の場合、Legendre記号とJacobi記号が一致する\(a\)が、丁度全体の半分存在するのであろうか。
-\(\mathcal{S}\)をLegendre記号とJacobi記号が一致する\(a\)の集合とする。
-つまり、
-\begin{align*}
-\mathcal{S} = \left\{a \in \mathbb{Z}_n^* : \left(\frac{a}{n}\right) \equiv a^{(n-1)/2} \pmod{n}\right\}
-\end{align*}
-とする。
-ここで\( \left(\frac{a}{n}\right)\)はJacobi記号である。
-このとき、\(\mathcal{S}\)は\(\mathbb{Z}_n^*\)の部分群であり、\(n\)が奇数の合成数のとき\(\mathcal{S}\)は\(\mathbb{Z}_n^*\)の真部分群となる。
-部分群の位数は、群の位数を割り切る。
-よって、\(\mathcal{S}\)が\(\mathbb{Z}_n^*\)の真部分群ならば、少なくとも\(\sharp\mathcal{S}\le\sharp\mathbb{Z}_n^*/2\)が言える。
+<p>Solovay-Strassenテストを突破する合成数を<strong>Euler-Jacobi擬素数</strong>(Euler-Jacobi pseudoprime)と呼ぶ{単にEuler擬素数と呼ぶ流儀もある。}。
 </p>
-<p>余勢を駆って、具体的な平方根を求めるアルゴリズムにも言及しよう。
+<p><h2>Tonelli-Shanksのアルゴリズム</h2>
+余勢を駆って、具体的な平方根を求めるアルゴリズムにも言及しよう。
 Legendre記号は平方剰余かを判定できたが、それがどんな数かは分からなかった。
 <strong>Tonelli-Shanksのアルゴリズム</strong>(Tonelli-Shanks algorithm)は素数\(p\)を法とする\(a\)の平方根を具体的に求めるアルゴリズムである。
 </p>
@@ -350,7 +346,7 @@ a^{(t+1)/2}D^{\mu} &\equiv a^{1/2} \pmod{p}
 \end{align*}
 となって\(a\)の平方根は\(a^{(t+1)/2}D^{\mu}\)であることが分かる。
 </p>
-<p>となれば、次は\(D,\mu\)を求める方法を考えるわけだが、ここでは次が正しいとしてアルゴリズムを与える。
+<p>となれば、次は\(D,\mu\)を求める方法を考えるわけだが、ここでは次の命題が正しいとしてアルゴリズムを与える。
 </p>
 <div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>命題</strong>)
 \(p\)を奇素数、\(d\in\mathbf{QNR}_p\)とする。

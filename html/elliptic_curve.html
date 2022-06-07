@@ -13,7 +13,8 @@
   <strong>このページは、pdfファイル出力用に作成したtexファイルから機械的に変換されています。体裁不良がある場合は<a href="https://github.com/haru-44/prime_text/releases/latest/download/main.pdf">pdfファイル</a>をご覧ください。</strong>
   <hr/>
 <h1>elliptic_curve</h1>
-<p>まず、「楕円曲線」とは、
+<p><h2>定義</h2>
+まず、「楕円曲線」とは、
 \begin{align}
 \label{eq:elliptic_curve_1}
 y^2 = x^3 + ax + b
@@ -122,7 +123,8 @@ E(\mathbb{Q}) \cong \mathbb{Z}_2 \times \mathbb{Z}_2
 \end{align*}
 という群である。
 </p>
-<p>有理数体\(\mathbb{Q}\)上の楕円曲線\(E(\mathbb{Q})\)がどのような群になるかということに関して、<strong>Mordellの定理</strong>(Mordell's theorem)が有名であるが、有限体\(\mathbb{F}_q\)上の楕円曲線\(E(\mathbb{F}_q)\)においても類似の結果が知られている。
+<p><h2>群の構造</h2>
+有理数体\(\mathbb{Q}\)上の楕円曲線\(E(\mathbb{Q})\)がどのような群になるかということに関して、<strong>Mordellの定理</strong>(Mordell's theorem)が有名であるが、有限体\(\mathbb{F}_q\)上の楕円曲線\(E(\mathbb{F}_q)\)においても類似の結果が知られている。
 </p>
 <div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>定理</strong>)
 有限体\(\mathbb{F}_q\)上の楕円曲線\(E(\mathbb{F}_q)\)は、次のいずれかと同型である。
@@ -257,7 +259,8 @@ p+1-2\sqrt{p} < \sharp E(\mathbb{F}_{p}) < p+1+2\sqrt{p}
 \end{center}
 \end{table}
 </p>
-<p>数学上の様態は理解が進んだかと思うが、これをプログラムに落とし込もうと思うと無限遠点\(O\)をどう扱うかなど、考える要素はいくつもある。
+<p><h2>楕円曲線の実装</h2>
+数学上の様態は理解が進んだかと思うが、これをプログラムに落とし込もうと思うと無限遠点\(O\)をどう扱うかなど、考える要素はいくつもある。
 ここで紹介する実装方法は4種類である。
 </p><ul>
  <li> [アフィン座標]\mbox{}\\
@@ -451,7 +454,8 @@ Q = \left[\prod_{p} p^a\right] P
 とすれば、(楕円曲線上での)加法1回で済む。
 これは、\(k\)倍算するよりもはるかに高速だが、より高速化する方法を後に述べる。
 </p>
-<p>また、アフィン座標ではなく、射影座標や修正射影座標で点を表すというのも1つの手だ。
+<p><h2>Montgomery座標での実装</h2>
+高速化には、アフィン座標ではなく、射影座標や修正射影座標で点を表すというのも1つの手だ。
 しかし、更に突き詰めると、もはや\(y\)座標を考えなくても良いという結論に至る。
 それがMontgomery座標である。
 \(y\)座標を考えなくとも大丈夫なのかというと、実際、任意の加法ができないのだが、楕円曲線法で求められているのは\(k\)倍算であるので十分である。

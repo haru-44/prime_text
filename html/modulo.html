@@ -13,7 +13,8 @@
   <strong>このページは、pdfファイル出力用に作成したtexファイルから機械的に変換されています。体裁不良がある場合は<a href="https://github.com/haru-44/prime_text/releases/latest/download/main.pdf">pdfファイル</a>をご覧ください。</strong>
   <hr/>
 <h1>modulo</h1>
-<p>\(153\)は\(3\)の倍数だろうか？　では、\(2481924\)は？　ちょっと<strong>小技</strong>を知っていれば、割り算をすることなくどちらも\(3\)の倍数であると分かる。
+<p><h2>余り算</h2>
+\(153\)は\(3\)の倍数だろうか？　では、\(2481924\)は？　ちょっと<strong>小技</strong>を知っていれば、割り算をすることなくどちらも\(3\)の倍数であると分かる。
 この小技というのが、「各桁の数を足した数が\(3\)の倍数ならば元の数も\(3\)の倍数である」という事実である。
 \(1+5+3=9\)は明らかに\(3\)の倍数であるし、\(2+4+8+1+9+2+4=30\)もやはり\(3\)の倍数である。
 この事実は、ちょっとした計算チェックをするときなどに役立つので知っている方も多いと思うが、一方でなぜそうなるかを知っている人は意外と少ない。
@@ -165,9 +166,10 @@ a^{n-1} \not\equiv 1 \pmod{n}
 ならば、\(n\)は合成数である。
 </div>
 
-<p>さて、このフェルマーの小定理の対偶を用いて、素数判定を行うことができる。
+<p><h2>Fermatテスト</h2>
+さて、このFermatの小定理の対偶を用いて、素数判定を行うことができる。
 試し割では具体的な素因数を明らかにすることによって、素数/合成数が判明する。
-そのようにして素数判定を行っても良いのだが、素因数を明らかにせずとも素数かどうかを判別することも可能で、Fermatの小定理を利用する<strong>Fermatテスト</strong>もその一つである。
+そのようにして素数判定を行っても良いのだが、素因数を明らかにせずとも素数かどうかを判別することも可能で、Fermatの小定理を利用する<strong>Fermatテスト</strong>もその1つである。
 </p>
 <p>\Algo{Fermatテスト}{fermat_test}
 </p>
@@ -289,6 +291,29 @@ def n_times(a: Any, n: int, op=None) -> Any:
         n >>= 1
     return r
 </pre>
+
+<p><h2>擬素数</h2>
+一般に、確率的素数判定アルゴリズムで誤って素数と判定する合成数を<strong>擬素数</strong>(pseudoprime)と呼ぶ。
+Fermatテストでも同様の擬素数を考えることができるが、Fermatテストは底\(a\)によって間違うかどうかが変わるので、「底\(a\)における」という枕詞が付く。
+</p>
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>定義</strong>)
+合成数\(n\)が\(a>1\)において
+\begin{align*}
+a^{n} \equiv 1 \pmod{n}
+\end{align*}
+を満たすとき、\(n\)は底\(a\)のFermat擬素数と呼ぶ。
+また、底\(a\)のFermat擬素数の集合を\(\mbox{psp}(a)\)と書く。
+</div>
+
+<p>Fermat擬素数は単に擬素数と呼ばれることもあるが、ここではしっかりとFermat擬素数と呼ぼう。
+</p>
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>例</strong>)\;
+<ul>
+ <li> 底2のFermat擬素数psp(2)は \(341, 561, 645, 1105,\ldots\) である{<a href="https://oeis.org/A001567">https://oeis.org/A001567</a>}。これは<strong>Poulet数</strong>(Poulet numbers)あるいは<strong>Sarrus数</strong>(Sarrus numbers)と呼ばれる。
+ <li> 底3のFermat擬素数psp(3)は \(91, 121, 286, 671,\ldots\) である{<a href="https://oeis.org/A005935">https://oeis.org/A005935</a>}。
+</ul>
+</div>
+
 
 
 </body></html>

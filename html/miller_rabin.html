@@ -13,7 +13,8 @@
   <strong>このページは、pdfファイル出力用に作成したtexファイルから機械的に変換されています。体裁不良がある場合は<a href="https://github.com/haru-44/prime_text/releases/latest/download/main.pdf">pdfファイル</a>をご覧ください。</strong>
   <hr/>
 <h1>miller_rabin</h1>
-<p>平方剰余の基本的な事実であるが、改めて確認しよう。
+<p><h2>考え方</h2>
+平方剰余の基本的な事実であるが、改めて確認しよう。
 </p>
 <div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>命題</strong>)
 \(n\)が素数ならば、\(a^2 \equiv 1 \pmod{n}\)を満たす\(a\)は、\(1\)と\(-1\)に限る。
@@ -100,7 +101,8 @@ a^{7} &\equiv 1 \pmod{n}
 </ul>
 </div>
 
-<p>Miller-Rabinテストもやはり、確率的な素数判定法である。
+<p><h2>Miller-Rabinテスト</h2>
+Miller-Rabinテストもやはり、確率的な素数判定法である。
 「合成数」と判定されれば確実に合成数だが、「素数」と判定されても確実ではない。
 なぜならば、合成数であるにも関わらずMiller-Rabinテストを突破するような\(a\)が存在するからだ。
 例えば、\(n=121=11^2\)にMiller-Rabinテストを実施する場合
@@ -132,78 +134,36 @@ a^{7} &\equiv 1 \pmod{n}
 </p>
 <p>\Algo{補助関数}{split_int}
 </p>
-<pre class="prettyprint">import bisect
-import random
+<pre class="prettyprint">import random
+from typing import List
 
 from split_int import split_int
 
 
-def miller_rabin_test(n: int, k: int = 10) -> str:
+def miller_rabin_test(n: int, k: int = 10, a_list: List[int] = None) -> str:
     """ Miller-Rabinテストを用いて、n>2が素数かを判定する。
-    nが小さい場合は、既知の底を使って、確定的に素数判定を行う。
-
-    計算量 : O(k |n|^3)
 
     Args:
         n (int): 素数判定する対象の整数
         k (int): 試行回数。既定値を10としたが、特に意味はない。
-                 nが2^64未満なら不使用。
                  合成数だが'probable prime'と判定する確率は高々4^{-k}
+        a_list(List[int]): 使用する底を指定する。指定した場合はkは無視される。
 
     Returns:
         string: 'composite number' = nは合成数
-                'prime number'     = nは素数
                 'probable prime'   = nはおそらく素数
 
     Examples:
         >>> miller_rabin_test(101)
-        'prime number'
+        'probable prime'
         >>> miller_rabin_test(111)
         'composite number'
-
-    Notes:
-        底は次のサイトから取得
-        https://miller-rabin.appspot.com/
     """
     s, m = split_int(n - 1)
-    deterministic_list = [(341531,             [9345883071009581737]),
-                          (1050535501,         [336781006125,
-                                                9639812373923155]),
-                          (350269456337,       [4230279247111683200,
-                                                14694767155120705706,
-                                                16641139526367750375]),
-                          (55245642489451,     [2,
-                                                141889084524735,
-                                                1199124725622454117,
-                                                11096072698276303650]),
-                          (7999252175582851,   [2,
-                                                4130806001517,
-                                                149795463772692060,
-                                                186635894390467037,
-                                                3967304179347715805]),
-                          (585226005592931977, [2,
-                                                123635709730000,
-                                                9233062284813009,
-                                                43835965440333360,
-                                                761179012939631437,
-                                                1263739024124850375]),
-                          (2**64,              [2,
-                                                325,
-                                                9375,
-                                                28178,
-                                                450775,
-                                                9780504,
-                                                1795265022])]
-    idx = bisect.bisect([num for num, _ in deterministic_list], n)
-    deterministic = idx < len(deterministic_list)
-    if deterministic:
-        a_list = deterministic_list[idx][1]
-    else:
-        a_list = [random.randrange(2, n) for _ in range(k)]
-    for a in a_list:
+    for a in a_list or [random.randrange(2, n) for _ in range(k)]:
         if pow(a, m, n) != 1 and all(pow(a, 2**t * m, n) != n - 1 for t in range(s)):
             return 'composite number'
-    return 'prime number' if deterministic else 'probable prime'
+    return 'probable prime'
 </pre>
 
 <p>では、どのくらいの\(a\)が判定を誤らせるのだろうか。
@@ -215,6 +175,10 @@ def miller_rabin_test(n: int, k: int = 10) -> str:
 
 <p>そのため、試行回数を増やすことによって、ほぼ確実に素数であることを判定できる。
 ゆえに、RSA暗号の鍵生成に際して利用されるなど、広く実用に供されているアルゴリズムでもある。
+</p>
+<p><h2>強擬素数</h2>
+Fermat擬素数などと同様に、Miller-Rabinテストをパスする合成数は底\(a\)の<strong>強擬素数</strong>(strong pseudoprime)と呼ぶ。
+これは、しばしば\(\mbox{spsp}(a)\)とも書かれる。
 </p>
 
 
