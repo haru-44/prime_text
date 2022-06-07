@@ -20,7 +20,7 @@ def selfridge_method_a(n: int) -> Tuple[int, int]:
         jacobi = jacobi_symbol(delta, n)
         if jacobi == -1:
             return 1, (1 - delta) // 4
-        if jacobi == 0:
+        if jacobi == 0 and abs(delta) != n:
             return 0, 0
         delta = diff - delta
         diff *= -1

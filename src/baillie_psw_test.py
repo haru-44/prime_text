@@ -1,7 +1,7 @@
-from jacobi_symbol import jacobi_symbol
 from miller_rabin_test import miller_rabin_test
-from quadratic_frobenius_test import quadratic_frobenius_test
+from selfridge_method_a import selfridge_method_a
 from sqrt_int import sqrt_int
+from strong_lucas_sequence_test import strong_lucas_sequence_test
 
 
 def baillie_psw_test(n: int) -> str:
@@ -24,24 +24,20 @@ def baillie_psw_test(n: int) -> str:
     # 試し割は原理上不要な工程だが、小さな素因数がある合成数について
     # わざわざ以降のテストするまでもない
     for p in [2, 3, 5, 7]:
+        if n == p:
+            return 'prime number'
         if n % p == 0:
             return 'composite number'
     # 底2のMiller-Rabinテスト
     if miller_rabin_test(n, a_list=[2]) == 'composite number':
         return 'composite number'
-    # nが平方数の場合、次ステップで探すdeltaが見つからない
-    # どのようなnを想定するかにもよるが、deltaがなかなか見つからない場合にのみチェックするなどでもよい
     if sqrt_int(n)**2 == n:
         return 'composite number'
-    delta = 5
-    diff = -2
-    # jacobi記号(delta, n)=-1となるようなdeltaを
-    # 5, -7, 9, -11, 13, ... から探す
-    while jacobi_symbol(delta, n) != -1:
-        delta = diff - delta
-        diff *= -1
-    a, b = 1, (1 - delta) // 4
-    result = quadratic_frobenius_test(n, a, b, method='lucas')
+    a, b = selfridge_method_a(n)
+    if a == 0 and b == 0:
+        return 'composite number'
+    # 強Lucasテスト
+    result = strong_lucas_sequence_test(n, a, b)
     if result == 'composite number':
         return result
     if n <= 2**64:
