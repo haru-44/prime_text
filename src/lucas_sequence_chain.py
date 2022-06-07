@@ -40,11 +40,11 @@ def lucas_sequence_chain_b(v_j: int, k: int, mod: int) -> Tuple[int, int]:
 
     Examples:
         >>> # V_1 = 5, V_2 = 23, V_3 = 110, V_4 = 527
-        >>> lucas_sequence_v(5, 3, 100)
+        >>> lucas_sequence_chain_b(5, 3, 100)
         (10, 27)
         >>> # (V_1 = 7,) V_2 = 47, V_3 = 322, V_4 = 2207, V_5 = 15127
         >>> # V_6 = 103682
-        >>> lucas_sequence_v(47, 2, 1000)
+        >>> lucas_sequence_chain_b(47, 2, 1000)
         (207, 682)
     """
     x, y = v_j, (v_j**2 - 2) % mod

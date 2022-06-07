@@ -13,9 +13,9 @@ def lucas_sequence_u(n: int, a: int, b: int) -> int:
         int: n番目のLucas数列の値
 
     Examples:
-        >>> lucas_sequence(4, 3, 2)
+        >>> lucas_sequence_u(4, 3, 2)
         15
-        >>> lucas_sequence(5, 6, 7)
+        >>> lucas_sequence_u(5, 6, 7)
         589
     """
     if n <= 1:
@@ -35,9 +35,9 @@ def lucas_sequence_v(n: int, a: int, b: int) -> int:
         int: n番目のLucas数列の値
 
     Examples:
-        >>> lucas_sequence(4, 3, 2)
+        >>> lucas_sequence_v(4, 3, 2)
         17
-        >>> lucas_sequence(5, 6, 7)
+        >>> lucas_sequence_v(5, 6, 7)
         1686
     """
     if n == 0:

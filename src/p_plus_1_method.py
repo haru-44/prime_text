@@ -2,7 +2,7 @@ import math
 
 from sympy import primerange
 
-from lucas_sequence_v import lucas_sequence_v
+from lucas_sequence_chain import lucas_sequence_chain_b
 
 
 def p_plus_1_method(n: int, *, B: int, a: int = 5) -> int:
@@ -29,7 +29,7 @@ def p_plus_1_method(n: int, *, B: int, a: int = 5) -> int:
     v = a
     for prime in primerange(1, B + 1):
         l = math.floor(math.log(n) / math.log(prime))
-        v, _ = lucas_sequence_v(v, prime**l, n)
+        v, _ = lucas_sequence_chain_b(v, prime**l, n)
     d = math.gcd(v - 2, n)
     if 1 < d < n:
         return d
