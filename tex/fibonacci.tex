@@ -182,16 +182,6 @@ $F_{11 - 1} = F_{10} \equiv 0 \pmod{11}$も正しい。
 \IND{Fibonacci擬素数テスト}{Fibonacciきそすうてすと}は\rTheo{fibonacci_prime}を利用した素数判定アルゴリズムである。
 Fibonacci擬素数テストでも、合成数を誤って「素数」と判定することがあり得て、これを\IND{Fibonacci擬素数}{Fibonacciきそすう}(Fibonacci pseudoprime)と呼ぶ\Notes{奇数のFibonacci擬素数は\url{https://oeis.org/A081264}, 偶数のFibonacci擬素数は\url{https://oeis.org/A141137}}。
 
-また、他の素数判定法と組み合わせることが可能である。
-例えば、
-\begin{itemize}
- \item $n \equiv \pm 2 \pmod{5}$
- \item 底$a=2$のFermatテスト(\rAlgo{fermat_test})で素数と判定される。
- \item Fibonacci数列テストで素数と判定される。
-\end{itemize}
-となるような合成数$n$は見つかっていない。
-これは、素数判定に関する\IND{Selfridge予想}{Selfridgeよそう}(Selfridge's conjecture)あるいは\IND{PSW予想}{PSWよそう}として知られ、真であることまたは反例を見つけた者に620ドルの賞金が送られることになっている\cite{A_Computational_Perspective}。
-
 \subsubsection{Lucas数列}
 Fibonacci数列を使って素数判定ができた。
 Lucas数列はFibonacci数列の一般化であるが、ならば同様にLucas数列でも素数判定ができるのではないか。
@@ -271,19 +261,6 @@ $n-1$は常に偶数になるから、$(-1)^{n-1}$は常に$1$になる。
 $n=2, 5$のときも、個別に値を調べれば$\left(\frac{2}{5}\right) = \left(\frac{5}{2}\right) = -1$であるから一致する。
 つまり、Lucas数列での定理は、Fibonacci数列の定理の一般化である。
 
-Fibonacci数列のときと同じように、定理から素数判定アルゴリズムを作ることができる。
-それが\IND{Lucas擬素数テスト}{Lucasきそすうてすと}だ。
-こちらも効率的な実装は\rAlgo{quadratic_frobenius_test}に譲る。
+Fibonacci数列のときと同じように、\rTheo{lucas_sequence}から素数判定アルゴリズムを作ることができて、これを\IND{Lucas擬素数テスト}{Lucasきそすうてすと}と呼ぶ。
+やはりこの素数判定法も、合成数を誤って「素数」と判定してしまうことがあり、これを\IND{Lucas擬素数}{Lucasきそすう}(Lucas pseudoprime)と呼ぶ。
 
-やはりこの素数判定法も、合成数を誤って「素数」と判定してしまうことがある。
-これを\IND{Lucas擬素数}{Lucasきそすう}(Lucas pseudoprime)と呼ぶ。
-例えば、$323=17\times19$は、合成数であるが、$a=-10,b=-5$のとき``probable prime"を返す。
-
-さらに、FermatテストからMiller-Rabinテストを考えたのと同じように、Lucas擬素数テストから強Lucas擬素数テストを考えることができる。
-つまり、$n - \left(\frac{\Delta}{n}\right)$を$2^s\cdot m$と表現する(ここで、$m$は奇数)とき、素数$n$は、次のうち少なくとも1つは満たす。
-\begin{itemize}
- \item $U_m \equiv 0 \pmod{n}$
- \item $V_{2^t\cdot m} \equiv 0 \pmod{n}$, ここで$0\le t<s$
-\end{itemize}
-これにすらパスする合成数は\IND{強Lucas擬素数}{きようLucasきそすう}(strong Lucas pseudoprime)と呼ばれる。
-$n$がパラメータ$(a,b)$の強Lucas擬素数なら、パラメータ$(a,b)$のLuacs擬素数でもある。

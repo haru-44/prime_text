@@ -1,0 +1,39 @@
+\rTheo{fibonacci_prime}や\rTheo{lucas_sequence}は、素数に関する定理だが、素数判定にしか使えないわけではない。
+$n$を合成数、$p$を$n$の素因数としよう。
+$U_{p-\epsilon} \equiv 0 \pmod{p}$が成り立つということは、$\gcd(U_{p-\epsilon} \bmod{n}, n)$は$n$の非自明な因数であると期待できる、というのは$p-1$法と同じ理屈である。
+ここで、$\epsilon$と仮に置いたが、これは$+1$か$-1$のどちらかであり、$p$やLucas数列のパラメータ$a,b$によって変わるのであった。
+$+1$のときは$p-1$法が因数分解できる数が素因数分解できるだけで面白みがない。
+\IND{Williamsの$p+1$法}{Williamsのp+1ほう}(以下、$p+1$法)は、$n$の素因数$p$について$p+1$が$B$-smoothであるという仮定を置いた素因数分解アルゴリズムである\cite{Williams1982}。
+無論、$p$がそもそも不明であることからも分かる通り、意図して$\epsilon=1$となるようにすることはできない。
+Lucas数列のパラメータ$a$をランダムに選んで、見込みがなければ別の$a$で試す、ということも必要となる。
+
+さて、Lucas数列$U_n,V_n$の間には、次のような関係がある。
+\begin{align*}
+\Delta U_k = 2V_{k+1}-aV_m
+\end{align*}
+つまり、$V_k$と$V_{k+1}$が分かれば$U_k$がすぐに求められるということであり、$U_m \equiv 0 \pmod{n}$かを調べることは$2V_{m+1}\equiv aV_m \pmod{n}$かを調べることと同値である。
+
+そこで詳しく調べてみると、$V_n$には
+\begin{align*}
+V_{j+k} = V_jV_k - b^jV_{k-1}
+\end{align*}
+という性質があることが分かる。
+$k=j$と$k=j+1$という2つの特別の場合を考えると、
+\begin{align*}
+V_{2j} &= V_j^2 - 2b^j\\
+V_{2j+1} &= V_jV_{j+1} - ab^j
+\end{align*}
+が得られる。
+これを使えば$V_k$を簡単に計算できそうだ。
+$b=1$の場合は更に簡単になるだけでなく、$V_j$から$V_{jk}$を計算できるようになる。
+$p-1$法と類似するアルゴリズムを実装するには必須の性質である。
+\begin{align*}
+V_{2j} &= V_j^2 - 2\\
+V_{N(2j+1)} &= V_{Nj}V_{N(j+1)} - V_N
+\end{align*}
+
+\Algo{Lucas数列(高速版)}{lucas_sequence_chain}{}
+
+これさえ分かれば、後は$p-1$法と同じ要領で$p+1$法が実装できる。
+
+\Algo{$p+1$法}{p_plus_1_method}{c.f., \rAlgo{lucas_sequence_chain}}

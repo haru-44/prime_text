@@ -7,7 +7,7 @@ from sqrt_int import sqrt_int
 
 
 def strong_lucas_sequence_test(n: int, a: int, b: int) -> str:
-    """ 強Lucas数列テストを用いて、n > 1が素数かを判定する。
+    """ 強Lucas擬素数テストを用いて、n > 1が素数かを判定する。
 
     Args:
         n (int): 素数判定する対象の奇数

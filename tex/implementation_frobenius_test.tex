@@ -1,6 +1,29 @@
-最後に、これまで学んだ知識で、Fibonacci数列テスト、Lucas数列テスト、2次Frobeniusテストを改めて実装する。
+最後に、これまで学んだ知識で、Fibonacci数列テスト、Lucas数列テスト、2次Frobeniusテストを実装する。
 
 \Algo{2次Frobeniusテスト}{quadratic_frobenius_test}{c.f., \rAlgo{inverse_mod}, \rAlgo{jacobi_symbol}, \rAlgo{lucas_sequence_chain}, \rAlgo{sqrt_int}}
 
+Lucas数列テストではパラメータ$a,b$は、$\Delta=a^2-4b$が平方数にならないように、という制約がある以外、自由に決めてよい。
+マーケティングの世界では「ジャムの法則」と呼ばれているそうだが、人間は選択肢が多いと選べなくなってしまう。
+Lucas数列テストでは、どんな$a,b$を選べば良いのだろうか？　その1つの答えが\IND{Selfridgeの方法A}{SelfridgeのほうほうA}(Selfridge's method A)\cite{selfridge_method}である。
+何とも奇妙な名称だが、パラメータ$a,b$を選ぶ方法として、論文中でAとBという2つの方法を紹介したことが始まりで、名前というよりも列挙のためのナンバリングでしかないのだが、こういう名称で呼ばれる。
+
+適切なパラメータ設定の方法はいくつかあるが、重要なのは$\Delta=a^2-4b$が$\left(\frac{\Delta}{n}\right)=-1$を満たすということだ。
+\cite{selfridge_method}で紹介された方法A,Bは次の通り。
+\begin{itemize}
+ \item $\Delta$を$5,-7,9,-11,\ldots$の順番に$\left(\frac{\Delta}{n}\right)=-1$を満たしているかを試して、最初に見つけた$\Delta$にt対して$a=1,b=(1-\Delta)/4$とする。
+ \item $\Delta$を$5,9,13,17,\ldots$の順番に$\left(\frac{\Delta}{n}\right)=-1$を満たしているかを試して、最初に見つけた$\Delta$に対して、$a$を$\sqrt{\Delta}$を超える最小の奇数、$b=(a^2-\Delta)/4$とする。
+\end{itemize}
+同論文では、1つ目の方法で$\Delta$を決定するまでの試行回数の期待値は、$3.147\cdots$に収束することも証明されている(\cite{selfridge_method}定理9)。
+
 \Algo{Selfridgeの方法A}{selfridge_method_a}{c.f., \rAlgo{jacobi_symbol}}
 
+さらに、FermatテストからMiller-Rabinテストを考えたのと同じように、Lucas擬素数テストから\IND{強Lucas擬素数テスト}{きようLucasきそすうてすと}を考えることができる。
+つまり、$n - \left(\frac{\Delta}{n}\right)$を$2^s\cdot m$と表現する(ここで、$m$は奇数)とき、素数$n$は、次のうち少なくとも1つは満たす。
+\begin{itemize}
+ \item $U_m \equiv 0 \pmod{n}$
+ \item $V_{2^t\cdot m} \equiv 0 \pmod{n}$, ここで$0\le t<s$
+\end{itemize}
+これにすらパスする合成数は\IND{強Lucas擬素数}{きようLucasきそすう}(strong Lucas pseudoprime)と呼ばれる。
+$n$がパラメータ$(a,b)$の強Lucas擬素数なら、パラメータ$(a,b)$のLuacs擬素数でもある。
+
+\Algo{強Lucas擬素数テスト}{strong_lucas_sequence_test}{c.f., \rAlgo{jacobi_symbol}, \rAlgo{lucas_sequence_chain}, \rAlgo{split_int}, \rAlgo{sqrt_int}}

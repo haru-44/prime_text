@@ -1,5 +1,14 @@
-def matrix_mul(A, B, mod=None):
+from typing import Optional
+
+def matrix_mul(A, B, mod:Optional[int]=None):
     """ 行列AとBの積を計算する
+
+    Args:
+        A, B: 行列
+        mod (int): 各要素の剰余を求める際に指定する
+
+    Returns:
+        C: AとBの積
     """
     n = len(A)
     m = len(B[0])
