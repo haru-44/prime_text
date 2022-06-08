@@ -2,7 +2,7 @@ def lucas_lehmer_primality_test(q: int) -> str:
     """ Lucas-Lehmerテストによって、Mersenne数M_q = 2**q - 1が素数かを判定する。
 
     Args:
-        q (int): 素数
+        q (int): 奇素数
 
     Returns:
         string: 'prime number'     = M_qは素数

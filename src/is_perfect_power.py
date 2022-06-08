@@ -21,6 +21,8 @@ def is_perfect_power(n: int) -> bool:
         >>> is_perfect_power(26)
         False
     """
+    if n == 1:
+        return True
     for b in range(2, int(math.log2(n)) + 1):
         a = nth_root_int(n, b)
         if a**b == n:
