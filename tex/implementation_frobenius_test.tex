@@ -3,7 +3,7 @@
 \Algo{2次Frobeniusテスト}{quadratic_frobenius_test}{c.f., \rAlgo{inverse_mod}, \rAlgo{jacobi_symbol}, \rAlgo{lucas_sequence_chain}, \rAlgo{sqrt_int}}
 
 Lucas数列テストではパラメータ$a,b$は、$\Delta=a^2-4b$が平方数にならないように、という制約がある以外、自由に決めてよい。
-マーケティングの世界では「ジャムの法則」と呼ばれているそうだが、人間は選択肢が多いと選べなくなってしまう。
+マーケティングの世界では「ジャムの法則」と呼ばれているそうだが、人間は選択肢が多いと選べなくなってしまうようだ。
 Lucas数列テストでは、どんな$a,b$を選べば良いのだろうか？　その1つの答えが\IND{Selfridgeの方法A}{SelfridgeのほうほうA}(Selfridge's method A)\cite{selfridge_method}である。
 何とも奇妙な名称だが、パラメータ$a,b$を選ぶ方法として、論文中でAとBという2つの方法を紹介したことが始まりで、名前というよりも列挙のためのナンバリングでしかないのだが、こういう名称で呼ばれる。
 
@@ -13,9 +13,24 @@ Lucas数列テストでは、どんな$a,b$を選べば良いのだろうか？�
  \item $\Delta$を$5,-7,9,-11,\ldots$の順番に$\left(\frac{\Delta}{n}\right)=-1$を満たしているかを試して、最初に見つけた$\Delta$にt対して$a=1,b=(1-\Delta)/4$とする。
  \item $\Delta$を$5,9,13,17,\ldots$の順番に$\left(\frac{\Delta}{n}\right)=-1$を満たしているかを試して、最初に見つけた$\Delta$に対して、$a$を$\sqrt{\Delta}$を超える最小の奇数、$b=(a^2-\Delta)/4$とする。
 \end{itemize}
-同論文では、1つ目の方法で$\Delta$を決定するまでの試行回数の期待値は、$3.147\cdots$に収束することも証明されている(\cite{selfridge_method}定理9)。
+同論文では、1つ目の方法で$\Delta$を決定するまでの試行回数の期待値は、$3.147\cdots$に収束することも証明されている(\cite[定理9]{selfridge_method})。
 
 \Algo{Selfridgeの方法A}{selfridge_method_a}{c.f., \rAlgo{jacobi_symbol}}
+
+擬素数が現れない、そうは言わないまでも擬素数が有限個で済むようなパラメータはあるだろうか？　残念ながらそういうパラメータは存在しない。
+
+\begin{Theo}{}{}
+任意のパラメータ$a,b$に対して、無限に多くのLucas擬素数が存在する。
+また、$\left(\frac{\Delta}{n}\right)=1$となるパラメータ$a,b$に対して、無限に多くのFrobenius擬素数が存在する。
+\end{Theo}
+
+証明は、
+\begin{itemize}
+ \item Fibonacci擬素数の場合\cite{fibonacci_pseudoprimes_infinite}
+ \item Lucas擬素数の場合\cite{lucas_pseudoprimes_infinite}
+ \item Frobenius擬素数で$\left(\frac{\Delta}{n}\right)=1$の場合\cite{frobenius_pseudoprimes_infinite}
+\end{itemize}
+でそれぞれなされている。
 
 さらに、FermatテストからMiller-Rabinテストを考えたのと同じように、Lucas擬素数テストから\IND{強Lucas擬素数テスト}{きようLucasきそすうてすと}を考えることができる。
 つまり、$n - \left(\frac{\Delta}{n}\right)$を$2^s\cdot m$と表現する(ここで、$m$は奇数)とき、素数$n$は、次のうち少なくとも1つは満たす。
@@ -27,3 +42,4 @@ Lucas数列テストでは、どんな$a,b$を選べば良いのだろうか？�
 $n$がパラメータ$(a,b)$の強Lucas擬素数なら、パラメータ$(a,b)$のLuacs擬素数でもある。
 
 \Algo{強Lucas擬素数テスト}{strong_lucas_sequence_test}{c.f., \rAlgo{jacobi_symbol}, \rAlgo{lucas_sequence_chain}, \rAlgo{split_int}, \rAlgo{sqrt_int}}
+
