@@ -20,7 +20,6 @@ def test_strong_lucas_pseudoprimes():
             continue
         ans = strong_lucas_sequence_test(n, a, b)
         if isprime(n):
-            print(n)
             assert ans == 'probable prime'
         elif n in pseudoprimes:
             assert ans == 'probable prime'

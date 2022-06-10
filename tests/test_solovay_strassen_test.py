@@ -2,7 +2,7 @@ from src.solovay_strassen_test import solovay_strassen_test
 from sympy.ntheory import isprime
 
 
-def test_fermat_test_A047713():
+def test_solovay_strassen_test_A047713():
     """
     Notes:
         https://oeis.org/A047713
@@ -21,7 +21,7 @@ def test_fermat_test_A047713():
             assert ans == 'composite number'
 
 
-def test_fermat_test_A048950():
+def test_solovay_strassen_test_A048950():
     """
     Notes:
         https://oeis.org/A048950

@@ -1,3 +1,4 @@
+\subsubsection{Eratosthenesの篩}
 素数を列挙するためのアルゴリズムとして、\IND{Eratosthenesの篩}{Eratosthenesのふるい}(sieve of Eratosthenes)は有名だ。
 長さ$n$のリストを用意して、
 \begin{itemize}
@@ -30,6 +31,7 @@
 
 \Algo{Eratosthenesの篩}{sieve_of_eratosthenes}{c.f., \rAlgo{sqrt_int}}
 
+\subsubsection{Sundaramの篩}
 素数を列挙するためのアルゴリズムとして、Eratosthenesの篩が紹介されることは多いが、それ以外のアルゴリズムが紹介されることは少ない。
 Eratosthenesの篩でも十分実用的であり、マニアックな改良まで紹介する必要がないからであろう。
 そういう所に突っ込んでいくべきであろう。
@@ -43,6 +45,7 @@ $i,j$が$(2i+1)(2j+1)\le n$を満たす範囲を動けば、$n$以下のすべ�
 
 \Algo{Sundaramの篩}{sieve_of_sundaram}{c.f., \rAlgo{sqrt_int}}
 
+\subsubsection{Atkinの篩}
 \IND{Atkinの篩}{Atkinのふるい}(sieve of Atkin)\cite{atkin_sieve}は、次の定理を使う。
 
 \begin{Theo}{}{atkin}

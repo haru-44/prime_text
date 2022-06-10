@@ -2,7 +2,7 @@ from src.miller_rabin_test import miller_rabin_test
 from sympy.ntheory import isprime
 
 
-def test_fermat_test_A001262():
+def test_miller_rabin_test_A001262():
     """
     Notes:
         https://oeis.org/A001262
@@ -21,7 +21,7 @@ def test_fermat_test_A001262():
             assert ans == 'composite number'
 
 
-def test_fermat_test_A020229():
+def test_miller_rabin_test_A020229():
     """
     Notes:
         https://oeis.org/A020229
@@ -41,7 +41,7 @@ def test_fermat_test_A020229():
             assert ans == 'composite number'
 
 
-def test_fermat_test_A020231():
+def test_miller_rabin_test_A020231():
     """
     Notes:
         https://oeis.org/A020231
@@ -60,7 +60,7 @@ def test_fermat_test_A020231():
             assert ans == 'composite number'
 
 
-def test_fermat_test_A020233():
+def test_miller_rabin_test_A020233():
     """
     Notes:
         https://oeis.org/A020233
