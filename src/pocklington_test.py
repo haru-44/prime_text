@@ -1,15 +1,17 @@
 import math
 import random
+from typing import List, Optional
 
-from sqrt_int import sqrt_int
 
-
-def pocklington_test(n: int, k: int = 10) -> str:
+def pocklington_test(n: int, qs: List[int], *,
+                     k: Optional[int] = None, a_list: Optional[List[int]] = None) -> str:
     """ Pocklingtonの定理を用いて、n>2が素数かを判定する。
 
     Args:
         n (int): 素数判定する対象の整数
-        k (int): 試行回数。既定値を10としたが、特に意味はない。
+        qs (List[int]): n-1の素因数リスト
+        k (int): 試行回数の指定
+        a_list(List[int]): 底の指定
 
     Returns:
         string: 'prime number'       = nは素数
@@ -17,28 +19,20 @@ def pocklington_test(n: int, k: int = 10) -> str:
                 'possibly composite' = nはおそらく合成数
 
     Examples:
-        >>> pocklington_test(97)
+        >>> pocklington_test(97, [2], k=10)
         'prime number'
-        >>> pocklington_test(100)
+        >>> pocklington_test(100, [3, 11], k=10)
         'composite number'
     """
-    # n - 1を試し割する
-    N = n - 1
-    F = 1
-    qs = []
-    upper = sqrt_int(N) + 1
-    for divisor in range(2, upper):
-        count = 0
-        while N % divisor == 0:
-            N //= divisor
-            count += 1
-        if count != 0:
-            qs.append(divisor)
-            F *= divisor**count
-            if n <= F**2:
-                break
-    for _ in range(k):
-        a = random.randrange(2, n)
+    F, N = 1, n - 1
+    for q in qs:
+        while N % q == 0:
+            N //= q
+            F *= q
+    assert n <= F**2 # qsが条件を満たしているかチェックする
+    if a_list is None:
+        a_list = [random.randrange(2, n) for _ in range(k)]
+    for a in a_list:
         if pow(a, n - 1, n) != 1:
             return 'composite number'
         if all(math.gcd(pow(a, (n - 1) // q, n) - 1, n) == 1 for q in qs):

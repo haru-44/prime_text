@@ -1,3 +1,39 @@
+\subsubsection{擬素数の整理}
+これまでに紹介してきた擬素数($+\alpha$)を整理してみよう。
+
+まずは、Fermatテストをすり抜けるFermat擬素数があった。
+Solovay-Strassenテストをすり抜けるのはEuler-Jacobi擬素数で、Miller-Rabinテストに対応するのが強擬素数だった。
+これらの関係は次のようになる。
+
+\begin{Theo}{}{}
+任意のパラメータ$a$に対して
+\begin{align*}
+\mbox{強擬素数} \subseteq \mbox{Euler-Jacobi擬素数} \subseteq \mbox{Euler擬素数} \subseteq \mbox{Fermat擬素数}
+\end{align*}
+が成り立つ。
+\end{Theo}
+
+もちろん、擬素数は少ない方が良いので、強擬素数の方が人類にとっては最も嬉しい。
+Euler擬素数は初めて登場したので、定義だけ述べておく。
+
+\begin{Defi}{\IND{Euler擬素数}{Eulerきそすう}, Euler pseudoprime}{euler_pseudoprime}
+奇数の合成数$n$は$a$と互いに素であるとする。
+$n$が
+\begin{align*}
+a^{(n-1)/2} \equiv \pm 1 \pmod{n}
+\end{align*}
+を満たすとき、$n$を底$a$のEuler擬素数と呼ぶ。
+\end{Defi}
+
+他に、Lucas擬素数やFrobenius擬素数が登場したが、
+\begin{align*}
+\mbox{Frobenius擬素数} &\subseteq \mbox{Lucas擬素数}\\
+\mbox{強Lucas擬素数} &\subseteq \mbox{Lucas擬素数}\\
+\mbox{強Frobenius擬素数} &\subseteq \mbox{Frobenius擬素数}
+\end{align*}
+という半ば自明の関係がある。
+
+\subsubsection{ニコイチ}
 複数の素数判定法を組み合わせれば良くなるというのは、安直ながら強力な方法である。
 例えば、
 \begin{itemize}
