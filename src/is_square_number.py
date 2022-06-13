@@ -8,7 +8,8 @@ def is_square_number(n: int) -> bool:
         n (int): 平方数かを判定する整数
 
     Returns:
-        bool: nが平方数ならTrue。負数なら常にFalse
+        bool: nが平方数ならTrue。そうでなければFalse
+              負数は常にFalse
 
     Examples:
         >>> is_square_number(26)

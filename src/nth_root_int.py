@@ -2,7 +2,8 @@ def nth_root_int(a: int, n: int) -> int:
     """ aのn乗根の整数部を求める
 
     Args:
-        a, b (int): パラメータ
+        a (int): 0以上の整数
+        n (int): 2以上の整数
 
     Returns:
         int: aのn乗根の整数部
@@ -11,9 +12,9 @@ def nth_root_int(a: int, n: int) -> int:
         >>> nth_root_int(26, 3)
         2
     """
-    if a == 0:
-        return 0
-    x = a
+    if a < 2:
+        return a
+    x = 2**((len(bin(a))-3+n)//n)
     while True:
         y = (a + (n - 1) * x**n) // (n * x**(n - 1))
         if y >= x:
