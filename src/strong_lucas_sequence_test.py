@@ -1,9 +1,9 @@
 import math
 
+from is_square_number import is_square_number
 from jacobi_symbol import jacobi_symbol
 from lucas_sequence_chain import lucas_sequence_chain
 from split_int import split_int
-from sqrt_int import sqrt_int
 
 
 def strong_lucas_sequence_test(n: int, a: int, b: int) -> str:
@@ -18,7 +18,7 @@ def strong_lucas_sequence_test(n: int, a: int, b: int) -> str:
              'composite number' = nは合成数
     """
     delta = a**2 - 4*b
-    assert sqrt_int(delta)**2 != delta
+    assert not is_square_number(delta)
     assert math.gcd(n, 2*a*b*delta) == 1
     s, m = split_int(n - jacobi_symbol(delta, n))
     v_m, v_mp1 = lucas_sequence_chain(m, a, b, n)
@@ -27,7 +27,7 @@ def strong_lucas_sequence_test(n: int, a: int, b: int) -> str:
     bk = pow(b, m, n)
     for _ in range(s-1):
         v_m = (v_m**2 - 2 * bk) % n
-        bk = pow(bk,2,n)
+        bk = pow(bk, 2, n)
         if v_m == 0:
             return 'probable prime'
     return 'composite number'

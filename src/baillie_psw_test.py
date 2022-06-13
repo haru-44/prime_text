@@ -1,6 +1,6 @@
+from is_square_number import is_square_number
 from miller_rabin_test import miller_rabin_test
 from selfridge_method_a import selfridge_method_a
-from sqrt_int import sqrt_int
 from strong_lucas_sequence_test import strong_lucas_sequence_test
 
 
@@ -31,7 +31,7 @@ def baillie_psw_test(n: int) -> str:
     # 底2のMiller-Rabinテスト
     if miller_rabin_test(n, a_list=[2]) == 'composite number':
         return 'composite number'
-    if sqrt_int(n)**2 == n:
+    if is_square_number(n):
         return 'composite number'
     a, b = selfridge_method_a(n)
     if a == 0 and b == 0:

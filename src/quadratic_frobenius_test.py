@@ -1,9 +1,9 @@
 import math
 
 from inverse_mod import inverse_mod
+from is_square_number import is_square_number
 from jacobi_symbol import jacobi_symbol
 from lucas_sequence_chain import lucas_sequence_chain_b
-from sqrt_int import sqrt_int
 
 
 def quadratic_frobenius_test(n: int, a: int, b: int, method: str = 'frobenius') -> str:
@@ -30,7 +30,7 @@ def quadratic_frobenius_test(n: int, a: int, b: int, method: str = 'frobenius') 
         'composite number'
     """
     delta = a**2 - 4*b
-    assert sqrt_int(delta)**2 != delta
+    assert not is_square_number(delta)
     assert math.gcd(n, 2*a*b*delta) == 1
     inv_b = inverse_mod(b, n)
     A = (a**2 * inv_b - 2) % n
