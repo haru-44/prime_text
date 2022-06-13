@@ -1,6 +1,6 @@
 最後に、これまで学んだ知識で、Fibonacci数列テスト、Lucas数列テスト、2次Frobeniusテストを実装する。
 
-\Algo{2次Frobeniusテスト}{quadratic_frobenius_test}{c.f., \rAlgo{inverse_mod}, \rAlgo{jacobi_symbol}, \rAlgo{lucas_sequence_chain}, \rAlgo{sqrt_int}}
+\Algo{2次Frobeniusテスト}{quadratic_frobenius_test}{c.f., \rAlgo{inverse_mod}, \rAlgo{is_square_number}, \rAlgo{jacobi_symbol}, \rAlgo{lucas_sequence_chain}}
 
 Lucas数列テストではパラメータ$a,b$は、$\Delta=a^2-4b$が平方数にならないように、という制約がある以外、自由に決めてよい。
 マーケティングの世界では「ジャムの法則」と呼ばれているそうだが、人間は選択肢が多いと選べなくなってしまうようだ。
@@ -41,5 +41,5 @@ Lucas数列テストでは、どんな$a,b$を選べば良いのだろうか？�
 これにすらパスする合成数は\IND{強Lucas擬素数}{きようLucasきそすう}(strong Lucas pseudoprime)と呼ばれる。
 $n$がパラメータ$(a,b)$の強Lucas擬素数なら、パラメータ$(a,b)$のLuacs擬素数でもある。
 
-\Algo{強Lucas擬素数テスト}{strong_lucas_sequence_test}{c.f., \rAlgo{jacobi_symbol}, \rAlgo{lucas_sequence_chain}, \rAlgo{split_int}, \rAlgo{sqrt_int}}
+\Algo{強Lucas擬素数テスト}{strong_lucas_sequence_test}{c.f., \rAlgo{jacobi_symbol}, \rAlgo{is_square_number}, \rAlgo{lucas_sequence_chain}, \rAlgo{split_int}}
 
