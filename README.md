@@ -40,6 +40,7 @@
 * その他の方法
   * [Pollardのρ法](https://haru-44.github.io/prime_text/html/rho_method.html)
   * [Baillie-PSWテスト](https://haru-44.github.io/prime_text/html/baillie_psw_test.html)
+  * [剰余類に含まれる因数](https://haru-44.github.io/prime_text/html/divisors_lenstra.html)
   * [2次形式](https://haru-44.github.io/prime_text/html/quadratic_form.html)
   * [AKSテスト](https://haru-44.github.io/prime_text/html/aks_test.html)
   * [楕円曲線](https://haru-44.github.io/prime_text/html/elliptic_curve.html)
