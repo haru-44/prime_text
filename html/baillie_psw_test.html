@@ -13,28 +13,66 @@
   <strong>このページは、pdfファイル出力用に作成したtexファイルから機械的に変換されています。体裁不良がある場合は<a href="https://github.com/haru-44/prime_text/releases/latest/download/main.pdf">pdfファイル</a>をご覧ください。</strong>
   <hr/>
 <h1>baillie_psw_test</h1>
-<p><strong>Baillie-PSWテスト</strong>(Baillie-PSW primality test)は、大雑把に言えばMiller-RabinテストとLucas数列テストを組み合わせた素数判定法である。
+<p><h2>擬素数の整理</h2>
+これまでに紹介してきた擬素数(\(+\alpha\))を整理してみよう。
+</p>
+<p>まずは、Fermatテストをすり抜けるFermat擬素数があった。
+Solovay-Strassenテストをすり抜けるのはEuler-Jacobi擬素数で、Miller-Rabinテストに対応するのが強擬素数だった。
+これらの関係は次のようになる。
+</p>
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>定理</strong>)
+任意のパラメータ\(a\)に対して
+\begin{align*}
+\mbox{強擬素数} \subseteq \mbox{Euler-Jacobi擬素数} \subseteq \mbox{Euler擬素数} \subseteq \mbox{Fermat擬素数}
+\end{align*}
+が成り立つ。
+</div>
+
+<p>もちろん、擬素数は少ない方が良いので、強擬素数の方が人類にとっては最も嬉しい。
+Euler擬素数は初めて登場したので、定義だけ述べておく。
+</p>
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>定義</strong>)
+奇数の合成数\(n\)は\(a\)と互いに素であるとする。
+\(n\)が
+\begin{align*}
+a^{(n-1)/2} \equiv \pm 1 \pmod{n}
+\end{align*}
+を満たすとき、\(n\)を底\(a\)のEuler擬素数と呼ぶ。
+</div>
+
+<p>他に、Lucas擬素数やFrobenius擬素数が登場したが、
+\begin{align*}
+\mbox{Frobenius擬素数} &\subseteq \mbox{Lucas擬素数}\\
+\mbox{強Lucas擬素数} &\subseteq \mbox{Lucas擬素数}\\
+\mbox{強Frobenius擬素数} &\subseteq \mbox{Frobenius擬素数}
+\end{align*}
+という半ば自明の関係がある。
+</p>
+<p><h2>ニコイチ</h2>
+複数の素数判定法を組み合わせれば良くなるというのは、安直ながら強力な方法である。
+例えば、
+</p><ul>
+ <li> \(n \equiv \pm 2 \pmod{5}\)
+ <li> 底\(a=2\)のFermatテスト()で素数と判定される。
+ <li> Fibonacci擬素数テストで素数と判定される。
+</ul>
+<p>となるような合成数\(n\)は見つかっていない。
+これは、素数判定に関する<strong>Selfridge予想</strong>(Selfridge's conjecture)あるいは<strong>PSW予想</strong>として知られ、真であることまたは反例を見つけた者に620ドルの賞金が送られることになっている。
+</p>
+<p><strong>Baillie-PSWテスト</strong>(Baillie-PSW primality test)は、大雑把に言えばMiller-Rabinテストと強Lucas擬素数テストを組み合わせた素数判定法である。
 Baillie-PSWテストという名称は、発明者であるRobert Baillie, Carl Pomerance, John Selfridge, Samuel Wagstaffからきている。
 元々、3人が発明したPSWテストが存在し、Baillieが改良を加えたため、このような名称となっている。
 </p>
 <p>Miller-RabinテストもLucas数列テストも、誤って素数と判定されてしまう合成数が存在するが、両方を突破する合成数は感覚的は少ないと推定できるだろう。
 もちろん、無闇矢鱈にテストを繰り返せば合成数であるという疑いは徐々に晴れていくものの、それでは芸がない。
 Miller-Rabinテストにおいて、\(a=2\)の場合に誤って素数と判定されてしまう合成数は、\(2047, 3277, 4033,\ldots\)等である{<a href="https://oeis.org/A001262">https://oeis.org/A001262</a>}。
-一方、適切にパラメータ\(a,b\)を設定されたLucas数列テストにおいて、誤って素数と判定されてしまう合成数は、\(5459, 5777, 10877,\ldots\)等である{<a href="https://oeis.org/A217255">https://oeis.org/A217255</a>}。
+一方、Selfridgeの方法Aで決められたパラメータ\(a,b\)を設定された強Lucas擬素数テストにおいて、誤って素数と判定されてしまう合成数は、\(5459, 5777, 10877,\ldots\)等である{<a href="https://oeis.org/A217255">https://oeis.org/A217255</a>}。
 この2つを試して間違うときというのは、この2つの数列に共通の数が含まれていた場合のみである。
 (現在検証されている範囲では)\(2^64\)までなら確実に素数か合成数かを判定できるし、これ以上についても、そのような合成数は未だ発見されていない。
 </p>
-<p>Lucas数列テストにおける、適切なパラメータ設定の方法は、いくつかあるが重要なのは\(\Delta=a^2-4b\)が\(\left(\frac{\Delta}{n}\right)=-1\)を満たすということだ。
-では\(\Delta\)を決定するための2つの方法が紹介されている。
-</p><ul>
- <li> \(\Delta\)を\(5,-7,9,-11,\ldots\)の順番に\(\left(\frac{\Delta}{n}\right)=-1\)を満たしているかを試して、最初に見つけた\(\Delta\)にt対して\(a=1,b=(1-\Delta)/4\)とする。
- <li> \(\Delta\)を\(5,9,13,17,\ldots\)の順番に\(\left(\frac{\Delta}{n}\right)=-1\)を満たしているかを試して、最初に見つけた\(\Delta\)に対して、\(a\)を\(\sqrt{\Delta}\)を超える最小の奇数、\(b=(a^2-\Delta)/4\)とする。
-</ul>
-<p>同論文では、1つ目の方法で\(\Delta\)を決定するまでの試行回数の期待値は、\(3.147\cdots\)に収束することも証明されている(定理9)。
-</p>
-<pre class="prettyprint">from miller_rabin_test import miller_rabin_test
+<pre class="prettyprint">from is_square_number import is_square_number
+from miller_rabin_test import miller_rabin_test
 from selfridge_method_a import selfridge_method_a
-from sqrt_int import sqrt_int
 from strong_lucas_sequence_test import strong_lucas_sequence_test
 
 
@@ -65,7 +103,7 @@ def baillie_psw_test(n: int) -> str:
     # 底2のMiller-Rabinテスト
     if miller_rabin_test(n, a_list=[2]) == 'composite number':
         return 'composite number'
-    if sqrt_int(n)**2 == n:
+    if is_square_number(n):
         return 'composite number'
     a, b = selfridge_method_a(n)
     if a == 0 and b == 0:

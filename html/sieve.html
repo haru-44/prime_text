@@ -13,7 +13,8 @@
   <strong>このページは、pdfファイル出力用に作成したtexファイルから機械的に変換されています。体裁不良がある場合は<a href="https://github.com/haru-44/prime_text/releases/latest/download/main.pdf">pdfファイル</a>をご覧ください。</strong>
   <hr/>
 <h1>sieve</h1>
-<p>素数を列挙するためのアルゴリズムとして、<strong>Eratosthenesの篩</strong>(sieve of Eratosthenes)は有名だ。
+<p><h2>Eratosthenesの篩</h2>
+素数を列挙するためのアルゴリズムとして、<strong>Eratosthenesの篩</strong>(sieve of Eratosthenes)は有名だ。
 長さ\(n\)のリストを用意して、
 </p><ul>
  <li> 2の倍数は素数を素数でないとして消し込む
@@ -74,7 +75,8 @@ def sieve_of_eratosthenes(n: int) -> List[bool]:
     return sieve_list
 </pre>
 
-<p>素数を列挙するためのアルゴリズムとして、Eratosthenesの篩が紹介されることは多いが、それ以外のアルゴリズムが紹介されることは少ない。
+<p><h2>Sundaramの篩</h2>
+素数を列挙するためのアルゴリズムとして、Eratosthenesの篩が紹介されることは多いが、それ以外のアルゴリズムが紹介されることは少ない。
 Eratosthenesの篩でも十分実用的であり、マニアックな改良まで紹介する必要がないからであろう。
 そういう所に突っ込んでいくべきであろう。
 </p>
@@ -116,7 +118,8 @@ def sieve_of_sundaram(n: int) -> List[int]:
     return [2 * idx + 3 for idx, is_prime in enumerate(sieve) if is_prime]
 </pre>
 
-<p><strong>Atkinの篩</strong>(sieve of Atkin)は、次の定理を使う。
+<p><h2>Atkinの篩</h2>
+<strong>Atkinの篩</strong>(sieve of Atkin)は、次の定理を使う。
 </p>
 <div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>定理</strong>)
 \(n\)を無平方数とする。

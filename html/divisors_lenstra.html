@@ -1,0 +1,102 @@
+<html lang="ja">
+  <head>
+    <title>divisors_lenstra</title>
+    <script type="text/x-mathjax-config">
+       MathJax.Hub.Config({TeX:{equationNumbers:{autoNumber:"AMS"}}});
+    </script>
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML,/www_func/MathJax/MyConfig.js">
+    </script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?lang=py&skin=sunburst"></script>
+  </head>
+  <body>
+  <strong>このページは、pdfファイル出力用に作成したtexファイルから機械的に変換されています。体裁不良がある場合は<a href="https://github.com/haru-44/prime_text/releases/latest/download/main.pdf">pdfファイル</a>をご覧ください。</strong>
+  <hr/>
+<h1>divisors_lenstra</h1>
+<p>「\(n\)の因数は、\(s\)を法として\(r\)と合同」という事実が判明したとする。
+このことは、\(n\)の素数判定あるいは素因数分解に役立つだろうか？　すぐに、試し割は\(xs+r\)の形のみを行えば良いことが分かる{\(x\)を動かせばよい}。
+他にも\(r=1\)なら\(p-1\)法が使えるし、\(r=s-1\)なら\(p+1\)法が使える。
+</p>
+<p>ここでは、Lenstraの結果を紹介しよう。
+このアルゴリズムは、\(s\)を法として\(r\)と合同な\(n\)の非自明な約数を列挙することができる。
+残念ながら、このアルゴリズムには人口に膾炙した名前がない{ふつう「Lenstra法」と言えば楕円曲線を使った素因数分解アルゴリズムを指す。}。
+</p>
+<p>仮定より、
+\begin{align*}
+n = (xs+r)(ys+r')
+\end{align*}
+と書ける、\(x,y\ge0\)と\(0<r'<s\)が存在する。
+</p>
+<pre class="prettyprint">import math
+from typing import List
+
+from inverse_mod import inverse_mod
+from is_square_number import is_square_number
+from sqrt_int import sqrt_int
+
+
+def divisors_lenstra(n: int, s: int, r: int) -> List[int]:
+    """ sを法としてrと合同なnの非自明な約数を列挙する
+
+    制約条件 0 < r < s < n, gcd(s, r) = 1
+
+    Examples:
+        >>> divisors_lenstra(245784, 65, 1)
+        [66, 196, 456, 2926, 12936]
+        >>> divisors_lenstra(288288, 71, 28)
+        [28, 99, 312, 2016, 4004]
+    """
+    assert math.gcd(s, r) == 1
+    divisors_set = set()
+    r_inv = inverse_mod(r, s)
+    r_dash = (n * r_inv) % s
+    if r > 1 and n % r == 0:  # x = 0
+        divisors_set.add(r)
+    if r_dash > 1 and n % r_dash == 0:  # y = 0
+        divisors_set.add(n // r_dash)
+    a1 = (r_inv * r_dash) % s
+    if a1 == 0:
+        a1 = s
+    a = [s, a1]
+    b = [0, 1]
+    c = [0, ((n - r*r_dash)//s * r_inv) % s]
+    for i in range(2, n):
+        _q, _a = divmod(a[i-2], a[i-1])
+        if _a == 0 and i % 2 == 1:
+            _a += a[i-1]
+            _q -= 1
+        if _a == 0:
+            break
+        a.append(_a)
+        b.append(b[i-2] - _q*b[i-1])
+        c.append((c[i-2] - _q*c[i-1]) % s)
+
+    tail = (n+s**2-1)//s**2 + 1
+    for i in range(1, len(a)):
+        if i % 2 == 0:
+            c_list = [0] if c[i] == 0 else [c[i]-s, c[i]]
+        else:
+            st = 2*a[i]*b[i]
+            rem = st % s
+            st += c[i] - rem
+            if c[i] < rem:
+                st += s
+            c_list = range(st, a[i]*b[i] + tail, s)
+        for c_ in c_list:
+            B = c_*s + a[i]*r + b[i]*r_dash
+            delta = B**2 - 4*a[i]*b[i]*n
+            if is_square_number(delta):
+                sq_delta = sqrt_int(delta)
+                u, v = (B + sq_delta) // 2, (B - sq_delta) // 2
+                if u % a[i] == 0 and v % b[i] == 0:
+                    if a[i] < u:
+                        divisors_set.add(u // a[i])
+                if v % a[i] == 0 and u % b[i] == 0:
+                    if a[i] < v:
+                        divisors_set.add(v // a[i])
+    return list(sorted(divisors_set))
+</pre>
+
+
+
+</body></html>

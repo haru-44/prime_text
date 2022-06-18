@@ -1,16 +1,16 @@
-�u$n$�̈����́A$s$��@�Ƃ���$r$�ƍ����v�Ƃ������������������Ƃ���B
-���̂��Ƃ́A$n$�̑f�����肠�邢�͑f���������ɖ𗧂��낤���H�@�����ɁA��������$xs+r$�̌`�݂̂��s���Ηǂ����Ƃ�������\Notes{$x$�𓮂����΂悢}�B
-���ɂ�$r=1$�Ȃ�$p-1$�@���g���邵�A$r=s-1$�Ȃ�$p+1$�@���g����B
+「$n$の因数は、$s$を法として$r$と合同」という事実が判明したとする。
+このことは、$n$の素数判定あるいは素因数分解に役立つだろうか？　すぐに、試し割は$xs+r$の形のみを行えば良いことが分かる\Notes{$x$を動かせばよい}。
+他にも$r=1$なら$p-1$法が使えるし、$r=s-1$なら$p+1$法が使える。
 
-�����ł́ALenstra�̌���\cite{divisors_lenstra}���Љ�悤�B
-���̃A���S���Y���́A$s$��@�Ƃ���$r$�ƍ�����$n$�̔񎩖��Ȗ񐔂�񋓂��邱�Ƃ��ł���B
-�c�O�Ȃ���A���̃A���S���Y���ɂ͐l�����Y�t�������O�͂Ȃ�\Notes{�ӂ��uLenstra�@�v�ƌ����Αȉ~�Ȑ����g�����f���������A���S���Y�����w���B}�B
+ここでは、Lenstraの結果\cite{divisors_lenstra}を紹介しよう。
+このアルゴリズムは、$s$を法として$r$と合同な$n$の非自明な約数を列挙することができる。
+残念ながら、このアルゴリズムには人口に膾炙した名前がない\Notes{ふつう「Lenstra法」と言えば楕円曲線を使った素因数分解アルゴリズムを指す。}。
 
-������A
+仮定より、
 \begin{align*}
 n = (xs+r)(ys+r')
 \end{align*}
-�Ə�����A$x,y\ge0$��$0<r'<s$�����݂���B
+と書ける、$x,y\ge0$と$0<r'<s$が存在する。
 
-\Algo{��]�ނɊ܂܂�����}{divisors_lenstra}{c.f., \rAlgo{inverse_mod}, \rAlgo{is_square_number}, \rAlgo{sqrt_int}}
+\Algo{剰余類に含まれる因数}{divisors_lenstra}{c.f., \rAlgo{inverse_mod}, \rAlgo{is_square_number}, \rAlgo{sqrt_int}}
 

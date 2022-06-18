@@ -13,7 +13,8 @@
   <strong>このページは、pdfファイル出力用に作成したtexファイルから機械的に変換されています。体裁不良がある場合は<a href="https://github.com/haru-44/prime_text/releases/latest/download/main.pdf">pdfファイル</a>をご覧ください。</strong>
   <hr/>
 <h1>pocklington_test</h1>
-<p>Lucasテストでは、\(n-1\)の素因数が<strong>完全に</strong>分かっている必要があった。
+<p><h2>Pocklingtonテスト</h2>
+Lucasテストでは、\(n-1\)の素因数が<strong>完全に</strong>分かっている必要があった。
 では、一部のみが判明している場合はどうなのだろうか。
 まずは簡単な形を見てみる。
 </p>
@@ -97,16 +98,18 @@ a^{n-1} \equiv 1 \pmod{n}\\
 </p>
 <pre class="prettyprint">import math
 import random
+from typing import List, Optional
 
-from sqrt_int import sqrt_int
 
-
-def pocklington_test(n: int, k: int = 10) -> str:
+def pocklington_test(n: int, qs: List[int], *,
+                     k: Optional[int] = None, a_list: Optional[List[int]] = None) -> str:
     """ Pocklingtonの定理を用いて、n>2が素数かを判定する。
 
     Args:
         n (int): 素数判定する対象の整数
-        k (int): 試行回数。既定値を10としたが、特に意味はない。
+        qs (List[int]): n-1の素因数リスト
+        k (int): 試行回数の指定
+        a_list(List[int]): 底の指定
 
     Returns:
         string: 'prime number'       = nは素数
@@ -114,28 +117,20 @@ def pocklington_test(n: int, k: int = 10) -> str:
                 'possibly composite' = nはおそらく合成数
 
     Examples:
-        >>> pocklington_test(97)
+        >>> pocklington_test(97, [2], k=10)
         'prime number'
-        >>> pocklington_test(100)
+        >>> pocklington_test(100, [3, 11], k=10)
         'composite number'
     """
-    # n - 1を試し割する
-    N = n - 1
-    F = 1
-    qs = []
-    upper = sqrt_int(N) + 1
-    for divisor in range(2, upper):
-        count = 0
-        while N % divisor == 0:
-            N //= divisor
-            count += 1
-        if count != 0:
-            qs.append(divisor)
-            F *= divisor**count
-            if n <= F**2:
-                break
-    for _ in range(k):
-        a = random.randrange(2, n)
+    F, N = 1, n - 1
+    for q in qs:
+        while N % q == 0:
+            N //= q
+            F *= q
+    assert n <= F**2 # qsが条件を満たしているかチェックする
+    if a_list is None:
+        a_list = [random.randrange(2, n) for _ in range(k)]
+    for a in a_list:
         if pow(a, n - 1, n) != 1:
             return 'composite number'
         if all(math.gcd(pow(a, (n - 1) // q, n) - 1, n) == 1 for q in qs):
@@ -143,7 +138,8 @@ def pocklington_test(n: int, k: int = 10) -> str:
     return 'possibly composite'
 </pre>
 
-<p>Pocklingtonテストを利用して、特殊な形の数についての素数判定を行ってみよう。
+<p><h2>Prothテスト</h2>
+Pocklingtonテストを利用して、特殊な形の数についての素数判定を行ってみよう。
 例えば、次のような場合を考えてみる。
 Fermat数\(F_{11}\)の因数として、\(119\times2^{13}+1=974849\)が知られているが、974849が素数であることは、一目で分からない。
 もちろん、この程度の桁数ならば造作もなく他の素数判定法により確認できる。
@@ -164,17 +160,21 @@ a^{(n-1)/2} \equiv -1 \pmod{n}
 <p>必要十分条件であるから、\(a\)さえ見つかれば確実に素数だと言える。
 </p>
 <pre class="prettyprint">import random
+from typing import List, Optional
 
 from jacobi_symbol import jacobi_symbol
 
 
-def proth_test(m: int, s: int, k: int = 10) -> str:
+def proth_test(s: int, m: int, *,
+               k: Optional[int] = None,
+               a_list: Optional[List[int]] = None) -> str:
     """ Prothテストを用いて、n = m * 2**s + 1が素数かを判定する。
 
     Args:
-        m (int): 奇数
         s (int): m < 2**s を満たす
-        k (int): 試行回数。既定値を10としたが、特に意味はない。
+        m (int): 奇数
+        k (int): 試行回数の指定
+        a_list(List[int]): 底の指定
 
     Returns:
         string: 'prime number'       = nは素数
@@ -182,16 +182,17 @@ def proth_test(m: int, s: int, k: int = 10) -> str:
                 'possibly composite' = nはおそらく合成数
 
     Examples:
-        >>> proth_test(5, 3) # 5 * 2**3 + 1 = 41 is prime
+        >>> proth_test(3, 5, k=10) # 5 * 2**3 + 1 = 41 is prime
         'prime number'
-        >>> proth_test(5, 8) # 5 * 2**8 + 1 = 1281 is composite
+        >>> proth_test(8, 5, k=10) # 5 * 2**8 + 1 = 1281 is composite
         'composite number'
-        >>> proth_test(3, 4) # 3 * 2**4 + 1 = 49 is composite
+        >>> proth_test(4, 3, k=10) # 3 * 2**4 + 1 = 49 is composite
         'possibly composite'
     """
     n = m * 2**s + 1
-    for _ in range(k):
-        a = random.randrange(2, n)  # 2 <= a < n を満たす乱数を生成する
+    if a_list is None:
+        a_list = [random.randrange(2, n) for _ in range(k)]
+    for a in a_list:
         if jacobi_symbol(a, n) == -1:
             if pow(a, (n - 1) // 2, n) == n - 1:
                 return 'prime number'
@@ -207,5 +208,35 @@ Prothテストにおいて\(k=1,a=3\)とすれば、Pepinテストになるか�
 このように、運が悪いといつまでも終了しないが、平均的には時間がかからずに終了し、出力される答えは常に正しい乱択アルゴリズムは<strong>ラスベガス法</strong>(Las Vegas algorithm)と総称される。
 最大の素数を発見する競争では、Mersenne数がトップをひた走るが、Mersenne数でない数の中ではProth素数が最大である{2022年現在、\(10223\times2^{31172165}+1\)が、Mersenne数でない数の中で最大の素数(2016年発見)。<a href="https://primes.utm.edu/primes/page.php?id=122473">https://primes.utm.edu/primes/page.php?id=122473</a>}。
 </p>
+<p><h2>その他の特殊な形の数</h2>
+PocklingtonテストやProthテストのアイディアを変形することで、\(2^{2s}+2^s+1, 2^{2s-1}+2^s+1\)などの形にも対応できる。
+</p>
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>定理</strong>)
+\(n^{1/3}\le F< n^{1/2}\)であるとし、\(n\)の\(F\)進展開を\(n=c_2F^2+c_1F+1\)とする(つまり、\(0\le c_1,c_2<F\)である)。
+次を満たす整数\(a\)が存在し、\(c_1^2-4c_2\)が平方数でないとき、かつそのときのみ\(n\)は素数である。
+ただし、\(q\)は\(n-1\)の任意の素因数とする。
+\begin{align*}
+\begin{cases}
+a^{n-1} \equiv 1 \pmod{n}\\
+\gcd(a^{(n-1)/q}-1, n) = 1
+\end{cases}
+\end{align*}
+</div>
+
+<p>\(2^{2s}+2^s+1\)という形は、\(F=2^s,c_2=1,c_1=1\)と考えることができるため、\(c_1^2-4c_2\)が平方数でないという条件は明らかである。
+一方、\(2^{2s-1}+2^s+1\)という形も、\(F=2^{s-1},c_2=2,c_1=2\)と考えることができるため、\(c_1^2-4c_2\)が平方数でないという条件は明らかである。
+よって、例えば次のような結果が得られる。
+</p>
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>系</strong>)
+\(s>0\)とし、\(n=2^{2s}+2^s+1\)とする。
+次を満たす整数\(a\)が存在するとき、かつそのときのみ\(n\)は素数である。
+\begin{align*}
+\begin{cases}
+a^{n-1} \equiv 1 \pmod{n}\\
+\gcd(a^{(n-1)/2}-1, n) = 1
+\end{cases}
+\end{align*}
+</div>
+
 
 </body></html>

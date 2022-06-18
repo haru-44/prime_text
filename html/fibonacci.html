@@ -33,6 +33,24 @@ F_{n - 1} + F_{n - 2}, &\mbox{if } n \ge 2
 <p>Fibonacciは、ウサギの増え方に関する問題として扱った。
 自然現象に数多く出現する数列として、数学を専門にしない人でも「Fibonacci数列」という名称は比較的聞いたことがあるかも知れない。
 しかし、自然界に出現することはFibonacci数列の一面でしかない。
+これまでに学んできた範囲においてもFibonacci数列は隠れている。
+例えば、Euclidの互除法()に必要な割り算の回数を知りたいとしよう。
+</p>
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>命題</strong>)
+Euclidの互除法で\(n\)回の割り算を必要とする自然数の組\((a,b)\)の中で最小のものは\((F_{n+2}, F_{n+1})\)である。
+</div>
+
+<p>Euclidの互除法にとって意地悪な入力がFibonacci数列というわけなので、それ以外ならもっと少なくなる。
+これを定理として書き下せば次のようになる。
+</p>
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>定理</strong>)
+自然数\(a,b\)の小さい方の数の10進桁数を\(m\)とする。
+Euclid の互除法を用いて\(a\)と\(b\)の最大公約数を求めるときの割り算の回数は、高々\(5m\)回である。
+</div>
+
+<p>このように、Fibonacci数列はどこにでも現れる。
+そして、実装方法も多彩だ。
+ひとまず、定義そのままに書いてみよう。
 </p>
 <pre class="prettyprint">from functools import lru_cache
 
@@ -71,7 +89,7 @@ F_n = \frac{\phi^n - (1 - \phi)^n}{\phi - (1 - \phi)}
 である。
 この\(\phi\)は<strong>黄金数</strong>(golden number)とも呼ばれる。
 ちなみに、\(F_n\)の分母はあえて整理していない。
-驚くべきは、黄金数が整数(あるいは有理数)ではなく無理数であるということだ。
+驚くべきは、黄金数が整数(あるいは有理数)ではなく無理数であるということだ{\(\sqrt{5}\)があるため無理数であることが分かるが、直接証明の方法が\cite[p. 7]{fibonacci_number}で紹介されている。\(\phi\)が互いに素な整数\(m,n\)で\(\phi=m/n\)と表されるなら、\(\phi\)は特性方程式\(x^2-x-1=0\)の根であるから\((m/n)^2-m/n-1=0\)を満たす。整理すると\(m^2=n(m+n)\)を得るが、これは\(m\)と\(n\)が互いに素であるという仮定に反する。}。
 右辺は無理数を含んでいるが、左辺は整数になるということは一見すると不可解である。
 </p>
 <p>実は、\(\phi\)が現れる裏には、特性方程式と呼ばれる方程式が存在する。
@@ -152,8 +170,17 @@ F_{n} & F_{n-1}
 が得られる{線形漸化式から行列を構成した方法を思い返せば、行の要素を上下逆転させても結果は変わらないことが分かる。}。
 よって、行列のべき乗演算ができればFibonacci数列が求められるわけで、それを実現したのが次の実装だ。
 </p>
-<pre class="prettyprint">def matrix_mul(A, B, mod=None):
+<pre class="prettyprint">from typing import Optional
+
+def matrix_mul(A, B, mod:Optional[int]=None):
     """ 行列AとBの積を計算する
+
+    Args:
+        A, B: 行列
+        mod (int): 各要素の剰余を求める際に指定する
+
+    Returns:
+        C: AとBの積
     """
     n = len(A)
     m = len(B[0])
@@ -256,16 +283,6 @@ F_{n - \left(\frac{n}{5}\right)} \equiv 0 \pmod{n}
 <p>「素数ならば斯くなる数式を満たす」という形の定理は、そのまま素数判定に利用できることは既に見た。
 <strong>Fibonacci擬素数テスト</strong>はを利用した素数判定アルゴリズムである。
 Fibonacci擬素数テストでも、合成数を誤って「素数」と判定することがあり得て、これを<strong>Fibonacci擬素数</strong>(Fibonacci pseudoprime)と呼ぶ{奇数のFibonacci擬素数は<a href="https://oeis.org/A081264">https://oeis.org/A081264</a>, 偶数のFibonacci擬素数は<a href="https://oeis.org/A141137">https://oeis.org/A141137</a>}。
-</p>
-<p>また、他の素数判定法と組み合わせることが可能である。
-例えば、
-</p><ul>
- <li> \(n \equiv \pm 2 \pmod{5}\)
- <li> 底\(a=2\)のFermatテスト()で素数と判定される。
- <li> Fibonacci数列テストで素数と判定される。
-</ul>
-<p>となるような合成数\(n\)は見つかっていない。
-これは、素数判定に関する<strong>Selfridge予想</strong>(Selfridge's conjecture)あるいは<strong>PSW予想</strong>として知られ、真であることまたは反例を見つけた者に620ドルの賞金が送られることになっている。
 </p>
 <p><h2>Lucas数列</h2>
 Fibonacci数列を使って素数判定ができた。
@@ -437,22 +454,9 @@ Fibonacci数列の場合を考えてみる。
 \(n=2, 5\)のときも、個別に値を調べれば\(\left(\frac{2}{5}\right) = \left(\frac{5}{2}\right) = -1\)であるから一致する。
 つまり、Lucas数列での定理は、Fibonacci数列の定理の一般化である。
 </p>
-<p>Fibonacci数列のときと同じように、定理から素数判定アルゴリズムを作ることができる。
-それが<strong>Lucas擬素数テスト</strong>だ。
-こちらも効率的な実装はに譲る。
+<p>Fibonacci数列のときと同じように、から素数判定アルゴリズムを作ることができて、これを<strong>Lucas擬素数テスト</strong>と呼ぶ。
+やはりこの素数判定法も、合成数を誤って「素数」と判定してしまうことがあり、これを<strong>Lucas擬素数</strong>(Lucas pseudoprime)と呼ぶ。
 </p>
-<p>やはりこの素数判定法も、合成数を誤って「素数」と判定してしまうことがある。
-これを<strong>Lucas擬素数</strong>(Lucas pseudoprime)と呼ぶ。
-例えば、\(323=17\times19\)は、合成数であるが、\(a=-10,b=-5\)のとき``probable prime"を返す。
-</p>
-<p>さらに、FermatテストからMiller-Rabinテストを考えたのと同じように、Lucas擬素数テストから強Lucas擬素数テストを考えることができる。
-つまり、\(n - \left(\frac{\Delta}{n}\right)\)を\(2^s\cdot m\)と表現する(ここで、\(m\)は奇数)とき、素数\(n\)は、次のうち少なくとも1つは満たす。
-</p><ul>
- <li> \(U_m \equiv 0 \pmod{n}\)
- <li> \(V_{2^t\cdot m} \equiv 0 \pmod{n}\), ここで\(0\le t<s\)
-</ul>
-<p>これにすらパスする合成数は<strong>強Lucas擬素数</strong>(strong Lucas pseudoprime)と呼ばれる。
-\(n\)がパラメータ\((a,b)\)の強Lucas擬素数なら、パラメータ\((a,b)\)のLuacs擬素数でもある。
-</p>
+
 
 </body></html>
