@@ -52,7 +52,10 @@ $\left(\frac{t^2-a}{p}\right)=-1$より、$\alpha\not\in\mathbb{F}_p$である�
 \end{align*}
 \end{prProof}
 
-\Algo{Cipollaのアルゴリズム}{cipolla_algorithm}{c.f., \rAlgo{legendre_symbol}, \rAlgo{n_times}}
+ちなみに、Lucas数列の裏にも$\mathbb{F}_{p^2}$が隠れているので、考えてみれば当たり前のことであるが、Lucas数列を使っても同値な実装が可能である。
+Lucas数列の効率的な実装は後々説明するので、ここではそういうこともできるという紹介で済ませる。
+
+\Algo{Cipollaのアルゴリズム}{cipolla_algorithm}{c.f., \rAlgo{inverse_mod}, \rAlgo{legendre_symbol}, \rAlgo{lucas_sequence_chain}, \rAlgo{n_times}}
 
 話しをLucas数列に戻して、今、Lucas数列を$p$で割った余り$U_n \bmod{p}$がどのような構造を持っているかを解明したい。
 構造というのは、もっと具体的に言えば$n$の変化によって、$U_n \bmod{p}$がどのように変わるのかということに興味がある。
