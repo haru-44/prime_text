@@ -123,3 +123,28 @@ $5^{(p-1)/2}\pmod{p}$は、$p\equiv\pm1\pmod{5}$のとき、1となるから、�
 を得る。
 $5^{(p-1)/2}\pmod{p}$は、$p\equiv\pm2\pmod{5}$のとき、$-1$となるから、このとき$F_{p+1}\equiv 0\pmod{p}$を得る。
 \end{thProof}
+
+\subsubsection{2つのGauss和の定義が一致することの証明}\label{sss:proof_gauss_sum_1}
+Gauss和$\tau_p$の2つの定義、式\ref{eq:tau_p1}と式\ref{eq:tau_p2}が奇素数において同値であることを示す。
+
+式\ref{eq:tau_p1}は
+\begin{align*}
+\tau_p = \sum_{u \in \mathbf{QR}_p} \zeta_p^u - \sum_{v \in \mathbf{QNR}_p} \zeta_p^v
+\end{align*}
+と書き直せることがLegendre記号の定義から分かる。
+ところで、\rProp{cyc_zeta}の4を適切に並び替えることによって、
+\begin{align*}
+1 + \sum_{u \in \mathbf{QR}_p} \zeta_p^u + \sum_{v \in \mathbf{QNR}_p} \zeta_p^v = 0
+\end{align*}
+を得る。
+このことから、
+\begin{align*}
+\tau_p = 1 + 2\sum_{u \in \mathbf{QR}_p} \zeta_p^u
+\end{align*}
+と書けることが分かった。
+一方、式\ref{eq:tau_p2}も、$n$が1から$p-1$を走るとき$n^2$には$\mathbf{QR}_p$の元がちょうど2つずつ現れるから、
+\begin{align*}
+\tau_p = 1 + 2\sum_{u \in \mathbf{QR}_p} \zeta_p^u
+\end{align*}
+が得られ、式\ref{eq:tau_p1}と式\ref{eq:tau_p2}は奇素数の場合において一致する。
+

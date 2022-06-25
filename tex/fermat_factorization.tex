@@ -1,3 +1,4 @@
+\subsubsection{Fermat法}
 例えば、$n=9951$を素因数分解するとしよう。
 $x^2-y^2 = (x-y)(x+y)$という公式と、直感によって、
 \begin{align*}
@@ -32,6 +33,7 @@ Fermat法が素早く解ける整数は、試し割法では苦戦し、試し�
 
 \Algo{Fermat法}{fermat_factorization_method}{c.f., \rAlgo{sqrt_int}}
 
+\subsubsection{Lehman法}
 Fermat法の挙動を観察すると、ループ回数は、単純に$n$が大きくなれば多くなるという訳ではないことに気付く。
 例えば、$4343=101\times43$は7回の反復を要するが、その3倍$3\times4343=13029$は、1回目で非自明な約数の発見に至っている。
 ならば、うまい具合に$n$を調整することによって、Fermat法よりも少ない計算回数で素因数分解ができるかもしれない、と思いつく。

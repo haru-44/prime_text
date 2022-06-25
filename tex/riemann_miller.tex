@@ -1,3 +1,4 @@
+\subsubsection{確実な証拠を探して}
 Miller-Rabinテストでは$a$をランダムに選ぶと、「素数」と誤って判定してしまうのであった。
 このような合成数$n$を$a$に対する\IND{強擬素数}{きようきそすう}(strong pseudoprime)と呼ぶ。
 そのため、Miller-Rabinテストでは$a$を複数回選んで、誤る確率を極力小さくしようとした。
@@ -33,6 +34,7 @@ $p$を5よりも大きい素数とし、$n=(4^p+1)/5$とする。
 今、一般Riemann予想が何者なのかは置いておくが、予想が真だとすれば、Millerテストは素数判定問題に対する確定的多項式時間アルゴリズムである。
 というのも、$n$に対する最小証拠$W(n)$が$2\ln^2(n)$未満だというのだから、この範囲をしらみ潰しに調べればよいからだ。
 
+\subsubsection{解析的整数論を覗く}
 次に、一般Riemann予想について説明するが、本当に駆け足となるので、詳しく知りたい方は\IND{解析的整数論}{かいせきてきせいすうろん}(analytic number theory)の教科書を読むこと。
 まずは、ゼータ関数をさらっと定義する。
 
@@ -102,6 +104,7 @@ $D$が1より大きい奇数のとき、Jacobi記号$\left(\frac{a}{D}\right)$�
 法$D$の主指標は、すべての元を1に移す、法$D$のDirichlet指標である。
 \end{Defi}
 
+これで、Dirichletの$L$関数を説明する準備ができた。
 Dirichletの$L$関数は、
 \begin{align*}
 L(s,\chi) = \sum_{n=1}^{\infty} \frac{\chi(n)}{n^s}
@@ -113,7 +116,7 @@ Riemannのゼータ関数では1だった分子がDirichlet指標$\chi$に置き
 Riemann予想と同様に、非自明な零点に関する予想がされている。
 それが一般Riemann予想である。
 
-\begin{Conj}{\IND{一般Riemann予想}{いつぱんRiemannよそう}, Generalized Riemann hypothesis}{Generalized Riemann hypothesis}
+\begin{Conj}{\IND{一般Riemann予想}{いつぱんRiemannよそう}, generalized Riemann hypothesis}{Generalized Riemann hypothesis}
 $L(s,\chi)$の非自明な零点は、実部が1/2である。
 \end{Conj}
 
