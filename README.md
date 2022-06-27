@@ -41,6 +41,8 @@
   * [2次篩法](https://haru-44.github.io/prime_text/html/quadratic_sieve_algorithm.html)
   * [2次体と整数環](https://haru-44.github.io/prime_text/html/ring_of_integer.html)
   * [数体篩法](https://haru-44.github.io/prime_text/html/number_field_sieve.html)
+* さまざまな素数
+  * [定理の拡張](https://haru-44.github.io/prime_text/html/expand_theorem.html)
 * その他の方法
   * [Pollardのρ法](https://haru-44.github.io/prime_text/html/rho_method.html)
   * [Baillie-PSWテスト](https://haru-44.github.io/prime_text/html/baillie_psw_test.html)

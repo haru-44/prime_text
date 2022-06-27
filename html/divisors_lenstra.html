@@ -26,6 +26,82 @@
 n = (xs+r)(ys+r')
 \end{align*}
 と書ける、\(x,y\ge0\)と\(0<r'<s\)が存在する。
+数列\(a,b,c\)を次のように定義しよう。
+ただし、\(r^{-1}\)は、\(s\)を法とした\(r\)の逆元で、\(q_i\)は、\(a_i\)を計算する過程で一意に決まる。
+</p>
+<p>\begin{align*}
+a_i &= 
+\begin{cases}
+s, &\mbox{if } i = 0\\
+r^{-1}r' \bmod{s}, \; 0< a_i \le s, &\mbox{if } i = 1\\
+a_{i-2} - q_ia_{i-1}, \; 0< a_i \le s, &\mbox{if } 2 \le i \mbox{ かつ } i \mbox{ は偶数}\\
+a_{i-2} - q_ia_{i-1}, \; 0\le a_i < s, &\mbox{if } 2 \le i \mbox{ かつ } i \mbox{ は奇数}
+\end{cases}
+\\
+b_i &=
+\begin{cases}
+0, &\mbox{if } i = 0\\
+1, &\mbox{if } i = 1\\
+b_{-2} - q_ib_{i-1}, &\mbox{otherwise}
+\end{cases}
+\\
+c_i &=
+\begin{cases}
+0, &\mbox{if } i = 0\\
+\frac{n-rr'}{s}\cdot r^{-1} \bmod{s}, &\mbox{if } i = 1\\
+c_{i-2}-q_ic_{i-1} \bmod{s}, &\mbox{otherwise}
+\end{cases}
+\end{align*}
+この数列は、\(a_t=0\)となる\(t\)まで続ける。
+すると、次が成り立つ。
+</p>
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>命題</strong>)
+\(0\le i \le t\)なる任意の\(i\)について、
+\begin{align*}
+xa_i + yb_i \equiv c_i \pmod{s}
+\end{align*}
+を満たす。
+</div>
+
+<p>我々の方針は、それぞれの\(i\)において\(c' \equiv c_i \pmod{s}\)を満たす\(c'\)をしらみつぶしに探す。
+\(c'\)が<strong>あたり</strong>なら、連立方程式
+\begin{align*}
+\begin{cases}
+xa_i + yb_i = c'\\
+(xs+r)(ys+r')=n
+\end{cases}
+\end{align*}
+を満たす\(x,y\)が求められ、目的が達成される。
+これを実現するための2つの障害は、どの範囲の\(c'\)を探せばいいかということと、連立方程式を解くにはどうすればよいかということだ。
+</p>
+<p>後者については、\(u=a_i(xs+r), v=b_i(ys+r')\)と置き、\(u,v\)が解となる2次方程式を作る。
+\(uv=a_ib_in, u+v=c's+a_ir+b_ir'\)であることに注意すると、そのような2次方程式は、
+\begin{align*}
+T^2 - (c's+a_ir+b_ir')T + a_ib_in
+\end{align*}
+であることが分かる{2次方程式の解と係数の関係は、高校数学の範囲である(たぶん)。}。
+この方程式に整数解があるかは、判別式
+\begin{align*}
+\Delta = (c's+a_ir+b_ir')^2 - 4a_ib_in
+\end{align*}
+が平方数であるかと等価である。
+\(\Delta\)が平方数であれば、2次方程式の解の公式より\(((c's+a_ir+b_ir')\pm\sqrt{\Delta})/2\)が\(u,v\)である。
+こうすることで、\(xs+r\)が求められるわけであるが、コーナーケースに注意しよう。
+\(b_0=0, a_t=0\)では、2次方程式を利用するこの方法では上手くいかない。
+幸いなことに、\(i=0,t\)のときに約数が見つかるというのは、\(x=0\)または\(y=0\)のときだけなので、実装上は別で判定し探索範囲は\(0<i<t\)としてよい。
+</p>
+<p>次に、前者の問題を考えよう。
+答えから言えば、\(c'\)が動く範囲は
+\begin{align*}
+\begin{cases}
+-s < c' < s, &\mbox{if } i \mbox{ は偶数}\\
+2a_ib_i < c' < a_ib_i + n/s^2, &\mbox{if } i \mbox{ は奇数}
+\end{cases}
+\end{align*}
+で良い。
+もちろん、\(c' \equiv c_i \pmod{s}\)という条件があるので、\(i\)が偶数の場合は高々2個のチェックで済む。
+</p>
+<p>以上で実装に必要な知識は揃った。
 </p>
 <pre class="prettyprint">import math
 from typing import List
@@ -97,6 +173,10 @@ def divisors_lenstra(n: int, s: int, r: int) -> List[int]:
     return list(sorted(divisors_set))
 </pre>
 
+<p>直感的に\(s\)が大きい方がすぐ終わるだろうと予想できるが、それは正しい。
+一般に、が平方数であるかを求める回数は\(O(\frac{n^{1/3}}{s} \log{n})\)と評価できる。
+なので、\(n<s^3\)であれば\(O(\log{n})\)回で済む。
+</p>
 
 
 </body></html>
