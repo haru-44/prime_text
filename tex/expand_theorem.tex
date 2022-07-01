@@ -74,8 +74,14 @@ $p\ge11$を素数とする。
 素数$p$がWolstenholme素数かどうかは、\rTheo{Wolstenholme_prime_equivalent}の3を使ってもよいが、逆元の計算が必要となる。
 \cite{McIntosh2007ASF}で指摘されているように、多項式
 \begin{align*}
-f(x) = \prod_{p/6<k<p/4} (x+k^3)
+\prod_{p/6<k<p/4} (x+k^3)
 \end{align*}
 の$x$の係数が$p$を法として0と合同かを調べればWolstenholme素数かが分かる。
+念のため、根と係数の関係より$x$の係数は
+\begin{align*}
+\left(\prod_{p/6<k<p/4}k^3\right)\left(\sum_{p/6<k<p/4}\frac{1}{k^3}\right)
+\end{align*}
+となることに注意しておく。
+よって、実装する際も単純に多項式を展開していくだけでよいが\Notes{2次以上の項は無視してよいし、係数も$\bmod{p}$で考えてよい。}、\rAlgo{is_wolstenholme_prime}では高速化のため$k^3$を足し算のみで計算するようにしている。
 
 \Algo{Wolstenholme素数の判定}{is_wolstenholme_prime}{}
