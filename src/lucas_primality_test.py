@@ -3,18 +3,18 @@ import random
 from sympy import factorint
 
 
-def lucas_primality_test(n: int, k: int = 10) -> str:
+def lucas_primality_test(n: int) -> str:
     """ Lucasの定理を用いて、n > 2が素数かを判定する。
+
+    結果を返すとき、nは確実に素数(あるいは合成数)であるが、
+    実行時間は運次第である。
 
     Args:
         n (int): 素数判定する対象の自然数
-        k (int): 試行回数。nが素数で十分大きい場合、
-                 1回の試行で素数と判定できる確率は、少なくとも 1 / (2 ln ln n)
 
     Returns:
         string: 'prime number'       = nは素数
                 'composite number'   = nは合成数
-                'possibly composite' = nはおそらく合成数
 
     Examples:
         >>> lucas_primality_test(93)
@@ -23,10 +23,9 @@ def lucas_primality_test(n: int, k: int = 10) -> str:
         'prime number'
     """
     qs = [*factorint(n - 1)]
-    for _ in range(k):
+    while True:
         a = random.randrange(2, n)
         if pow(a, n - 1, n) != 1:
             return 'composite number'
         if all(pow(a, (n - 1) // q, n) != 1 for q in qs):
             return 'prime number'
-    return 'possibly composite'
