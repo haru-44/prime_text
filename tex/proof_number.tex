@@ -46,6 +46,24 @@ $2^k$が偶数であること、2の偶数乗は3を法として1と合同であ
 となり、証明は完了する。
 \end{thProof}
 
+\subsubsection{\rTheo{pocklington_test}の証明}
+$p$を$n$の任意の素因数とする。
+まず確認しておくが、$a\equiv1\pmod{n}$ならば、$a\equiv1\pmod{p}$である。
+合同の定義より$n \mid a-1$だが、$p \mid n$という仮定より$p \mid a-1$を得る。
+一方、$a\not\equiv1\pmod{n}$だからといって必ずしも$a\not\equiv1\pmod{p}$となるわけではない。
+反例として$a=p+1$と置くと、$a\not\equiv1\pmod{n}$だが$a\equiv1\pmod{p}$である。
+正しくは、$\gcd(a-1,n)=1$ならば$a\not\equiv1\pmod{p}$である。
+この対偶、「$a\equiv1\pmod{p}$となる$p$が存在するなら、$\gcd(a-1,n)=1$」を示すことは容易い。
+
+では、改めて証明に取り掛かろう。
+$a^{n-1}\equiv1\pmod{n}$ならば、$a^{n-1}\equiv1\pmod{p}$なので、$(a^R)^F\equiv1\pmod{p}$を得る。
+\rProp{element_order}の2より、$\mbox{ord}(a^R) \mid F$が分かる。
+一方で2つ目の条件は、$F$より小さい数では$a^R$の位数にはなり得ないということを言っている。
+よって、$\mbox{ord}(a^R) = F$である。
+
+\rProp{lagrange_coro}より、$\mbox{ord}(a^R) \mid \varphi(p)$なので、$\mbox{ord}(a^R) = F$および$\varphi(p)=p-1$を代入すれば$F \mid p-1$を得る。
+つまり、$p\equiv1\pmod{F}$が得られ、証明は完了する。
+
 \subsubsection{\rTheo{fibonacci_prime}の証明}
 \begin{Lemm}{}{binomial_coefficients_mod}
 $p$が素数のとき、次が成り立つ。

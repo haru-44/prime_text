@@ -91,8 +91,7 @@ AKSテストは、$x^r-1$を選ぶことが適切だと言う。
 AKSテストの要となるのが次の定理だ。
 
 \begin{Theo}{}{aks}
-整数$n\ge2$、正整数$r$は$n$と互いに素で、$ord_r(n)>\lg^2{n}$を満たすとする。
-さらに、$0\le a \le\sqrt{\varphi(r)}\lg{n}$を満たす任意の$a$に対して、
+整数$n\ge2$、正整数$r$は$n$と互いに素で、$\mbox{ord}_r(n)>\lg^2{n}$を満たし、$0\le a \le\sqrt{\varphi(r)}\lg{n}$を満たす任意の$a$に対して、
 \begin{align*}
 (x+a)^n \equiv x^n + a \pmod{x^r-1, n}
 \end{align*}
@@ -121,27 +120,3 @@ AKSテストの実装は次のようになる。
 ただし$r$は、$ord_r(n) > \lg^2{n}$を満たす最小の正整数とする。
 \end{Theo}
 
-AKSテストではなぜ$x^r-1$という多項式で剰余したのか、という疑問が沸き起こる。
-というのも、証明中でも$x^r-1$という多項式である必然性はどこにもないからだ。
-実は$x^r-1$でなくともよいのである。
-次の定理が一般化として知られている。
-
-\begin{Theo}{}{aks_ext}
-整数$n\ge2$, モニックな$d$次多項式$f(x)\in\mathbb{Z}_n[x]$とする(ただし、$d>\lg^2{n}$)。
-さらに、$0\le a \le\sqrt{d}\lg{n}$を満たす任意の$a$に対して、
-\begin{align*}
-(x+a)^n\equiv x^n+a\pmod{f(x)}
-\end{align*}
-を満たすとする。
-$n$に素因数$p>\sqrt{d}\lg{n}$が存在するならば、$n$は$p$の累乗数である。
-なお、$f(x)$は次の3つを満たすとする。
-\begin{itemize}
-\item $f(x^n) \equiv 0 \pmod{f(x)}$
-\item $x^{n^d}\equiv x\pmod{f(x)}$
-\item $d$の任意の素因数$q$に対して$x^{n^{d/q}}-x$と$f(x)$は互いに素
-\end{itemize}
-\end{Theo}
-
-AKSテストは、素数判定問題が多項式時間で確定的に判定できることを示したアルゴリズムであった。
-$x^r-1$で剰余算した多項式で判定を行う。
-多項式時間で実行でき、かつ、確実に素数判定を行うために$r$は適切な値にする必要があった。

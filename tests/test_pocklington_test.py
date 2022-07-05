@@ -4,5 +4,5 @@ from sympy.ntheory import factorint, isprime
 
 def test_pocklington_test_001():
     for n in range(3, 1000):
-        ans = pocklington_test(n, factorint(n-1).keys(), k=100)
+        ans = pocklington_test(n, factorint(n-1).keys())
         assert isprime(n) == (ans == 'prime number')
