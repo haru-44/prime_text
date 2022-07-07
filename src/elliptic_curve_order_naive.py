@@ -1,7 +1,7 @@
 from legendre_symbol import legendre_symbol
 
 
-def elliptic_curve_order(a: int, b: int, p: int) -> int:
+def elliptic_curve_order_naive(a: int, b: int, p: int) -> int:
     """ 楕円曲線 y**2 = x**3 + a*x + b (mod p) の群の位数を計算する。
 
     Args:
@@ -12,9 +12,9 @@ def elliptic_curve_order(a: int, b: int, p: int) -> int:
         int: 群の位数
 
     Examples:
-        >>> elliptic_curve_order(1, 3, 5)
+        >>> elliptic_curve_order_naive(1, 3, 5)
         4
-        >>> elliptic_curve_order(1, 1, 5)
+        >>> elliptic_curve_order_naive(1, 1, 5)
         9
     """
     assert (4 * a**3 + 27 * b**2) % p != 0

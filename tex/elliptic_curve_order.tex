@@ -1,0 +1,26 @@
+群$E_{a,b}(\mathbb{F}_p)$の位数を求めることは、興味深い問題である。
+素因数分解するにしても、位数がどんなものかによって分解できるかが決まった。
+後で紹介する楕円曲線を使った素数判定でも位数を求めることは必要になってくる。
+
+既に、\rAlgo{elliptic_curve_order_naive}で、初歩的な群の位数の求め方は学んだ。
+とは言え、$p$が大きくなるにしたがって現実的な時間では終わらなくなってしまう。
+\Ind{baby-step giant-step}は、離散対数問題を解くアルゴリズムとしてよく知られているが、位数の計算にも応用できる。
+まずは、次の事実を確認しておこう。
+
+\begin{Prop}{}{elliptic_curve_order_range}
+楕円曲線上の点を$P$とする。
+$(p+1-2\sqrt{p}, p+1+2\sqrt{p})$の範囲に、$[m]P=O$なる正整数$m$がただ1つ存在するとき、$\sharp E(\mathbb{F}_{p})=m$である。
+\end{Prop}
+
+\begin{prProof}{elliptic_curve_order_range}
+$[m]P=O$より、$P$の位数は$m$を割り切る(\rProp{element_order}の2)。
+一方、\rProp{lagrange_coro}より$P$の位数は$\sharp E(\mathbb{F}_{p})$を割り切る。
+ここで、\rTheo{Hasse's_theorem}より、$\sharp E(\mathbb{F}_{p})$は$p+1-2\sqrt{p}<\sharp E(\mathbb{F}_{p})<p+1+2\sqrt{p}$を満たすから$\sharp E(\mathbb{F}_{p})=m$である。
+\end{prProof}
+
+少し賢い方法としては、$m$を$(p+1-2\sqrt{p}, p+1+2\sqrt{p})$の範囲で走らせて、$[m]P=O$となる$m$はただ1つだけであることを確認すればよい。
+それでも$O(\sqrt{p}\ln{p})$回の体演算が必要となる。
+これを減らすためにbaby-step giant-stepの考えを応用しよう。
+baby-step giant-stepの本質的な考え方は、2つの多重集合$A,B$の共通部分$A\cap B$をなるべく少ない比較回数で求めることにある。
+
+\Algo{共通部分を求める}{intersection}{}
