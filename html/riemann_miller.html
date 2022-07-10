@@ -13,7 +13,8 @@
   <strong>このページは、pdfファイル出力用に作成したtexファイルから機械的に変換されています。体裁不良がある場合は<a href="https://github.com/haru-44/prime_text/releases/latest/download/main.pdf">pdfファイル</a>をご覧ください。</strong>
   <hr/>
 <h1>riemann_miller</h1>
-<p>Miller-Rabinテストでは\(a\)をランダムに選ぶと、「素数」と誤って判定してしまうのであった。
+<p><h2>確実な証拠を探して</h2>
+Miller-Rabinテストでは\(a\)をランダムに選ぶと、「素数」と誤って判定してしまうのであった。
 このような合成数\(n\)を\(a\)に対する<strong>強擬素数</strong>(strong pseudoprime)と呼ぶ。
 そのため、Miller-Rabinテストでは\(a\)を複数回選んで、誤る確率を極力小さくしようとした。
 しかし、\(a\)を選ぶ戦略はそれだけだろうか。
@@ -48,7 +49,8 @@
 <p>今、一般Riemann予想が何者なのかは置いておくが、予想が真だとすれば、Millerテストは素数判定問題に対する確定的多項式時間アルゴリズムである。
 というのも、\(n\)に対する最小証拠\(W(n)\)が\(2\ln^2(n)\)未満だというのだから、この範囲をしらみ潰しに調べればよいからだ。
 </p>
-<p>次に、一般Riemann予想について説明するが、本当に駆け足となるので、詳しく知りたい方は<strong>解析的整数論</strong>(analytic number theory)の教科書を読むこと。
+<p><h2>解析的整数論を覗く</h2>
+次に、一般Riemann予想について説明するが、本当に駆け足となるので、詳しく知りたい方は<strong>解析的整数論</strong>(analytic number theory)の教科書を読むこと。
 まずは、ゼータ関数をさらっと定義する。
 </p>
 <div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>定義</strong>)
@@ -117,7 +119,8 @@ Riemannのゼータ関数とは、複素数\(s\)の関数\(\zeta(s)\)のこと�
 法\(D\)の主指標は、すべての元を1に移す、法\(D\)のDirichlet指標である。
 </div>
 
-<p>Dirichletの\(L\)関数は、
+<p>これで、Dirichletの\(L\)関数を説明する準備ができた。
+Dirichletの\(L\)関数は、
 \begin{align*}
 L(s,\chi) = \sum_{n=1}^{\infty} \frac{\chi(n)}{n^s}
 \end{align*}

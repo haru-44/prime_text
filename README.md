@@ -43,12 +43,15 @@
   * [数体篩法](https://haru-44.github.io/prime_text/html/number_field_sieve.html)
 * さまざまな素数
   * [定理の拡張](https://haru-44.github.io/prime_text/html/expand_theorem.html)
+* 楕円曲線
+  * [楕円曲線の定義と構造](https://haru-44.github.io/prime_text/html/elliptic_curve_def.html)
+  * [楕円曲線を用いた素因数分解](https://haru-44.github.io/prime_text/html/implementation_elliptic_curve_test.html)
+  * [群の位数](https://haru-44.github.io/prime_text/html/elliptic_curve_order.html)
 * その他の方法
   * [Pollardのρ法](https://haru-44.github.io/prime_text/html/rho_method.html)
   * [Baillie-PSWテスト](https://haru-44.github.io/prime_text/html/baillie_psw_test.html)
   * [2次形式](https://haru-44.github.io/prime_text/html/quadratic_form.html)
   * [AKSテスト](https://haru-44.github.io/prime_text/html/aks_test.html)
-  * [楕円曲線](https://haru-44.github.io/prime_text/html/elliptic_curve.html)
 
 ## 著者
 

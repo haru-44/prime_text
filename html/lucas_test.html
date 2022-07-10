@@ -120,18 +120,18 @@ a^{(n-1)/q} &\not\equiv 1 \pmod{n}
 from sympy import factorint
 
 
-def lucas_primality_test(n: int, k: int = 10) -> str:
+def lucas_primality_test(n: int) -> str:
     """ Lucasの定理を用いて、n > 2が素数かを判定する。
+
+    結果を返すとき、nは確実に素数(あるいは合成数)であるが、
+    実行時間は運次第である。
 
     Args:
         n (int): 素数判定する対象の自然数
-        k (int): 試行回数。nが素数で十分大きい場合、
-                 1回の試行で素数と判定できる確率は、少なくとも 1 / (2 ln ln n)
 
     Returns:
         string: 'prime number'       = nは素数
                 'composite number'   = nは合成数
-                'possibly composite' = nはおそらく合成数
 
     Examples:
         >>> lucas_primality_test(93)
@@ -140,13 +140,12 @@ def lucas_primality_test(n: int, k: int = 10) -> str:
         'prime number'
     """
     qs = [*factorint(n - 1)]
-    for _ in range(k):
+    while True:
         a = random.randrange(2, n)
         if pow(a, n - 1, n) != 1:
             return 'composite number'
         if all(pow(a, (n - 1) // q, n) != 1 for q in qs):
             return 'prime number'
-    return 'possibly composite'
 </pre>
 
 <p>Lucasテストで残る疑問は、\(n\)が素数のとき、どのくらいの\(a\)がテストをパスするかだ。
@@ -277,6 +276,7 @@ from totient_function import totient_function
 def n_order(a: int, n: int) -> int:
     """ 法nにおけるaの位数を求める。
     つまり、a^s = 1 (mod n)を満たす最小のsを求める。
+    0 < a < n かつ gcd(a, n) = 1
 
     Args:
         a (int): 整数
@@ -291,10 +291,12 @@ def n_order(a: int, n: int) -> int:
         >>> n_order(5, 12)
         2
     """
+    if a == 1:
+        return 1
     group_order = totient_function(n)
     order = group_order
     for prime in [*factorint(group_order)]:
-        while pow(a, order // prime, n) == 1:
+        while order % prime == 0 and pow(a, order // prime, n) == 1:
             order //= prime
     return order
 </pre>

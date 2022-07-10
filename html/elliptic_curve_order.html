@@ -1,0 +1,74 @@
+<html lang="ja">
+  <head>
+    <title>elliptic_curve_order</title>
+    <script type="text/x-mathjax-config">
+       MathJax.Hub.Config({TeX:{equationNumbers:{autoNumber:"AMS"}}});
+    </script>
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML,/www_func/MathJax/MyConfig.js">
+    </script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?lang=py&skin=sunburst"></script>
+  </head>
+  <body>
+  <strong>このページは、pdfファイル出力用に作成したtexファイルから機械的に変換されています。体裁不良がある場合は<a href="https://github.com/haru-44/prime_text/releases/latest/download/main.pdf">pdfファイル</a>をご覧ください。</strong>
+  <hr/>
+<h1>elliptic_curve_order</h1>
+<p>群\(E_{a,b}(\mathbb{F}_p)\)の位数を求めることは、興味深い問題である。
+素因数分解するにしても、位数がどんなものかによって分解できるかが決まった。
+後で紹介する楕円曲線を使った素数判定でも位数を求めることは必要になってくる。
+</p>
+<p>既に、で、初歩的な群の位数の求め方は学んだ。
+とは言え、\(p\)が大きくなるにしたがって現実的な時間では終わらなくなってしまう。
+\Ind{baby-step giant-step}は、離散対数問題を解くアルゴリズムとしてよく知られているが、位数の計算にも応用できる。
+まずは、次の事実を確認しておこう。
+</p>
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>命題</strong>)
+楕円曲線上の点を\(P\)とする。
+\((p+1-2\sqrt{p}, p+1+2\sqrt{p})\)の範囲に、\([m]P=O\)なる正整数\(m\)がただ1つ存在するとき、\(\sharp E(\mathbb{F}_{p})=m\)である。
+</div>
+
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #000000;">(<strong>証明</strong>)
+\([m]P=O\)より、\(P\)の位数は\(m\)を割り切る(の2)。
+一方、より\(P\)の位数は\(\sharp E(\mathbb{F}_{p})\)を割り切る。
+ここで、より、\(\sharp E(\mathbb{F}_{p})\)は\(p+1-2\sqrt{p}<\sharp E(\mathbb{F}_{p})<p+1+2\sqrt{p}\)を満たすから\(\sharp E(\mathbb{F}_{p})=m\)である。
+</div>
+
+<p>少し賢い方法としては、\(m\)を\((p+1-2\sqrt{p}, p+1+2\sqrt{p})\)の範囲で走らせて、\([m]P=O\)となる\(m\)はただ1つだけであることを確認すればよい。
+それでも\(O(\sqrt{p}\ln{p})\)回の体演算が必要となる。
+これを減らすためにbaby-step giant-stepの考えを応用しよう。
+baby-step giant-stepの本質的な考え方は、2つの多重集合\(A,B\)の共通部分\(A\cap B\)をなるべく少ない比較回数で求めることにあった。
+</p>
+<pre class="prettyprint">from typing import Iterator, List, Tuple
+
+
+def intersection(a: List[int], b: List[int]) -> Iterator[Tuple[int, int, int]]:
+    """ aとbの共通部分を求める。
+
+    Args:
+        a,b: List[int]: 多重集合
+
+    Yields:
+        (int, int, int): 共通部分の元, その元のaでのインデックス, その元のbでのインデックス
+
+    Examples:
+        >>> list(intersection([3, 2, 4, 2], [1, 0, 8, 3, 3, 2])
+        [(2, 1, 5), (3, 0, 3)]
+    """
+    a = sorted(zip(a, range(len(a))), key=lambda x: x[0])
+    b = sorted(zip(b, range(len(b))), key=lambda x: x[0])
+    i = j = 0
+    while i < len(a) and j < len(b):
+        if a[i][0] <= b[j][0]:
+            if a[i][0] == b[j][0]:
+                yield a[i][0], a[i][1], b[j][1]
+            i += 1
+            while i < len(a) - 1 and a[i][0] == a[i-1][0]:
+                i += 1
+        else:
+            j += 1
+            while j < len(b) - 1 and b[j][0] == b[j-1][0]:
+                j += 1
+</pre>
+
+
+</body></html>

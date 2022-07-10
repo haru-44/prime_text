@@ -84,14 +84,21 @@ U_{p - \left(\frac{\Delta}{p}\right)} \equiv 0 \pmod{p^2}
 </ol>
 </div>
 
-<p>現在知られているWolstenholme素数は、16843と2124679のみであり、\(10^9\)以下には他に存在しないことが確認されている{<a href="https://oeis.org/A088164">https://oeis.org/A088164</a>}。
+<p>2022年7月現在、知られているWolstenholme素数は、16843と2124679のみである。
+これら以外のWolstenholme素数について、2007年には\(10^9\)以下には存在しないことが確認され、2022年には\(10^{11}\)以下には存在しないことが確認されている{<a href="https://oeis.org/A088164">https://oeis.org/A088164</a>}。
 </p>
 <p>素数\(p\)がWolstenholme素数かどうかは、の3を使ってもよいが、逆元の計算が必要となる。
 で指摘されているように、多項式
 \begin{align*}
-f(x) = \prod_{p/6<k<p/4} (x+k^3)
+\prod_{p/6<k<p/4} (x+k^3)
 \end{align*}
 の\(x\)の係数が\(p\)を法として0と合同かを調べればWolstenholme素数かが分かる。
+念のため、根と係数の関係より\(x\)の係数は
+\begin{align*}
+\left(\prod_{p/6<k<p/4}k^3\right)\left(\sum_{p/6<k<p/4}\frac{1}{k^3}\right)
+\end{align*}
+となることに注意しておく。
+よって、実装する際も単純に多項式を展開していくだけでよいが{2次以上の項は無視してよいし、係数も\(\bmod{p}\)で考えてよい。}、では高速化のため\(k^3\)を足し算のみで計算するようにしている。
 </p>
 <pre class="prettyprint">def is_wolstenholme_prime(p: int) -> bool:
     """ p がWolstenholme素数かを判定する
@@ -108,11 +115,16 @@ f(x) = \prod_{p/6<k<p/4} (x+k^3)
         >>> is_wolstenholme_prime(11)
         False
     """
-    s = p//6 + 1
-    coef0, coef1 = pow(s, 3, p), 1
-    for k in range(s + 1, p//4 + 1):
-        k3 = pow(k, 3, p)
+    k = p//6 + 1
+    delta1 = (3*k**2 + 3*k + 1) % p
+    delta2 = 12 - (p % 6)
+    k3 = pow(k, 3, p)
+    coef0, coef1 = 1, 0
+    for _ in range(k, p//4 + 1):
         coef0, coef1 = (coef0 * k3) % p, (coef0 + coef1 * k3) % p
+        k3 = (k3 + delta1) % p
+        delta1 = (delta1 + delta2) % p
+        delta2 = (delta2 + 6) % p
     return coef1 == 0
 </pre>
 

@@ -13,7 +13,8 @@
   <strong>このページは、pdfファイル出力用に作成したtexファイルから機械的に変換されています。体裁不良がある場合は<a href="https://github.com/haru-44/prime_text/releases/latest/download/main.pdf">pdfファイル</a>をご覧ください。</strong>
   <hr/>
 <h1>fermat_factorization</h1>
-<p>例えば、\(n=9951\)を素因数分解するとしよう。
+<p><h2>Fermat法</h2>
+例えば、\(n=9951\)を素因数分解するとしよう。
 \(x^2-y^2 = (x-y)(x+y)\)という公式と、直感によって、
 \begin{align*}
 9951 &= 10000 - 49\\
@@ -76,7 +77,8 @@ def fermat_factorization_method(n: int) -> int:
     return 1
 </pre>
 
-<p>Fermat法の挙動を観察すると、ループ回数は、単純に\(n\)が大きくなれば多くなるという訳ではないことに気付く。
+<p><h2>Lehman法</h2>
+Fermat法の挙動を観察すると、ループ回数は、単純に\(n\)が大きくなれば多くなるという訳ではないことに気付く。
 例えば、\(4343=101\times43\)は7回の反復を要するが、その3倍\(3\times4343=13029\)は、1回目で非自明な約数の発見に至っている。
 ならば、うまい具合に\(n\)を調整することによって、Fermat法よりも少ない計算回数で素因数分解ができるかもしれない、と思いつく。
 この考えを実現したのが、<strong>Lehman法</strong>である。
