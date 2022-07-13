@@ -1,6 +1,6 @@
 import random
 
-from legendre_symbol import legendre_symbol
+from jacobi_symbol import jacobi_symbol
 from split_int import split_int
 
 
@@ -24,7 +24,7 @@ def tonelli_shanks_algorithm(a: int, p: int) -> int:
         >>> tonelli_shanks_algorithm(10, 13)
         6
     """
-    assert legendre_symbol(a, p) == 1  # aは平方非剰余であり、平方根は存在しない
+    assert jacobi_symbol(a, p) == 1  # aは平方非剰余であり、平方根は存在しない
 
     res = p % 4
     a %= p
@@ -33,7 +33,7 @@ def tonelli_shanks_algorithm(a: int, p: int) -> int:
     else:
         while True:  # 法pで平方非剰余なdを見つけるまでループする
             d = random.randrange(2, p)
-            if legendre_symbol(d, p) == -1:
+            if jacobi_symbol(d, p) == -1:
                 break
         s, t = split_int(p - 1)
         A, D = pow(a, t, p), pow(d, t, p)

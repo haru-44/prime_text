@@ -1,8 +1,8 @@
 import random
 from typing import List, Optional
 
+from euler_criterion import euler_criterion
 from jacobi_symbol import jacobi_symbol
-from legendre_symbol import legendre_symbol
 
 
 def solovay_strassen_test(n: int, k: Optional[int] = None, a_list: Optional[List[int]] = None) -> str:
@@ -26,7 +26,7 @@ def solovay_strassen_test(n: int, k: Optional[int] = None, a_list: Optional[List
     if a_list is None:
         a_list = [random.randrange(2, n) for _ in range(k)]
     for a in a_list:
-        euler_criterion = legendre_symbol(a, n)
-        if euler_criterion == 0 or euler_criterion != jacobi_symbol(a, n):
+        criterion = euler_criterion(a, n)
+        if criterion == 0 or criterion != jacobi_symbol(a, n):
             return 'composite number'
     return 'probable prime'

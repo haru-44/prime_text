@@ -1,5 +1,5 @@
-def legendre_symbol(a: int, p: int) -> int:
-    """ Legendre記号(a / p)を計算する。
+def euler_criterion(a: int, p: int) -> int:
+    """ Eulerの規準を計算する。
 
     Args:
         a (int): 整数
@@ -12,9 +12,9 @@ def legendre_symbol(a: int, p: int) -> int:
              0  = aはpで割り切れる
 
     Examples:
-        >>> legendre_symbol(2, 5)
+        >>> euler_criterion(2, 5)
         -1
-        >>> legendre_symbol(4, 7)
+        >>> euler_criterion(4, 7)
         1
     """
     ans = pow(a, (p - 1) // 2, p)

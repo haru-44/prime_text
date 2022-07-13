@@ -114,7 +114,7 @@ $1$は常に平方剰余であり、つまり、平方非剰余の集合に単�
 
 さて、Legendre記号を求めるアルゴリズムは、\rProp{Legendre_symbol_calc}を素直に実装すると、次の通りとなる。
 
-\Algo{Legendre記号}{legendre_symbol}{}
+\Algo{Eulerの規準}{euler_criterion}{}
 
 以上のように、素数を法とする平方剰余の判定は簡単に行うことができるのである。
 平方剰余の理論は、次に示す平方剰余の相互法則によって、1つの頂点を迎える。
@@ -223,7 +223,7 @@ $n$が素数の場合、この2つは常に一致するが、合成数の場合�
 $a$の値によって一致することもあるし、一致しないこともある。
 この一致する$a$と一致しない$a$は、丁度半分ずつ存在するので、$a$をランダムに選べば$1/2$の確率で合成数であることが分かるのである。
 
-\Algo{Solovay-Strassenテスト}{solovay_strassen_test}{c.f., \rAlgo{legendre_symbol}, \rAlgo{jacobi_symbol}}
+\Algo{Solovay-Strassenテスト}{solovay_strassen_test}{c.f., \rAlgo{euler_criterion}, \rAlgo{jacobi_symbol}}
 
 Solovay-Strassenテストを突破する合成数を\IND{Euler-Jacobi擬素数}{Euler-Jacobiきそすう}(Euler-Jacobi pseudoprime)と呼ぶ\Notes{単にEuler擬素数と呼ぶ流儀もある。}。
 
@@ -269,6 +269,6 @@ $k=0,m=0$のとき、$(AD^m)^{2^{s-k}}\equiv1\pmod{p}$を満たすので、あ�
 
 Tonelli-Shanksのアルゴリズムは、任意の奇素数$p$で正しく平方根を返すので\rProp{tonelli_shanks_algorithm}を実装するだけでもよいのだが、$p\equiv3\pmod{4}$ならもっと簡単な方法があるので、コードの簡潔さは劣るが高速化のためにはそちらを使った方が良い。
 
-\Algo{Tonelli-Shanksのアルゴリズム}{tonelli_shanks_algorithm}{c.f., \rAlgo{legendre_symbol}, \rAlgo{split_int}}
+\Algo{Tonelli-Shanksのアルゴリズム}{tonelli_shanks_algorithm}{c.f., \rAlgo{jacobi_symbol}, \rAlgo{split_int}}
 
 これは、あくまで素数を法とする平方根を求める方法であることに注意する。

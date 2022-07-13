@@ -1,7 +1,7 @@
 import random
 
 from inverse_mod import inverse_mod
-from legendre_symbol import legendre_symbol
+from jacobi_symbol import jacobi_symbol
 from lucas_sequence_chain import lucas_sequence_chain
 from n_times import n_times
 
@@ -29,11 +29,11 @@ def cipolla_algorithm(a: int, p: int) -> int:
         c, d = y
         return (a * c + b * d * s) % p, (a * d + b * c) % p
 
-    assert legendre_symbol(a, p) == 1
+    assert jacobi_symbol(a, p) == 1
     while True:
         t = random.randrange(0, p-1)
         s = (t**2 - a) % p
-        if legendre_symbol(s, p) == -1:
+        if jacobi_symbol(s, p) == -1:
             break
 
     x, _ = n_times((t, 1), (p+1)//2, _mul)
@@ -58,11 +58,11 @@ def cipolla_algorithm_lucas(a: int, p: int) -> int:
         >>> cipolla_algorithm_lucas(2, 7) # 4も解であるが、小さいほうの3を返す
         3
     """
-    assert legendre_symbol(a, p) == 1
+    assert jacobi_symbol(a, p) == 1
     while True:
         t = random.randrange(0, p-1)
         s = (t**2 - 4*a) % p
-        if legendre_symbol(s, p) == -1:
+        if jacobi_symbol(s, p) == -1:
             break
 
     k, _ = lucas_sequence_chain((p+1)//2, t, a, p)

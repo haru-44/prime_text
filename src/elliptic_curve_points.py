@@ -1,6 +1,6 @@
 from typing import Generator, Tuple
 
-from legendre_symbol import legendre_symbol
+from jacobi_symbol import jacobi_symbol
 from tonelli_shanks_algorithm import tonelli_shanks_algorithm
 
 
@@ -23,10 +23,10 @@ def elliptic_curve_points(a: int, b: int, p: int) -> Generator[Tuple[int, int], 
     assert (4 * a**3 + 27 * b**2) % p != 0
     for x in range(p):
         y2 = (x**3 + a*x + b) % p
-        legendre = legendre_symbol(y2, p)
-        if legendre == 0:
+        jacobi = jacobi_symbol(y2, p)
+        if jacobi == 0:
             yield x, 0
-        elif legendre == 1:
+        elif jacobi == 1:
             y = tonelli_shanks_algorithm(y2, p)
             yield x, y
             yield x, -y % p

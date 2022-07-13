@@ -1,4 +1,4 @@
-from legendre_symbol import legendre_symbol
+from jacobi_symbol import jacobi_symbol
 
 
 def elliptic_curve_order_naive(a: int, b: int, p: int) -> int:
@@ -18,4 +18,4 @@ def elliptic_curve_order_naive(a: int, b: int, p: int) -> int:
         9
     """
     assert (4 * a**3 + 27 * b**2) % p != 0
-    return p + 1 + sum(legendre_symbol(x**3 + a * x + b, p) for x in range(p))
+    return p + 1 + sum(jacobi_symbol(x**3 + a * x + b, p) for x in range(p))
