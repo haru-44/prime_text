@@ -53,7 +53,7 @@ Miller-RabinテストもLucas数列テストも、誤って素数と判定され
 Miller-Rabinテストにおいて、$a=2$の場合に誤って素数と判定されてしまう合成数は、$2047, 3277, 4033,\ldots$等である\Notes{\url{https://oeis.org/A001262}}。
 一方、Selfridgeの方法Aで決められたパラメータ$a,b$を設定された強Lucas擬素数テストにおいて、誤って素数と判定されてしまう合成数は、$5459, 5777, 10877,\ldots$等である\Notes{\url{https://oeis.org/A217255}}。
 この2つを試して間違うときというのは、この2つの数列に共通の数が含まれていた場合のみである。
-(現在検証されている範囲では)$2^64$までなら確実に素数か合成数かを判定できるし、これ以上についても、そのような合成数は未だ発見されていない。
+(現在検証されている範囲では)$2^{64}$までなら確実に素数か合成数かを判定できるし、これ以上についても、そのような合成数は未だ発見されていない。
 
 \Algo{Baillie-PSWテスト}{baillie_psw_test}{c.f., \rAlgo{is_square_number}, \rAlgo{miller_rabin_test}, \rAlgo{selfridge_method_a}, \rAlgo{strong_lucas_sequence_test}}
 
