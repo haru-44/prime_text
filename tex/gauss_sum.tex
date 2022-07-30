@@ -25,7 +25,7 @@ $n$次の円分多項式$\Phi_n$とは、「1の原始$n$乗根」を根に持�
 
 $\zeta_n^k$のうち、$\gcd(n,k)=1$となる$k$のときのみ原始$n$乗根となるから、具体的に書くなら次のようになる。
 \begin{align*}
-\Phi_n(x)=\prod_{\stackrel{1 \le k \le n}{\gcd(k,n)=1}}(x - e^{2\pi ik/n})
+\Phi_n(x)=\prod_{\stackrel{1 \le k \le n}{\gcd(k,n)=1}}(x - \zeta_n^k)
 \end{align*}
 
 \begin{Exam}{}{}\;
@@ -37,7 +37,12 @@ $\zeta_n^k$のうち、$\gcd(n,k)=1$となる$k$のときのみ原始$n$乗根�
 \end{Exam}
 
 原始多項式となる条件からも推察できるように、$\Phi_n(x)$は、$\varphi(n)$次の多項式である。
-一方、$\Phi_n(x)$が常に整数係数多項式となることは、定義からすると意外かもしれない。
+一方、$\Phi_n(x)$が常に整数係数多項式となることは、定義からは想像が付かない。
+
+\begin{Prop}{}{cyclotomic_polynomial_coef}
+$n$次円分多項式$\Phi_n$は、$\varphi(n)$次の整数係数多項式である。
+\end{Prop}
+
 専ら素数次の円分多項式を使うから、この場合について詳しく見てみよう。
 
 \begin{Prop}{}{}

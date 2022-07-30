@@ -1,3 +1,4 @@
+from is_square_number import is_square_number
 from sqrt_int import sqrt_int
 
 
@@ -23,7 +24,7 @@ def fermat_factorization_method(n: int) -> int:
     # ループの開始位置が厳密には正しくない
     for x in range(sqrt_int(n), (n + 9) // 6 + 1):
         y2 = x**2 - n
-        y = sqrt_int(y2)
-        if y**2 == y2:
+        if is_square_number(y2):
+            y = sqrt_int(y2)
             return x - y
     return 1

@@ -1,5 +1,7 @@
 import math
 
+from sympy.ntheory import primerange
+
 from nth_root_int import nth_root_int
 
 
@@ -23,7 +25,7 @@ def is_perfect_power(n: int) -> bool:
     """
     if n == 1:
         return True
-    for b in range(2, int(math.log2(n)) + 1):
+    for b in primerange(2, int(math.log2(n)) + 1):
         a = nth_root_int(n, b)
         if a**b == n:
             return True
