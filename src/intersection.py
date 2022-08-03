@@ -11,7 +11,7 @@ def intersection(a: List[int], b: List[int]) -> Iterator[Tuple[int, int, int]]:
         (int, int, int): 共通部分の元, その元のaでのインデックス, その元のbでのインデックス
 
     Examples:
-        >>> list(intersection([3, 2, 4, 2], [1, 0, 8, 3, 3, 2])
+        >>> list(intersection([3, 2, 4, 2], [1, 0, 8, 3, 3, 2]))
         [(2, 1, 5), (3, 0, 3)]
     """
     a = sorted(zip(a, range(len(a))), key=lambda x: x[0])

@@ -28,8 +28,6 @@ Fermat法が素早く解ける整数は、試し割法では苦戦し、試し�
 
 以上を踏まえて、Fermat法を実装しよう。
 既に述べたように、$\left \lceil\sqrt{n}\right \rceil \le a \le (n + 9) / 6$の範囲の$a$をすべてチェックするのである。
-次のアルゴリズムは、素直な実装だが、ループの開始位置が$\left \lceil\sqrt{n}\right \rceil$ではなく$\left \lfloor\sqrt{n}\right \rfloor$となっている。
-最初のループが1回余計になることがあるが、新たに$\left \lceil\sqrt{n}\right \rceil$を求めるアルゴリズムを実装する手間を回避した。
 
 \Algo{Fermat法}{fermat_factorization_method}{c.f., \rAlgo{is_square_number}, \rAlgo{sqrt_int}}
 

@@ -1,5 +1,4 @@
-import random
-
+from find_qnr import find_qnr
 from inverse_mod import inverse_mod
 from jacobi_symbol import jacobi_symbol
 from lucas_sequence_chain import lucas_sequence_chain
@@ -30,12 +29,8 @@ def cipolla_algorithm(a: int, p: int) -> int:
         return (a * c + b * d * s) % p, (a * d + b * c) % p
 
     assert jacobi_symbol(a, p) == 1
-    while True:
-        t = random.randrange(0, p-1)
-        s = (t**2 - a) % p
-        if jacobi_symbol(s, p) == -1:
-            break
-
+    t = find_qnr(p, lambda x: x**2-a, (0, p-1))
+    s = (t**2 - a) % p
     x, _ = n_times((t, 1), (p+1)//2, _mul)
     return min(x, -x % p)
 
@@ -59,12 +54,7 @@ def cipolla_algorithm_lucas(a: int, p: int) -> int:
         3
     """
     assert jacobi_symbol(a, p) == 1
-    while True:
-        t = random.randrange(0, p-1)
-        s = (t**2 - 4*a) % p
-        if jacobi_symbol(s, p) == -1:
-            break
-
+    t = find_qnr(p, lambda x: x**2-4*a, (0, p-1))
     k, _ = lucas_sequence_chain((p+1)//2, t, a, p)
     x = (k * inverse_mod(2, p)) % p
     return min(x, -x % p)

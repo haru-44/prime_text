@@ -54,7 +54,7 @@ def cornacchia_smith_4p(p: int, d: int) -> Optional[Tuple[int, int]]:
                          そのようなx,yが存在しないならNone
 
     Examples:
-        >>> cornacchia_smith(101, -323) # 4 * 101 = 9^2 + 323 * 1^2
+        >>> cornacchia_smith_4p(101, -323) # 4 * 101 = 9^2 + 323 * 1^2
         (9, 1)
     """
     if p == 2:

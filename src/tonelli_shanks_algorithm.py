@@ -1,5 +1,4 @@
-import random
-
+from find_qnr import find_qnr
 from jacobi_symbol import jacobi_symbol
 from split_int import split_int
 
@@ -31,10 +30,7 @@ def tonelli_shanks_algorithm(a: int, p: int) -> int:
     if res == 3:
         x = pow(a, (p+1)//4, p)
     else:
-        while True:  # 法pで平方非剰余なdを見つけるまでループする
-            d = random.randrange(2, p)
-            if jacobi_symbol(d, p) == -1:
-                break
+        d = find_qnr(p)
         s, t = split_int(p - 1)
         A, D = pow(a, t, p), pow(d, t, p)
         m = 0

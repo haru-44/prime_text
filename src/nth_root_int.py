@@ -14,7 +14,7 @@ def nth_root_int(a: int, n: int) -> int:
     """
     if a < 2:
         return a
-    x = 2**((len(bin(a))-3+n)//n)
+    x = 2**((a.bit_length() - 1 + n) // n)
     while True:
         y = (a + (n - 1) * x**n) // (n * x**(n - 1))
         if y >= x:

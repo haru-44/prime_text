@@ -269,6 +269,6 @@ $k=0,m=0$のとき、$(AD^m)^{2^{s-k}}\equiv1\pmod{p}$を満たすので、あ�
 
 Tonelli-Shanksのアルゴリズムは、任意の奇素数$p$で正しく平方根を返すので\rProp{tonelli_shanks_algorithm}を実装するだけでもよいのだが、$p\equiv3\pmod{4}$ならもっと簡単な方法があるので、コードの簡潔さは劣るが高速化のためにはそちらを使った方が良い。
 
-\Algo{Tonelli-Shanksのアルゴリズム}{tonelli_shanks_algorithm}{c.f., \rAlgo{jacobi_symbol}, \rAlgo{split_int}}
+\Algo{Tonelli-Shanksのアルゴリズム}{tonelli_shanks_algorithm}{c.f., \rAlgo{find_qnr}, \rAlgo{jacobi_symbol}, \rAlgo{split_int}}
 
 これは、あくまで素数を法とする平方根を求める方法であることに注意する。

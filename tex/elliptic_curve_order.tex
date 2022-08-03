@@ -20,7 +20,5 @@ $[m]P=O$より、$P$の位数は$m$を割り切る(\rProp{element_order}の2)。
 
 少し賢い方法としては、$m$を$(p+1-2\sqrt{p}, p+1+2\sqrt{p})$の範囲で走らせて、$[m]P=O$となる$m$はただ1つだけであることを確認すればよい。
 それでも$O(\sqrt{p}\ln{p})$回の体演算が必要となる。
-これを減らすためにbaby-step giant-stepの考えを応用しよう。
-baby-step giant-stepの本質的な考え方は、2つの多重集合$A,B$の共通部分$A\cap B$をなるべく少ない比較回数で求めることにあった。
+これを減らすためにbaby-step giant-stepの考えを応用する。
 
-\Algo{共通部分を求める}{intersection}{}
