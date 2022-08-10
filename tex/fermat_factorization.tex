@@ -29,7 +29,9 @@ Fermat法が素早く解ける整数は、試し割法では苦戦し、試し�
 以上を踏まえて、Fermat法を実装しよう。
 既に述べたように、$\left \lceil\sqrt{n}\right \rceil \le a \le (n + 9) / 6$の範囲の$a$をすべてチェックするのである。
 
-\Algo{Fermat法}{fermat_factorization_method}{c.f., \rAlgo{is_square_number}, \rAlgo{sqrt_int}}
+\Algo{Fermat法}{fermat_factorization_method}{c.f., \rAlgo{sqrt_int}}
+
+Fermat法の高速化については、\ref{sssec:quadratic_residue_square}で改めて考察する。
 
 \subsubsection{Lehman法}
 Fermat法の挙動を観察すると、ループ回数は、単純に$n$が大きくなれば多くなるという訳ではないことに気付く。

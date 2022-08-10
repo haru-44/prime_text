@@ -1,4 +1,3 @@
-from is_square_number import is_square_number
 from sqrt_int import sqrt_int, sqrt_int_ceil
 
 
@@ -23,7 +22,7 @@ def fermat_factorization_method(n: int) -> int:
     assert n % 2 == 1
     for x in range(sqrt_int_ceil(n), (n + 9) // 6 + 1):
         y2 = x**2 - n
-        if is_square_number(y2):
-            y = sqrt_int(y2)
+        y = sqrt_int(y2)
+        if y**2 == y2:
             return x - y
     return 1
