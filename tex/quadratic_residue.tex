@@ -327,3 +327,55 @@ $x^2-n$が平方数であるとき、次を満たす。
 
 \Algo{Fermat法(高速化版)}{fermat_factorization_method_fast}{c.f., \rAlgo{sqrt_int}}
 
+また、$x^2-n$が平方数にならなくとも、いくつかの情報は得られる。
+例えば、$x^2-n=17$だったとしよう。
+$n$の素因数$p$で剰余算すれば、$x^2\equiv17\pmod{p}$が得られるので、$p=17$でなければ$p\equiv\pm1,\pm2,\pm4,\pm8\pmod{17}$である。
+一般に、$x^2-n=q$が得られたとき、$q$が素数で$q \not\mid n$かつ$4 \mid q-1$ならば、$n$の素因数$p$は$\left(\frac{p}{q}\right)=1$を満たす\Notes{$x^2\equiv q\pmod{p}$より、$\left(\frac{q}{p}\right)=1$。平方剰余の相互法則より、$\left(\frac{p}{q}\right)=1$}。
+これは$n$の素因数候補が半分になるということで、同様の合同式を複数得れば指数関数的に候補が絞られていく強力な手法である。
+合同式をすべて満たす解を見つける計算量が指数関数的に増大する点を除いては――。
+
+\subsubsection{擬平方数}
+整数で平方数なら、$m$を法としても平方剰余となるから、逆に$m$を法として平方非剰余なら$n$は平方数にならない、ということを利用して平方数判定を高速化した。
+ならば、どんな法でも平方剰余となる、平方数でない数とはどのようなものであろうか。
+
+\begin{Defi}{\IND{擬平方数}{きへいほうすう}, pseudosquare}{pseudosquare}
+素数$p$に対する擬平方数$L_p$は、次の2条件を満たす平方数でない最小の正整数である。
+\begin{enumerate}
+ \item $L_p \equiv 1 \pmod{8}$
+ \item $2<q\le p$を満たすすべての素数$q$について、$\left(\frac{L_p}{q}\right)=1$
+\end{enumerate}
+\end{Defi}
+
+\begin{Exam}{}{pseudosquare}\;
+\begin{itemize}
+ \item $8k+1$の形の正整数で平方数でない最小の数は$17$である。よって、$L_2 = 17$
+ \item $L_3 = 73$
+  \begin{itemize}
+   \item $\left(\frac{17}{3}\right)=\left(\frac{41}{3}\right)=\left(\frac{65}{3}\right)=-1$
+   \item $\left(\frac{33}{3}\right)=\left(\frac{57}{3}\right)=0$
+   \item 25,49は平方数
+  \end{itemize}
+ \item $L_5 = 241$
+\end{itemize}
+\end{Exam}
+
+計算機実験の結果から、$p$に対する$L_p$の値は指数関数的に増加することが予想されている。
+そのせいもあって、$L_p$の厳密な値が知られているのは$p=373$までである\cite{10.1007/978-3-642-14518-6_26}。
+一方で、擬平方数を素数判定に応用する際には、この増加速度は有利に働く。
+
+\begin{Theo}{\cite{Lukes1996}}{pseudosquare_test}
+$n$を1より大きい奇数、$B$を正整数、$p$を素数とする。
+次の条件をすべて満たすなら$n$は素数か素数の累乗である。
+\begin{enumerate}
+ \item $n$の素因数はすべて$B$より大きい。
+ \item $n < BL_p$
+ \item $q \le p$を満たす任意の素数$q$について、$q^{(n-1)/2}\equiv \pm1\pmod{n}$
+ \item $n\equiv 5\pmod{8}$ならば、$2^{(n-1)/2}\equiv-1\pmod{n}$
+ \item $n\equiv 1\pmod{8}$ならば、$q^{(n-1)/2}\equiv -1\pmod{n}$を満たす奇素数$q \le p$が存在する。
+\end{enumerate}
+\end{Theo}
+
+特に$B=1$のとき、\rTheo{pseudosquare_test}は必要十分条件となって、確定的な素数判定法を与える。
+
+\Algo{擬平方数による素数判定}{pseudosquare_test}{c.f., \rAlgo{is_perfect_power}}
+
