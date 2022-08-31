@@ -8,7 +8,7 @@ def baillie_psw_test(n: int) -> str:
     """ Baillie-PSWテストを用いて、nが素数かを判定する。
 
     Args:
-        n (int): 素数判定する対象の整数
+        n (int): 素数判定する対象の1より大きい整数
 
     Returns:
         str: 'composite number' : nは合成数
@@ -21,13 +21,6 @@ def baillie_psw_test(n: int) -> str:
         >>> baillie_psw_test(101) # 101 is prime
         'prime number'
     """
-    # 試し割は原理上不要な工程だが、小さな素因数がある合成数について
-    # わざわざ以降のテストするまでもない
-    for p in [2, 3, 5, 7]:
-        if n == p:
-            return 'prime number'
-        if n % p == 0:
-            return 'composite number'
     # 底2のMiller-Rabinテスト
     if miller_rabin_test(n, a_list=[2]) == 'composite number':
         return 'composite number'
