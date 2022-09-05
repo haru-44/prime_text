@@ -21,6 +21,8 @@ def baillie_psw_test(n: int) -> str:
         >>> baillie_psw_test(101) # 101 is prime
         'prime number'
     """
+    if n == 2:
+        return 'prime number'
     # 底2のMiller-Rabinテスト
     if miller_rabin_test(n, a_list=[2]) == 'composite number':
         return 'composite number'
