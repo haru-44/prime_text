@@ -1,22 +1,24 @@
-import math
-
-
 def quadratic_form_reduction(a, b, c):
-    """ 2次形式(a,b,c)の簡約形式を返す。
+    """ 負の判別式を持つ2次形式(a,b,c)の簡約形式を返す。
 
     Args:
-        a, b, c (int): 2次形式のパラメータ。ただし、判別式Dは平方数でないとする。
+        a, b, c (int): 2次形式のパラメータ。ただし、判別式Dは負で平方数でないとする。
 
     Returns:
         a, b, c (int): 簡約形式
     """
     D = b**2 - 4 * a * c
+    assert D < 0
     while True:
-        if abs(a) < abs(b):
-            u = math.floor((abs(a) - b) / (2 * a))
-            a, b, c = a, b + 2 * u * a, c + u * b + u**2 * a
-        if abs(a) <= abs(c):
-            break
-        else:
+        if c < a:
             a, b, c = c, -b, a
-    return a, b, c
+        if a < b or b <= -a:
+            b_ = b % (2 * a)
+            if a < b_:
+                b_ -= 2 * a
+            c_ = (b_**2 - D) // (4 * a)
+            a, b, c = a, b_, c_
+        elif a == c and -a < b < 0:
+            return a, -b, c
+        else:
+            return a, b, c

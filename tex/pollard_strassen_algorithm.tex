@@ -1,4 +1,63 @@
+\subsubsection{階乗を計算することの難しさ}
+計算量理論では、問題の絶対的な問題を考えるよりも、相対的な難しさを考える方が一般的である。
+つまり、問題Aと問題Bはどちらが難しいか(あるいは簡単か、同じくらいか)を論じるのである。
+専門的には還元(reduction)と呼ばれるが、問題Aを一瞬で解く仮想的な機械を使って問題Bが解ければ、「問題Bは問題Aより難しくはない」と言えるのである。
+これを便宜的に$B\le A$と書くことにしよう。
+例えば、三角形の面積を求めるアルゴリズムが存在したとすると、それを使って直角三角形の面積を求めることができる。
+このことから、直角三角形の面積を求める問題は、三角形の面積を求める問題よりも簡単、あるいは同程度の難しさであると言える(「より難しい」という可能性が否定された)。
+先ほどの記号で書くなら、「直角三角形の面積を求める問題」$\le$「三角形の面積を求める問題」となる。
+
+そういう意味で、階乗を計算することは素数判定問題や素因数分解問題よりも難しい。
+Wilsonの定理(\rTheo{wilson})より、$(n-1)!\pmod{n}$の値が分かれば$n$が素数かどうか分かるし、2分探索によって素因数分解もできる。
+階乗さえ高速に計算できれば、素数判定も素因数分解も簡単に解けてしまうのだ！
+
+そこで、階乗を高速に計算することを目指そう\Notes{なお、還元の議論で気を付けなければならないのは、「階乗を高速に計算できれば素数判定や素因数分解が高速にできる」という理屈は正しいが、階乗を計算しなくとも素数判定や素因数分解が高速に解けることはあり得るので、階乗計算がどんなに難しいからと言って素数判定や素因数分解の難しさを傍証することはできない。}。
+今の目標は、任意の$k,n$について$k! \bmod{n}$を計算することだが、最初は具体的な値として$64!$を計算してみよう。
+もちろん、$64!=1\times2\times\cdots\times64$を計算すればよいのだが、ここでは$f(x)=x(x+1)\cdots(x+7)$という多項式を使ってみる。
+すると、
+\begin{align*}
+64! &= \underbrace{ 1 \times 2 \times \cdots \times 8}_{f(1)} \times \underbrace{ 9 \times \cdots \times 16}_{f(9)} \times \cdots \times \underbrace{ 57 \times \cdots \times 64}_{f(57)}\\
+ &= f(1)f(9)f(17)f(25)f(33)f(41)f(49)f(57)
+\end{align*}
+と表すことができる。
+階乗を計算する問題は、多項式の任意の点を計算する問題に変換できた。
+
+\subsubsection{multipoint evaluation}
+多項式$f(x)$と$t$個の点$(x_0,x_1,\ldots,x_{t-1})$が与えられたとき、$f(x_0),f(x_1),\ldots,f(x_{t-1})$を計算する問題はmultipoint evaluationとして知られている。
+単純には、逐次代入して計算する方法が考えられるが、もっと速い方法がある。
+その鍵となるのが次の定理である。
+
+\begin{Theo}{\IND{剰余の定理}{しようよのていり}, polynomial remainder theorem}{polynomial_remainder_theorem}
+多項式$f(x)$を$(x-a)$で割った余りは$f(a)$である。
+同じことだが、ある多項式$g(x)$が存在し、
+\begin{align*}
+f(x) = (x-a)g(x) + f(a)
+\end{align*}
+を満たす。
+\end{Theo}
+
+つまり、$f(x_i)$を計算する問題は$f(x) \bmod{(x-x_i)}$を計算する問題に言い換えることができる。
+しかも整数のときと同じように、$(f \bmod{gh}) \bmod{g} = f \bmod{g}$ が成り立つので、次のようなアルゴリズムを構成できる。
+
+\begin{enumerate}
+ \item $(x-x_i)$ を葉ノードとする木を構成する。親ノードは子ノードの積とする。
+ \begin{itemize}
+  \item 実際のアルゴリズムでは葉から根に向かって木を作り、根ノードは$\prod_{i=0}^{t-1}(x-x_i)$である。
+ \end{itemize}
+ \item 各ノードについて、そのノードの多項式を$g$とするとき、$f \bmod{g}$を計算する。
+ \begin{itemize}
+  \item 実際のアルゴリズムでは根から葉に向かって計算する。親ノードの計算結果が$f \bmod{gh}$であるとき、$(f \bmod{gh}) \bmod{g}$を計算すれば、自ノードの多項式$f \bmod{g}$が得られる。
+ \end{itemize}
+ \item 葉ノードの値が求めるべき$f(x_i)$である。
+ \begin{itemize}
+  \item 各ノードには多項式が割り当てられているが、葉ノードに割り当てられているのは1次の多項式なので、これで剰余算すると定数関数になることに注意する。
+ \end{itemize}
+\end{enumerate}
+
+\Algo{多項式の評価}{multipoint_evaluation}{c.f., \rAlgo{Polynomial}}
+
+\subsubsection{Pollard-Strassenのアルゴリズム}
+\cite{pollard_1974, Strassen1976/77}
+
 \Algo{Pollard-Strassenのアルゴリズム}{pollard_strassen_algorithm}{c.f., \rAlgo{multipoint_evaluation}, \rAlgo{Polynomial}}
-
-
 
