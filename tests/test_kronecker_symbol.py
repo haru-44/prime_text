@@ -60,6 +60,7 @@ def test_kronecker_symbol_zero():
     assert kronecker_symbol(-1, 0) == 1
 
 def test_kronecker_symbol_eq():
-    for n in range(-10, 10):
+    for n in range(2, 10):
         assert kronecker_symbol(n, n) == 0
+        assert kronecker_symbol(-n, -n) == 0
 
