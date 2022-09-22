@@ -324,3 +324,38 @@ Kronecker指標$\chi_D(n)$は、Kronecker記号を使って$\chi_D(n)=\left(\fra
 
 \Algo{Dirichletの類数公式}{dirichlet_class_number_formula}{c.f., \rAlgo{kronecker_symbol}}
 
+\subsubsection{Shanksの baby-step giant-step}
+Shanksの \Ind{baby-step giant-step} は一般には、離散対数問題を解くアルゴリズムとして知られている。
+離散対数問題とは、群$G$の元$\alpha,\beta$を与えられたとき、$\alpha^x=\beta$を満たす$x$を求める問題である。
+しかし、$\beta=1$とすれば、$\alpha$の位数を求める問題にも利用できるし、元の位数が分かるということは群の位数を求めることにも応用できると期待できることは想像に難くない\Notes{厳密な議論をするならば、$\alpha^x=1$を満たす$x$が分かったからと言って、$\alpha$の位数が求まったわけではないことに注意する。あくまで$\alpha$の位数の倍数が$x$なのである。}。
+
+\begin{Prop}{}{}
+任意の$D<0$において、
+\begin{align*}
+0 < h(D) < \sqrt{|D|}\ln{|D|}
+\end{align*}
+を満たす。
+\end{Prop}
+
+という事実が知られているので、元を虱潰しに枚挙していく方法だと、少なくとも元の個数分のステップは必要である。
+そこまで理解したうえでbaby-step giant-step を眺めてみよう。
+
+まずは、baby-step giant-step の本家本元、離散対数問題を解くことを考える。
+ここでの群とは巡回群である。
+今、位数$n$の巡回群$G$の元$\alpha,\beta$が与えられ、$\alpha^x=\beta$となる$x$を求めたい。
+$m$を$m=\left\lceil \sqrt{n} \right\rceil$とし、$x=im+j$と置く。
+これは、$x$を$m$進2桁の数と考えたようなものだ。
+すると、
+\begin{align*}
+\alpha^x &= \beta\\
+\alpha^{im+j} &= \beta\\
+\alpha^j &= \beta(\alpha^{-m})^i
+\end{align*}
+と変形できる。
+つまらない式変形に見えて、既に結論を得ている。
+まず、$\alpha^j$を$0\le j<m$の範囲で動かした値をテーブルとして作成する。
+この作業は$O(m)$だけの時間とメモリ空間を使う。
+そして、$\beta(\alpha^{-m})^i$を$0\le j<m$の範囲で計算するたびに、テーブル上に同じ値がないかを探し、存在すればその$i,j$から$x$を得られるという仕組みだ。
+テーブルに存在するか照会するコストを無視すれば、やはり$O(m)$のステップで済むので全体としての計算時間は$O(\sqrt{n})$と評価できる。
+
+
