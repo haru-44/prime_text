@@ -1,0 +1,101 @@
+一般に、Dirichletの類数公式は、2次体の類数に関する公式として知られる。
+今、2次形式の話しをしていたはずなのに、なぜ2次体のことを持ち出すのか。
+それは、2次形式を発展させたものが2次体だからである。
+ここでは2次体の理論を詳しく説明しないが、2次体の類数と2次形式の類数$\sharp\mathcal{C}(D)$は一致するのでその結果だけを流用する。
+以降、$h(D)=\sharp\mathcal{C}(D)$と書くことにしよう。
+
+\begin{Theo}{}{}
+2次体$K=\mathbb{Q}(\sqrt{m})$、その判別式$D$、Kronecker指標$\chi_D$, $L$関数
+\begin{align*}
+L(s, \chi_D) = \sum_{n=0}^{\infty}\frac{\chi_D(n)}{n^s}
+\end{align*}
+と置く。
+$K$の類数$h(D)$は
+\begin{align*}
+h(D) = \frac{1}{\kappa_0}L(1, \chi_D)
+\end{align*}
+と表せる。
+ただし、$w$は$K$に含まれる1のべき根の個数、$\varepsilon_0$は$K$の基本単数で$\varepsilon_0>1$としたとき、
+\begin{align*}
+\kappa_0 = 
+\begin{cases}
+\frac{2\pi}{w\sqrt{|D|}}, & \mbox{if } D < 0\\
+\frac{2 \log{\varepsilon_0}}{\sqrt{D}}, & \mbox{if } D > 0
+\end{cases}
+\end{align*}
+とする。
+\end{Theo}
+
+何も説明していなので、何を言っているか分からないと思う。
+それでも$h(D)$を求めたいという目的意識で眺めてみると、無限和が出てくるため機械での計算が困難であることが了解できるだろう。
+そこで、Gauss和を用いて有限和の形に直す。
+さらに、$D<0$のみを考えていたので、$D>0$の式は省略する。
+
+\begin{Theo}{\IND{Dirichletの類数公式}{Dirichletのるいすうこうしき}, Dirichlet class number formula}{dirichlet_class_number_formula}
+虚2次体の類数$h(D)$は、次の式で表される。
+\begin{align*}
+h(D) = \frac{w}{2}\cdot\frac{1}{D}\sum_{n=1}^{|D|}\chi_D(n)n
+\end{align*}
+\end{Theo}
+
+$|D|$回の計算が必要であるから、$D$がそれなりに小さくないと計算できない。
+それでも、無限が有限に変わったのは大きい。
+これを具体的に計算するために、説明を加えていこう。
+
+$w$は「$K$に含まれる1のべき根の個数」であったが、それほど難しい値ではない。
+$D$の値によって、
+\begin{align*}
+w = 
+\begin{cases}
+4, & \mbox{if } D = -3\\
+6, & \mbox{if } D = -4\\
+2, & \mbox{otherwise}
+\end{cases}
+\end{align*}
+と定まる数で、$D=-3,-4$が例外で基本的に$2$であることが分かる。
+
+次にKronecker指標についてであるが、これまでLegendre記号、Jacobi記号を学んだ。
+Legendre記号は奇素数について、Jacobi記号は奇数について定義されていたが、Kronecker記号は整数全体に対して定義される。
+
+\begin{Defi}{\IND{Kronecker記号}{Kroneckerきこう}, Kronecker symbol}{kronecker_symbol}
+整数$a,n$とし、$n\neq0$のとき$n=u2^sm$と分解できるとする($u=\pm1$, $m$は正の奇数)。
+Kronecker記号$\left(\frac{a}{n}\right)$は次のように定義される。
+当然ながら、$n$が奇数のときにはKronecker記号$\left(\frac{a}{n}\right)$はJacobi記号$\left(\frac{a}{n}\right)$に一致する。
+
+\begin{align*}
+\left(\frac{a}{n}\right) = \left(\frac{a}{u}\right)\cdot \left(\frac{a}{2}\right)^s \cdot\left(\frac{a}{m}\right)
+\end{align*}
+ここで、
+\begin{align*}
+\left(\frac{a}{u}\right) = 
+\begin{cases}
+1, & \mbox{if } u = 1 \mbox{ or } a \ge 0\\
+-1, & \mbox{otherwise}
+\end{cases}
+\end{align*}
+\begin{align*}
+\left(\frac{a}{2}\right) = 
+\begin{cases}
+0, & \mbox{if } a \mbox{ は偶数}\\
+1, & \mbox{if } a \equiv \pm 1 \pmod{8}\\
+-1, & \mbox{if } a \equiv \pm 3 \pmod{8}
+\end{cases}
+\end{align*}
+$\left(\frac{a}{m}\right)$は、Jacobi記号とする。
+また、$n=0$のときは
+\begin{align*}
+\left(\frac{a}{0}\right) = 
+\begin{cases}
+1, & \mbox{if } a = \pm 1\\
+0, & \mbox{otherwise}
+\end{cases}
+\end{align*}
+とする。
+\end{Defi}
+
+\Algo{Kronecker記号}{kronecker_symbol}{c.f., \rAlgo{jacobi_symbol}, \rAlgo{split_int}}
+
+Kronecker指標$\chi_D(n)$は、Kronecker記号を使って$\chi_D(n)=\left(\frac{D}{n}\right)$と書けるので、Dirichletの類数公式を計算する素地が整った。
+定理をそのまま実装したバージョンと、若干の式変形をして簡単化したバージョンを載せる\Notes{変形の詳細については、\cite[p236]{iwanami_number_theory_2}を参照のこと。}。
+
+\Algo{Dirichletの類数公式}{dirichlet_class_number_formula}{c.f., \rAlgo{kronecker_symbol}}
