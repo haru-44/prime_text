@@ -1,0 +1,111 @@
+例えば、$\sqrt{3}$は$1.73205\cdots$と続く無理数だ。
+つまり、整数/整数という形に表すことができない。
+それでも近似を考えることはできて、安直には
+\begin{align*}
+\frac{17}{10} \; \frac{173}{100} \; \frac{1732}{1000}
+\end{align*}
+は有理数で$\sqrt{3}$を近似していると言える。
+少々不満なのは、近似の精度を上げるにつれて分子分母の数が大きくなり過ぎではないかという点だ。
+そうすると、もっと小さな数で良い近似は存在しないのだろうか？　という疑問が自然と生まれてくる。
+
+そこで、実数$\omega$に対して
+\begin{align*}
+\omega = a_0 + \cfrac{1}{a_1 + \cfrac{1}{a_2 + \cfrac{1}{a_3 + \cfrac{1}{\ddots}}}}
+\end{align*}
+というような\IND{連分数}{れんふんすう}(continued fraction)を考えよう。
+分子がすべて1である場合には\IND{正則連分数}{せいそくれんふんすう}(regular continued fraction)と呼ぶこともあるが、今回扱う連分数はすべて正則連分数なので、ここで連分数といった場合には正則連分数を指す。
+また、紙幅の関係で、
+\begin{align*}
+\omega=a_0 +\frac{1}{a_1 +}\, \frac{1}{a_2 +}\, \frac{1}{a_3 +}\cdots
+\end{align*}
+と書いたり、$[a_0;a_1,a_2,a_3,\ldots]$と書いたりする。
+
+さて、連分数の何が凄いのかというと、無理数に対して良く近似する有理数を作れることができるのだ。
+例えば、$\sqrt{3}$は無理数なので当然、連分数も無限に続くのだが、適当なところで打ち切って整理してやれば、
+\begin{align*}
+\sqrt{3} &\approx 1 + \cfrac{1}{1 + \cfrac{1}{2 + \cfrac{1}{1 + \cfrac{1}{2 + \cfrac{1}{1}}}}}\\
+&=\frac{26}{15} = 1.7333\ldots
+\end{align*}
+となって、3桁の数字を使わなくとも小数点以下第2位まで正しい有理数が得られた。
+
+実数を連分数表示に変換する方法も、機械的にできて、$\sqrt{3}=1.73\ldots$の整数部は1で、少数部の逆数は$1/0.73\ldots=1.366\ldots$だから、
+\begin{align*}
+\sqrt{3} &= 1 + 0.73\ldots\\
+&= 1 + \frac{1}{1.366\ldots}\\
+&= 1 + \frac{1}{1 + 0.366\ldots}\\
+&= 1 + \cfrac{1}{1 + \cfrac{1}{2.732\ldots}}
+\end{align*}
+というように、再帰的に計算できる。
+ただし、$\sqrt{3}$のようなケースではもう少し工夫ができて、$w=\sqrt{3}-1$と置き、$w^2+2w=2$より$w=\frac{2}{2+w}$が得られる。
+よって、
+\begin{align*}
+w + 1 &= 1 + \frac{2}{2+w} = 1 + \frac{1}{1 + w/2}\\
+&= 1 + \cfrac{1}{1 + \cfrac{1}{1 + w/2}}\\
+&= 1 + \cfrac{1}{1 + \cfrac{1}{1 + \cfrac{1}{2+w}}}
+\end{align*}
+というようにして求められる。
+
+再三例示しているように、$\sqrt{3}$は連分数では$[1;1,2,1,2,\ldots]$と表されるが、この先どこまで計算していっても$1,2$が繰り返されるだけである。
+少数にも循環小数が存在したが、連分数にも循環する場合があって、それは2次の無理数であることが必要にして十分である。
+
+ここまでのアルゴリズムをきちんと書き下してみよう。
+まず、連分数$[a_0;a_1,a_2,\ldots,a_n]$が与えられたとき、有理数$p_n/q_n$を求めるには次の漸化式を解けばよい。
+\begin{align*}
+p_n = 
+\begin{cases}
+a_0, &\mbox{if } n = 0\\
+p_0a_1 + 1, &\mbox{if } n = 1\\
+p_{n-1}a_n + p_{n-2}, &\mbox{otherwise}
+\end{cases}
+\\
+q_n = 
+\begin{cases}
+1, &\mbox{if } n = 0\\
+q_0a_1, &\mbox{if } n = 1\\
+q_{n-1}a_n + q_{n-2}, &\mbox{otherwise}
+\end{cases}
+\end{align*}
+
+さらに、平方数でない$N$が与えられたとき、$\sqrt{N}$の連分数表示$[a_0;a_1,a_2,\ldots]$を求めるには、
+\begin{align*}
+a_n &= 
+\begin{cases}
+\left \lfloor \sqrt{N} \right \rfloor, &\mbox{if } n = 0\\
+\left \lfloor \frac{a_0 + P_n}{Q_n} \right \rfloor, &\mbox{otherwise}
+\end{cases}
+\\
+P_n &= 
+\begin{cases}
+0, &\mbox{if } n = 0\\
+a_{n-1} Q_{n-1} - P_{n-1}, &\mbox{otherwise}
+\end{cases}
+\\
+Q_n &= 
+\begin{cases}
+1, &\mbox{if } n = 0\\
+N - a_0^2, &\mbox{if } n = 1\\
+Q_{n-2} + a_{n-1}(P_{n-1} - P_n), &\mbox{otherwise}
+\end{cases}
+\end{align*}
+という漸化式を解けばよい。
+
+\Algo{連分数を計算する}{continued_fraction}{c.f., \rAlgo{sqrt_int}}
+
+こう書くと$Q_n$は添え物のような印象を与えてしまうが、実は超重要な変数であって、それは次の等式が任意の$i$で成り立つことが関係している。
+\begin{align*}
+p_{i-1}^2 - N q_{i-1}^2 = (-1)^i Q_i
+\end{align*}
+
+唐突に思われるかもしれないが、ここでPell方程式を考えよう。
+
+\begin{Defi}{\IND{Pell方程式}{Pellほうていしき}, Pell's equation}{Pell's_equation}
+平方数でない自然数$N$に対して、
+\begin{align*}
+x^2 - Ny^2 = 1
+\end{align*}
+の形の方程式をPell方程式と呼ぶ。
+\end{Defi}
+場合によっては、右辺が$-1$の場合もPell方程式と呼ぶことがあるが、ここでは$1$のときのみを考える。
+
+\Algo{Pell方程式を解く}{pell_equation}{c.f., \rAlgo{continued_fraction}}
+
