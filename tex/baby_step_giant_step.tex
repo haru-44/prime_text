@@ -30,3 +30,5 @@ $m$を$m=\left\lceil \sqrt{n} \right\rceil$とし、$x=im+j$と置く。
 この作業は$O(m)$だけの時間とメモリ空間を使う。
 そして、$\beta(\alpha^{-m})^i$を$0\le j<m$の範囲で計算するたびに、テーブル上に同じ値がないかを探し、存在すればその$i,j$から$x$を得られるという仕組みだ。
 テーブルに存在するか照会するコストを無視すれば、やはり$O(m)$のステップで済むので全体としての計算時間は$O(\sqrt{n})$と評価できる。
+\Algo{baby-step giant-step}{baby_step_giant_step}{c.f., \rAlgo{inverse_mod}, \rAlgo{sqrt_int}}
+

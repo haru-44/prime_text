@@ -48,8 +48,15 @@ w + 1 &= 1 + \frac{2}{2+w} = 1 + \frac{1}{1 + w/2}\\
 再三例示しているように、$\sqrt{3}$は連分数では$[1;1,2,1,2,\ldots]$と表されるが、この先どこまで計算していっても$1,2$が繰り返されるだけである。
 少数にも循環小数が存在したが、連分数にも循環する場合があって、それは2次の無理数であることが必要にして十分である。
 
+\begin{Prop}{}{}
+2次無理数の連分数展開は循環する。
+逆に、循環連分数は2次無理数を表す。
+\end{Prop}
+
 ここまでのアルゴリズムをきちんと書き下してみよう。
-まず、連分数$[a_0;a_1,a_2,\ldots,a_n]$が与えられたとき、有理数$p_n/q_n$を求めるには次の漸化式を解けばよい。
+
+\begin{Prop}{}{}
+連分数$[a_0;a_1,a_2,\ldots,a_n]$に対する有理数$p_n/q_n$は次の漸化式で求められる。
 \begin{align*}
 p_n = 
 \begin{cases}
@@ -65,15 +72,12 @@ q_0a_1, &\mbox{if } n = 1\\
 q_{n-1}a_n + q_{n-2}, &\mbox{otherwise}
 \end{cases}
 \end{align*}
+\end{Prop}
 
-さらに、平方数でない$N$が与えられたとき、$\sqrt{N}$の連分数表示$[a_0;a_1,a_2,\ldots]$を求めるには、
+\begin{Prop}{}{}
+平方数でない$N$に対する連分数表示$[a_0;a_1,a_2,\ldots]$は次の漸化式で求められる。
 \begin{align*}
-a_n &= 
-\begin{cases}
-\left \lfloor \sqrt{N} \right \rfloor, &\mbox{if } n = 0\\
-\left \lfloor \frac{a_0 + P_n}{Q_n} \right \rfloor, &\mbox{otherwise}
-\end{cases}
-\\
+a_n &= \left \lfloor \frac{\left \lfloor \sqrt{N} \right \rfloor + P_n}{Q_n} \right \rfloor\\
 P_n &= 
 \begin{cases}
 0, &\mbox{if } n = 0\\
@@ -87,15 +91,17 @@ N - a_0^2, &\mbox{if } n = 1\\
 Q_{n-2} + a_{n-1}(P_{n-1} - P_n), &\mbox{otherwise}
 \end{cases}
 \end{align*}
-という漸化式を解けばよい。
+さらに、任意の$n=1,2,\ldots$において、
+\begin{align*}
+p_{n-1}^2 - N q_{n-1}^2 = Q_n\\
+N = P_n^2 + Q_{n-1}Q_n
+\end{align*}
+が成り立つ。
+\end{Prop}
 
 \Algo{連分数を計算する}{continued_fraction}{c.f., \rAlgo{sqrt_int}}
 
-こう書くと$Q_n$は添え物のような印象を与えてしまうが、実は超重要な変数であって、それは次の等式が任意の$i$で成り立つことが関係している。
-\begin{align*}
-p_{i-1}^2 - N q_{i-1}^2 = (-1)^i Q_i
-\end{align*}
-
+連分数表示を求める漸化式もさることながら、各変数間の関係式も重要である。
 唐突に思われるかもしれないが、ここでPell方程式を考えよう。
 
 \begin{Defi}{\IND{Pell方程式}{Pellほうていしき}, Pell's equation}{Pell's_equation}
@@ -103,9 +109,32 @@ p_{i-1}^2 - N q_{i-1}^2 = (-1)^i Q_i
 \begin{align*}
 x^2 - Ny^2 = 1
 \end{align*}
-の形の方程式をPell方程式と呼ぶ。
+の形の方程式をPell方程式と呼ぶ\Notes{イングランドの数学者 John Pell の名が冠されているが、これは名付け親の Leonhard Euler が Pell の業績と誤解したためだと言われている。}。
 \end{Defi}
+
 場合によっては、右辺が$-1$の場合もPell方程式と呼ぶことがあるが、ここでは$1$のときのみを考える。
+さて、Pell方程式は
+\begin{align*}
+p_{n-1}^2 - N q_{n-1}^2 = (-1)^n Q_n
+\end{align*}
+という関係式に似ていないだろうか。
+実は、Pell方程式は連分数展開のアルゴリズムによって解ける。
+$n$が偶数で$Q_n$が1ならば、$p_{n-1},q_{n-1}$が方程式の解であることは明らかである。
+この方法で必ず解が見つかること、しかもそれが最小解であることも知られている。
 
 \Algo{Pell方程式を解く}{pell_equation}{c.f., \rAlgo{continued_fraction}}
 
+さて、連分数を素因数分解に利用する1つの手は
+\begin{align*}
+p_{n-1}^2 - N q_{n-1}^2 = (-1)^n Q_n
+\end{align*}
+である。
+両辺を$N$で剰余算すると
+\begin{align*}
+p_{n-1}^2 \equiv (-1)^n Q_n \pmod{N}
+\end{align*}
+となる。
+このような関係式をいくつも集めて$Q_n$が平方数になる組み合わせを探せば、$x^2\equiv y^2\pmod{N}$を満たす$x,y$が得られる。
+この手法は一般に\IND{連分数法}{れんふんすうほう}として知られている。
+2次篩に似た手法だが、歴史的には連分数法が先輩だ。
+個々の$Q_n$は(2次篩での場合に比べて)比較的小さいことはメリットだが、篩が使えないというデメリットもあって、総合的には2次篩に劣る。
