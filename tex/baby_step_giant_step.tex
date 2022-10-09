@@ -2,6 +2,8 @@ Shanksの \Ind{baby-step giant-step} は一般には、離散対数問題を解�
 離散対数問題とは、群$G$の元$\alpha,\beta$を与えられたとき、$\alpha^x=\beta$を満たす$x$を求める問題である。
 しかし、$\beta=1$とすれば、$\alpha$の位数を求める問題にも利用できるし、元の位数が分かるということは群の位数を求めることにも応用できると期待できることは想像に難くない\Notes{厳密な議論をするならば、$\alpha^x=1$を満たす$x$が分かったからと言って、$\alpha$の位数が求まったわけではないことに注意する。あくまで$\alpha$の位数の倍数が$x$なのである。}。
 
+$h(D)$を知ろうとしたとき、
+
 \begin{Prop}{}{}
 任意の$D<0$において、
 \begin{align*}
@@ -31,4 +33,25 @@ $m$を$m=\left\lceil \sqrt{n} \right\rceil$とし、$x=im+j$と置く。
 そして、$\beta(\alpha^{-m})^i$を$0\le j<m$の範囲で計算するたびに、テーブル上に同じ値がないかを探し、存在すればその$i,j$から$x$を得られるという仕組みだ。
 テーブルに存在するか照会するコストを無視すれば、やはり$O(m)$のステップで済むので全体としての計算時間は$O(\sqrt{n})$と評価できる。
 \Algo{baby-step giant-step}{baby_step_giant_step}{c.f., \rAlgo{inverse_mod}, \rAlgo{sqrt_int}}
+
+baby-step giant-step の考え方を使えば、群の位数を探索することができる。
+
+\begin{Prop}{}{}
+群$G$の位数$\sharp G$は不明だが、$\alpha\le\sharp G\le\beta$を満たすとする。
+$1$を$G$の単位元、$a$を$G$の元とするとき、集合$H_a=\{i: \alpha\le i \le\beta, a^i = 1 \}$の要素は$\sharp G$の候補である。
+特に$\sharp H_a=1$のとき、その元が群の位数$\sharp G$である。
+\end{Prop}
+
+よって、ある程度$h(D)$の範囲を絞ったら、その範囲で baby-step giant-step を適用すればよい。
+特別なことをしなくとも$h(D) < \sqrt{|D|}\ln{|D|}$より、$\sqrt{\sqrt{|D|}\ln{|D|}}$程度で$h(D)$を求められることが分かる。
+しかも、$D$が決まっていれば$a,b$が決まった時点で$c$は確定するので、アルゴリズム中で$c$を記憶しておく必要はない。
+さらに、$(a,b,c)$の逆元は
+\begin{align*}
+(a,b,c)^{-1} =
+\begin{cases}
+(a, -b, c), &\mbox{if } 0 < b < a \neq c\\
+(a, b, c), &\mbox{otherwise}
+\end{cases}
+\end{align*}
+であるから、$b$は絶対値のみを記憶すればよい。
 
