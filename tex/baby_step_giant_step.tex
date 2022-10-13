@@ -30,15 +30,15 @@ $m$を$m=\left\lceil \sqrt{n} \right\rceil$とし、$x=im+j$と置く。
 つまらない式変形に見えて、既に結論を得ている。
 まず、$\alpha^j$を$0\le j<m$の範囲で動かした値をテーブルとして作成する。
 この作業は$O(m)$だけの時間とメモリ空間を使う。
-そして、$\beta(\alpha^{-m})^i$を$0\le j<m$の範囲で計算するたびに、テーブル上に同じ値がないかを探し、存在すればその$i,j$から$x$を得られるという仕組みだ。
+そして、$\beta(\alpha^{-m})^i$を$0\le i<m$の範囲で計算するたびに、テーブル上に同じ値がないかを探し、存在すればその$i,j$から$x$を得られるという仕組みだ。
 テーブルに存在するか照会するコストを無視すれば、やはり$O(m)$のステップで済むので全体としての計算時間は$O(\sqrt{n})$と評価できる。
 \Algo{baby-step giant-step}{baby_step_giant_step}{c.f., \rAlgo{inverse_mod}, \rAlgo{sqrt_int}}
 
 baby-step giant-step の考え方を使えば、群の位数を探索することができる。
 
 \begin{Prop}{}{}
-群$G$の位数$\sharp G$は不明だが、$\alpha\le\sharp G\le\beta$を満たすとする。
-$1$を$G$の単位元、$a$を$G$の元とするとき、集合$H_a=\{i: \alpha\le i \le\beta, a^i = 1 \}$の要素は$\sharp G$の候補である。
+群$G$の位数$\sharp G$は不明だが、$L\le\sharp G\le U$を満たすとする。
+$1$を$G$の単位元、$a$を$G$の元とするとき、集合$H_a=\{i: L \le i \le U, a^i = 1 \}$の要素は$\sharp G$の候補である。
 特に$\sharp H_a=1$のとき、その元が群の位数$\sharp G$である。
 \end{Prop}
 
@@ -54,4 +54,10 @@ $1$を$G$の単位元、$a$を$G$の元とするとき、集合$H_a=\{i: \alpha\
 \end{cases}
 \end{align*}
 であるから、$b$は絶対値のみを記憶すればよい。
+これで、プレーンな baby-step giant-step よりも2倍早くなる。
+
+今、$L\le\sharp G\le U$ であることが分かっているとして$\alpha^{L+x}=1$となる$x$を求めたい。
+$x$の範囲は$0\le x \le U-L$である。
+ここで、$\beta=\alpha^{-L}$と置くと、$\alpha^x=\beta$を解く問題に置き換えられる。
+後は、baby-step giant-step を適用すればよく、しかも、$i$は$2\le i <m$で偶数のみを調べればよい\Notes{$\beta\alpha^{-2m}$がテーブル上にないということは、$m$から$3m$の間に位数が存在しないということであることに注意。}。
 
