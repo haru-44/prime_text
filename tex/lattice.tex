@@ -35,6 +35,24 @@
 例えば、$\mathbf{b}_1'=\begin{pmatrix}0\\3\end{pmatrix},\mathbf{b}_2' = \begin{pmatrix}1\\-1\end{pmatrix}$でも、$x_1\mathbf{b}_2' + x_2\mathbf{b}_2'$がまったく同じ点集合を成す。
 実際、$\mathbf{b}_1'-\mathbf{b}_2'=\mathbf{b}_1$であることからも明らかだ。
 同じようにして、どんな長いベクトルでも作れてしまうが、逆に「同じ点集合を表すベクトルの集合で、なるべく短いものは何か？」という疑問が生まれる。
-それが最短ベクトル問題であり、暗号理論の分野ではしばしば暗号方式の安全性の根拠に使われる程難しい問題である。
+それが最短ベクトル問題であり、暗号理論の分野ではしばしば暗号方式の安全性の根拠に使われる程難しい問題\Notes{SVP challenge \url{https://www.latticechallenge.org/svp-challenge/index.php}}である。
 一方で応用範囲はいくつもあり、例えばRSA暗号への攻撃手法の1つにも最短ベクトル問題が関係している\Notes{RSA暗号の秘密鍵$d$が小さいと破られることが知られている。なお、\textbf{RSA暗号が破られること}と\textbf{素因数分解ができること}は等価ではないので注意。}し、もちろん本稿の主題でもある素因数分解にも使える。
 
+改めて格子を定義しよう。
+
+\begin{Defi}{\IND{格子}{こうし}, lattice}{lattice}
+$\mathbb{R}^m$における格子とは、$\mathbb{R}^m$の$n$個の線形独立なベクトル$\mathbf{b}_1, \ldots,\mathbf{b}_n$を使って、
+\begin{align*}
+\Lambda = \left\{ \sum_{i=1}^n a_i \mathbf{b}_i \; : \; a_i \in\mathbb{Z} \right\}
+\end{align*}
+と表される集合である。
+このとき、$n$を格子の\IND{階数}{かいすう}(rank)、$m$を\IND{次元}{しけん}(dimension)、$\mathbf{b}_1, \ldots,\mathbf{b}_n$を\IND{格子基底}{こうしきてい}(lattice basis)と呼ばれる。
+\end{Defi}
+
+行列では
+\begin{align*}
+\Lambda = \{ \mathbf{Ba} \; : \; \mathbf{a} \in \mathbb{Z}^n\}
+\end{align*}
+と書けるので、こちらの方が簡潔である。
+
+\Algo{LLLアルゴリズム}{lll_algorithm}{}
