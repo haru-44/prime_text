@@ -3,6 +3,7 @@ from __future__ import annotations
 from typing import List, Optional, Tuple
 
 from inverse_mod import inverse_mod
+from n_times import n_times
 
 
 class Polynomial:
@@ -80,6 +81,15 @@ class Polynomial:
             for j in range(other.deg + 1):
                 coef[i + j] += self[i] * other[j]
         return Polynomial(coef)
+
+    def __rmul__(self, other: int) -> Polynomial:
+        coef = [other * coef for coef in self._coef]
+        return Polynomial(coef)
+
+    def __pow__(self, other: int) -> Polynomial:
+        if other == 0:
+            return Polynomial([1])
+        return n_times(self, other, Polynomial.__mul__)
 
     def __floordiv__(self, other: Polynomial) -> Polynomial:
         q, _ = Polynomial._divmod(self, other)
@@ -222,6 +232,15 @@ class PolynomialMod:
                 coef[i + j] += self[i] * other[j]
                 coef[i + j] %= self._mod
         return PolynomialMod(coef, self._mod)
+
+    def __rmul__(self, other: int) -> PolynomialMod:
+        coef = [other * coef for coef in self._coef]
+        return PolynomialMod(coef, self._mod)
+
+    def __pow__(self, other: int) -> PolynomialMod:
+        if other == 0:
+            return PolynomialMod([1], self._mod)
+        return n_times(self, other, PolynomialMod.__mul__)
 
     def __floordiv__(self, other: PolynomialMod) -> PolynomialMod:
         q, _ = PolynomialMod._divmod(self, other)
