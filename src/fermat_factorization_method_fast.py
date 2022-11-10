@@ -18,7 +18,8 @@ def fermat_factorization_method_fast(n: int) -> int:
         >>> fermat_factorization_method_fast(2027) # 2027 is prime
         1
     """
-    assert n > 1 and n % 2 != 0 and n % 3 != 0
+    if n <= 1 or n % 2 == 0 or n % 3 == 0:
+        raise ValueError()
     n24 = n % 24
     # 初期値と幅の設定
     st = sqrt_int_ceil(n)

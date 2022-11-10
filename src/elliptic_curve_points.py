@@ -20,7 +20,8 @@ def elliptic_curve_points(a: int, b: int, p: int) -> Generator[Tuple[int, int], 
         >>> list(elliptic_curve_points(1, 1, 5))
         [(0, 1), (0, 4), (2, 1), (2, 4), (3, 1), (3, 4), (4, 2), (4, 3)]
     """
-    assert (4 * a**3 + 27 * b**2) % p != 0
+    if (4 * a**3 + 27 * b**2) % p == 0:
+        return ValueError()
     for x in range(p):
         y2 = (x**3 + a*x + b) % p
         jacobi = jacobi_symbol(y2, p)

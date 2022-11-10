@@ -13,7 +13,8 @@ def selfridge_method_a(n: int) -> Tuple[int, int]:
         a(int), b(int): Lucas擬素数テストのためのパラメータ。
                         合成数であることが判明した場合は(0, 0)
     """
-    assert n % 2 == 1
+    if n % 2 == 0:
+        raise ValueError()
     delta = 5
     diff = -2
     while True:

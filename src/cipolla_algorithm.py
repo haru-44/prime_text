@@ -28,7 +28,8 @@ def cipolla_algorithm(a: int, p: int) -> int:
         c, d = y
         return (a * c + b * d * s) % p, (a * d + b * c) % p
 
-    assert jacobi_symbol(a, p) == 1
+    if jacobi_symbol(a, p) != 1:
+        raise ValueError()
     t = find_qnr(p, lambda x: x**2-a, (0, p-1))
     s = (t**2 - a) % p
     x, _ = n_times((t, 1), (p+1)//2, _mul)
@@ -53,7 +54,8 @@ def cipolla_algorithm_lucas(a: int, p: int) -> int:
         >>> cipolla_algorithm_lucas(2, 7) # 4も解であるが、小さいほうの3を返す
         3
     """
-    assert jacobi_symbol(a, p) == 1
+    if jacobi_symbol(a, p) != 1:
+        raise ValueError()
     t = find_qnr(p, lambda x: x**2-4*a, (0, p-1))
     k, _ = lucas_sequence_chain((p+1)//2, t, a, p)
     x = (k * inverse_mod(2, p)) % p

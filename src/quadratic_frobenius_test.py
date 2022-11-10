@@ -30,8 +30,8 @@ def quadratic_frobenius_test(n: int, a: int, b: int, method: str = 'frobenius') 
         'composite number'
     """
     delta = a**2 - 4*b
-    assert not is_square_number(delta)
-    assert math.gcd(n, 2*a*b*delta) == 1
+    if is_square_number(delta) or math.gcd(n, 2 * a * b * delta) != 1:
+        raise ValueError()
     inv_b = inverse_mod(b, n)
     A = (a**2 * inv_b - 2) % n
     m = (n - jacobi_symbol(delta, n)) // 2

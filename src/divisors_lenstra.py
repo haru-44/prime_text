@@ -17,7 +17,8 @@ def divisors_lenstra(n: int, s: int, r: int) -> List[int]:
         >>> divisors_lenstra(288288, 71, 28)
         [28, 99, 312, 2016, 4004]
     """
-    assert math.gcd(s, r) == 1
+    if math.gcd(s, r) != 1:
+        raise ValueError()
     divisors_set = set()
     r_inv = inverse_mod(r, s)
     r_dash = (n * r_inv) % s

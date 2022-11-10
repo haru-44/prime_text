@@ -11,7 +11,8 @@ def quadratic_form_reduction(a: int, b: int, c: int) -> Tuple[int, int, int]:
         a, b, c (int): 簡約形式
     """
     D = b**2 - 4 * a * c
-    assert D < 0
+    if D >= 0:
+        raise ValueError()
     while True:
         if c < a:
             a, b, c = c, -b, a

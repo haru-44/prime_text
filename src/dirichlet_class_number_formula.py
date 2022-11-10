@@ -16,7 +16,8 @@ def dirichlet_class_number_formula(D: int) -> int:
         >>> dirichlet_class_number_formula(-47)
         5
     """
-    assert D < 0
+    if D >= 0:
+        raise ValueError()
     h = 0
     for n in range(1, abs(D)):
         h += kronecker_symbol(D, n) * n
@@ -44,7 +45,8 @@ def dirichlet_class_number_formula_simplify(D: int) -> int:
         >>> dirichlet_class_number_formula_simplify(-47)
         5
     """
-    assert D < -4
+    if D >= -4:
+        raise ValueError()
     h = sum(kronecker_symbol(D, n) for n in range(1, abs(D) // 2 + 1))
     if D % 8 == 5:
         h //= 3

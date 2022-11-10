@@ -19,7 +19,8 @@ def quadratic_form_class_number_naive(D: int) -> Generator[Tuple[int, int, int],
         >>> list(quadratic_form_class_number_naive(-23))
         [(1, 1, 6), (2, 1, 3), (2, -1, 3)]
     """
-    assert D < 0 and (D % 4 == 0 or D % 4 == 1)
+    if D >= 0:
+        raise ValueError()
     for a in range(1, sqrt_int(-D // 3) + 1):
         for b in range(a + 1):
             c, r = divmod(b**2 - D, 4 * a)

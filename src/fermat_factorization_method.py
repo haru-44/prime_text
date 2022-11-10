@@ -19,7 +19,8 @@ def fermat_factorization_method(n: int) -> int:
         >>> fermat_factorization_method(2027) # 2027 is prime
         1
     """
-    assert n % 2 == 1
+    if n % 2 == 0:
+        raise ValueError()
     for x in range(sqrt_int_ceil(n), (n + 9) // 6 + 1):
         y2 = x**2 - n
         y = sqrt_int(y2)

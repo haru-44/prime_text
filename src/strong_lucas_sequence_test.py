@@ -18,8 +18,8 @@ def strong_lucas_sequence_test(n: int, a: int, b: int) -> str:
              'composite number' = nは合成数
     """
     delta = a**2 - 4*b
-    assert not is_square_number(delta)
-    assert math.gcd(n, 2*a*b*delta) == 1
+    if is_square_number(delta) or math.gcd(n, 2 * a * b * delta) != 1:
+        raise ValueError()
     s, m = split_int(n - jacobi_symbol(delta, n))
     v_m, v_mp1 = lucas_sequence_chain(m, a, b, n)
     if v_m == 0 or (2*v_mp1 - a*v_m) % n == 0:

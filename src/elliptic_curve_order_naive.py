@@ -17,5 +17,6 @@ def elliptic_curve_order_naive(a: int, b: int, p: int) -> int:
         >>> elliptic_curve_order_naive(1, 1, 5)
         9
     """
-    assert (4 * a**3 + 27 * b**2) % p != 0
+    if (4 * a**3 + 27 * b**2) % p == 0:
+        return ValueError()
     return p + 1 + sum(jacobi_symbol(x**3 + a * x + b, p) for x in range(p))
