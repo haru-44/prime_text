@@ -23,19 +23,20 @@ def tonelli_shanks_algorithm(a: int, p: int) -> int:
         >>> tonelli_shanks_algorithm(10, 13)
         6
     """
-    assert jacobi_symbol(a, p) == 1  # aは平方非剰余であり、平方根は存在しない
-
-    res = p % 4
     a %= p
-    if res == 3:
-        x = pow(a, (p+1)//4, p)
+    # 平方剰余のときのみ、解が存在する
+    if jacobi_symbol(a, p) != 1:
+        raise ValueError()
+    if p % 4 == 3:
+        # p = 3 (mod 4) のときは、Tonelli-Shanks を使うまでもなく解ける
+        x = pow(a, (p + 1) // 4, p)
     else:
         d = find_qnr(p)
         s, t = split_int(p - 1)
         A, D = pow(a, t, p), pow(d, t, p)
         m = 0
         for i in range(1, s):
-            if pow(A * pow(D, m, p), pow(2, s-1-i), p) == p - 1:
+            if pow(A * pow(D, m, p), pow(2, s - 1 - i), p) == p - 1:
                 m += pow(2, i)
-        x = (pow(a, (t+1)//2, p) * pow(D, m//2, p)) % p
+        x = (pow(a, (t + 1) // 2, p) * pow(D, m // 2, p)) % p
     return min(x, -x % p)
