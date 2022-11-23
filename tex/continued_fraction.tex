@@ -19,6 +19,28 @@
 \omega=a_0 +\frac{1}{a_1 +}\, \frac{1}{a_2 +}\, \frac{1}{a_3 +}\cdots
 \end{align*}
 と書いたり、$[a_0;a_1,a_2,a_3,\ldots]$と書いたりする。
+次は、単なる用語の定義だ。
+
+\begin{Defi}{\IND{全商}{せんしよう}(complete quotient), \IND{部分商}{ふふんしよう}(partial quotient)}{complete_quotient}
+実数$\omega$の連分数展開$[a_0;a_1,a_2,a_3,\ldots]$に対して、
+\begin{align*}
+x_i = [a_i; a_{i+1}, a_{i+2},\ldots]
+\end{align*}
+を$i$次全商、$a_i$を$i$次部分商と呼ぶ。
+\end{Defi}
+
+明らかに$x_0=\omega$である。
+また、
+\begin{align*}
+x_i = a_i + \frac{1}{x_{i+1}}
+\end{align*}
+であるから$\left\lfloor x_i \right\rfloor$は$a_i$である。
+つまり、$x_i$の整数部は$a_i$であることが分かる。
+あるいは少し変形することで、
+\begin{align*}
+x_{i+1} = \frac{1}{x_i - a_i}
+\end{align*}
+も得られる。
 
 さて、連分数の何が凄いのかというと、無理数に対して良く近似する有理数を作れることができるのだ。
 例えば、$\sqrt{3}$は無理数なので当然、連分数も無限に続くのだが、適当なところで打ち切って整理してやれば、
@@ -46,6 +68,7 @@ w + 1 &= 1 + \frac{2}{2+w} = 1 + \frac{1}{1 + w/2}\\
 というようにして求められる。
 
 再三例示しているように、$\sqrt{3}$は連分数では$[1;1,2,1,2,\ldots]$と表されるが、この先どこまで計算していっても$1,2$が繰り返されるだけである。
+これを$[1;\overline{1,2}]$と書いて、$1,2$が循環していることを表す。
 少数にも循環小数が存在したが、連分数にも循環する場合があって、それは2次の無理数であることが必要にして十分である。
 
 \begin{Prop}{}{}
@@ -55,7 +78,7 @@ w + 1 &= 1 + \frac{2}{2+w} = 1 + \frac{1}{1 + w/2}\\
 
 ここまでのアルゴリズムをきちんと書き下してみよう。
 
-\begin{Prop}{}{}
+\begin{Prop}{}{continued_faraction_1}
 連分数$[a_0;a_1,a_2,\ldots,a_n]$に対する有理数$p_n/q_n$は次の漸化式で求められる。
 \begin{align*}
 p_n = 
@@ -74,10 +97,14 @@ q_{n-1}a_n + q_{n-2}, &\mbox{otherwise}
 \end{align*}
 \end{Prop}
 
-\begin{Prop}{}{}
-平方数でない$N$に対する連分数表示$[a_0;a_1,a_2,\ldots]$は次の漸化式で求められる。
+なお、\rProp{continued_faraction_1}で得られる$p_n/q_n$は既約分数である。
+つまり、$\gcd(p_n,q_n)=1$なのである。
+
+\begin{Prop}{}{continued_faraction_2}
+平方数でない$N$に対して$\sqrt{N}$の連分数表示$[a_0;a_1,a_2,\ldots]$は次の漸化式で求められる。
 \begin{align*}
-a_n &= \left \lfloor \frac{\left \lfloor \sqrt{N} \right \rfloor + P_n}{Q_n} \right \rfloor\\
+a_n &= \left \lfloor x_n \right \rfloor\\
+x_n &= \frac{\sqrt{N} + P_n}{Q_n}\\
 P_n &= 
 \begin{cases}
 0, &\mbox{if } n = 0\\
@@ -93,13 +120,43 @@ Q_{n-2} + a_{n-1}(P_{n-1} - P_n), &\mbox{otherwise}
 \end{align*}
 さらに、任意の$n=1,2,\ldots$において、
 \begin{align*}
-p_{n-1}^2 - N q_{n-1}^2 = Q_n\\
+p_{n-1}^2 - N q_{n-1}^2 = (-1)^n Q_n\\
 N = P_n^2 + Q_{n-1}Q_n
 \end{align*}
 が成り立つ。
 \end{Prop}
 
+\rProp{continued_faraction_2}では、全商$x_n$の求め方についても示しているが、具体的に計算するとなると必然的に実数(厳密には$\mathbb{Q}(\sqrt{N})$)を扱わなくてはならなくなる。
+部分商$a_n$を求めたいだけなら、
+\begin{align*}
+a_n = \left \lfloor \frac{\left \lfloor \sqrt{N} \right \rfloor + P_n}{Q_n} \right \rfloor
+\end{align*}
+で事足りる。
+
 \Algo{連分数を計算する}{continued_fraction}{c.f., \rAlgo{sqrt_int}}
+
+\begin{Exam}{}{}
+$N=41$とする。
+このとき、$\omega=\sqrt{41}$の連分数展開を求めよう。
+\begin{table}[htb]
+\centering
+\caption{$\sqrt{41}$の連分数展開}
+\label{tb:sqrt41_continued_fraction}
+\begin{tabular}{|r|r|r|c|r|r|r|}
+\hline
+$n$ & $P_n$ & $Q_n$ & $x_n$                   & $a_n$ & $p_n$ & $q_n$ \\ \hline
+0   & 0     & 1     & $\frac{\sqrt{41}+0}{1}$ & 6     & 6     & 1     \\ \hline
+1   & 6     & 5     & $\frac{\sqrt{41}+6}{5}$ & 2     & 13    & 2     \\ \hline
+2   & 4     & 5     & $\frac{\sqrt{41}+4}{5}$ & 2     & 32    & 5     \\ \hline
+3   & 6     & 1     & $\frac{\sqrt{41}+6}{1}$ & 12    & 397   & 62    \\ \hline
+4   & 6     & 5     & $\frac{\sqrt{41}+6}{5}$ & 2     & 826   & 129   \\ \hline
+5   & 4     & 5     & $\frac{\sqrt{41}+4}{5}$ & 2     & 2049  & 320   \\ \hline
+6   & 6     & 1     & $\frac{\sqrt{41}+6}{1}$ & 12    & 25414 & 3969  \\ \hline
+7   & 6     & 5     & $\frac{\sqrt{41}+6}{5}$ & 2     & 52877 & 8258  \\ \hline
+\end{tabular}
+\end{table}
+表\ref{tb:sqrt41_continued_fraction}のように計算できるから、$\sqrt{41}=[6;\overline{2,2,12}]$である。
+\end{Exam}
 
 連分数表示を求める漸化式もさることながら、各変数間の関係式も重要である。
 唐突に思われるかもしれないが、ここでPell方程式を考えよう。
@@ -113,7 +170,7 @@ x^2 - Ny^2 = 1
 \end{Defi}
 
 場合によっては、右辺が$-1$の場合もPell方程式と呼ぶことがあるが、ここでは$1$のときのみを考える。
-さて、Pell方程式は
+さて、Pell方程式は\rProp{continued_faraction_2}で得た、
 \begin{align*}
 p_{n-1}^2 - N q_{n-1}^2 = (-1)^n Q_n
 \end{align*}

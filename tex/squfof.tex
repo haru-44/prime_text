@@ -1,0 +1,21 @@
+\ruby{今日}{こん|にち}、Shanks の square forms factorization (以降、\Ind{SQUFOF})と呼ばれる素因数分解アルゴリズムは、いくつかのバリエーションがある。
+Shanks は SQUFOF について(講演や草稿が残っているが)論文を残しておらず、決定稿たるアルゴリズムが存在しない。
+そして、後に他の研究者が理論的な解析と改良を行ったものもSQUFOFと呼ばれるため、混乱が生じ得るわけだ。
+
+最も単純なアルゴリズムは、Wikipedia英語版\cite{wiki:Shanks's_square_forms_factorization}に記載のものであろう。
+
+\Algo{SQUFOF (wiki版)}{square_forms_factorization_simple}{c.f., \rAlgo{is_square_number}, \rAlgo{sqrt_int}}
+
+実装を見れば分かる通り、実装自体は非常に短く書ける。
+そのシンプルさゆえ、実行時間で他の高速なアルゴリズムより不利ではあるが、実用に供されることがある。
+
+それでは、その理屈を追っておこう。
+基礎となるのは、$\sqrt{N}$の連分数展開である。
+\rProp{continued_faraction_2}を思い出すと、$p_{n-1}^2 - N q_{n-1}^2 = Q_n$を満たすのであったから、$p_{n-1}^2 \equiv (-1)^n Q_n \pmod{N}$が得られる。
+連分数法ではこの関係式を集めて、$Q_n$が平方数になるような組み合わせを見つけた。
+しかし、$p_n,q_n$はどんどん大きくなって、コンピュータで扱うには不適当である。
+そこで、SQUFOF では $Q_n$ が平方数になるまでループを回すが、$p_n,q_n$ は計算しない。
+実際、$P_n,Q_n$は$2\sqrt{N}$より大きくならないので、この対策は効果的だ。
+このような理屈ゆえ、SQUFOF の前半は連分数展開(\rAlgo{continued_fraction})と処理は同じである。
+後半もループ内の処理は同じだが、初期値を変更している点で少々異なっている。
+

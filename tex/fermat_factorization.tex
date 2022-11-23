@@ -1,4 +1,5 @@
 \subsubsection{Fermat法}
+\label{sssec:fermat_method}
 例えば、$n=9951$を素因数分解するとしよう。
 $x^2-y^2 = (x-y)(x+y)$という公式と、直感によって、
 \begin{align*}
@@ -35,11 +36,12 @@ Fermat法が素早く解ける整数は、試し割法では苦戦し、試し�
 Fermat法の高速化については、\ref{sssec:quadratic_residue_square}で改めて考察する。
 
 \subsubsection{Lehman法}
+\label{sssec:lehman_method}
 Fermat法の挙動を観察すると、ループ回数は、単純に$n$が大きくなれば多くなるという訳ではないことに気付く。
 例えば、$4343=101\times43$は7回の反復を要するが、その3倍($3\times4343=13029$)は、1回目で非自明な約数の発見に至っている。
 より一般には$n=pq$のとき、$|q-p|$ が小さい方が良いので、$|uq-vp|$が最小となるような$k=uv$を使って$kn$に対してFermat法を実施するというアイディアが得られる。
 もちろん、$n$の因数分解を知らずして$k$を知ることはできないので、$k$は考え得るすべての値で試してみる。
-この考えを実現したのが、\IND{Lehman法}{Lehmanほう}である。
+この考えを実現したのが、\IND{Lehman法}{Lehmanほう}\cite{Lehman1974FactoringLI}である。
 
 Lehman法では、新たに$k$というパラメータを用意し、$n$ではなく$4kn$について$4kn=x^2-y^2$となる$x,y$を探す。
 これだけでは$k$が増えた分、純粋に探索範囲が増えてしまうが、$k,x$の範囲は、
