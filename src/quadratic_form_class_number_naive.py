@@ -1,6 +1,8 @@
 import math
 from typing import Generator, Tuple
 
+from sympy.ntheory import sqrt_mod
+
 from sqrt_int import sqrt_int
 
 
@@ -22,9 +24,9 @@ def quadratic_form_class_number_naive(D: int) -> Generator[Tuple[int, int, int],
     if D >= 0:
         raise ValueError()
     for a in range(1, sqrt_int(-D // 3) + 1):
-        for b in range(a + 1):
-            c, r = divmod(b**2 - D, 4 * a)
-            if r != 0 or c < a or math.gcd(math.gcd(a, b), c) != 1:
+        for b in filter(lambda x: x <= a, sqrt_mod(D, 4 * a, all_roots=True)):
+            c = (b**2 - D) // (4 * a)
+            if c < a or math.gcd(math.gcd(a, b), c) != 1:
                 continue
             yield (a, b, c)
             if a != b and a != c and b != 0:
