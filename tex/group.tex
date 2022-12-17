@@ -146,8 +146,31 @@ $\bmod{n}$においては、$ax+ny\equiv1\pmod{n}$より、$ax\equiv1\pmod{n}$�
 これだけの説明だと、「逆元が存在しない」＝「解がない」という誤解を招きやすいので、逆元が存在しないパターンにも触れておこう。
 4には逆元が存在せず、$4x\equiv2\pmod{16}$を満たすような$x$は確かに存在しない。
 しかし、同じ逆元が存在しない場合でも$4x\equiv8\pmod{16}$は、$x=2$を代入すれば成立する。
-このことは、逆元がどういうものであるかという考察を深めることに繋がるが、今は群の例を見ることを優先しよう。
+脇道に逸れるが、一般に1次合同方程式$ax\equiv b\pmod{n}$を解くには、次の命題を理解すればよい。
 
+\begin{Prop}{}{}
+整数$a,b,n$について、$g=\gcd(a,n)=au+nv,a=ga',b=gb',n=gn'$と置く。
+このとき、\IND{1次合同方程式}{1しこうとうほうていしき}(linear congruence)
+\begin{align}\label{eq:linear_congruence}
+ax \equiv b \pmod{n}
+\end{align}
+は次を満たす。
+\begin{enumerate}
+ \item $g=1$のとき、$x\equiv bu\pmod{n}$が$n$を法として唯1つの解である。
+ \item 式(\ref{eq:linear_congruence})に解が存在 $\iff$ $g \mid b$
+ \item 整数$x$について、式(\ref{eq:linear_congruence})を満たすことと、$a'x \equiv b' \pmod{n'}$を満たすことは同値。
+ \item 式(\ref{eq:linear_congruence})の解の1つが$x$であるとき、式(\ref{eq:linear_congruence})の解は$x, x+n', x+2n', \ldots, x+(g-1)n'$の$g$個で、これが$n$を法とする解のすべてである。
+\end{enumerate}
+\end{Prop}
+
+これをコードに落とすと次のようになる。
+本稿でも、基本的には$g=1$を前提としているので、そういう意味で$g>1$の場合どうなるかということは不要な知識だ。
+なので、閑話として読み飛ばしても構わない。
+自分であれこれ考えるようになって、「こういう場合はどうなるのだろう」と疑問に思ったとき思い出してもらえれば。
+
+\Algo{1次合同方程式}{linear_congruence}{c.f., \rAlgo{extended_gcd}}
+
+閑話休題\Notes{閑話休題は閑話の意味で使われる場合があるが、本来は閑話から本題に戻るときに使う。ここでは本来の意味で使用している。}。
 $a$と$n$が互いに素でないと逆元が存在しないのなら、$n$と互いに素でない元を除けば群になりそうだ。
 そこで、次のような集合を定義する。
 
