@@ -121,7 +121,7 @@ $\left(\frac{a}{n}\right)=-1$となる$a$は、全体の半分ほど存在して
 任意の自然数$s$について、$78557\times 2^s+1$は合成数である。
 \end{Theo}
 
-証明は$s$の場合分けをすることによってできるが、ここでは$s$が偶数の場合のみを示してみよう。
+証明は$s$の場合分けをすることによってできるが、まずは$s$が偶数の場合のみを示してみよう。
 
 \begin{Prop}{}{78557_even}
 $s$が偶数のとき、$78557\times 2^s+1$は$3$で割り切れる。
@@ -138,14 +138,68 @@ $s$が偶数のとき、
 となって、3で割り切れる。
 \end{prProof}
 
-結局、$78557\times 2^s+1$は$3, 5, 7, 13, 19, 37, 73$のいずれかで割り切れるため、素数にはなり得ないことが示される。
+この証明は一般化できそうだ。
+
+\begin{Prop}{}{proth_divide}
+正整数$N$に対して、$m,s$はある$t$が存在して
+\begin{align*}
+s &\equiv t \pmod{\mbox{ord}_N(2)}\\
+m &\equiv -(2^{-t}) \pmod{N}
+\end{align*}
+を満たすとする。
+このとき、$N$は$m\cdot2^s+1$を割り切る。
+ここで、$\mbox{ord}_N(2)$は、$N$を法とする2の位数である。
+\end{Prop}
+
+\begin{prProof}{proth_divide}
+\begin{align*}
+m\cdot 2^s+1 &\equiv -(2^{-t}) \cdot 2^t + 1 \pmod{N}\\
+&\equiv -(2^{-t+t}) + 1 \pmod{N}\\
+&\equiv -1 + 1 \pmod{N}\\
+&\equiv 0 \pmod{N}
+\end{align*}
+\end{prProof}
+
+\begin{Coro}{}{}
+$m\equiv2\pmod{3}$かつ$s\equiv0\pmod{2}$のとき、$m\cdot 2^s+1$は$3$で割り切れる。
+\end{Coro}
+
+\begin{Coro}{}{}
+$m\equiv2\pmod{5}$かつ$s\equiv1\pmod{4}$のとき、$m\cdot 2^s+1$は$5$で割り切れる。
+\end{Coro}
+
+\begin{Coro}{}{}
+$m\equiv3\pmod{7}$かつ$s\equiv1\pmod{3}$のとき、$m\cdot 2^s+1$は$7$で割り切れる。
+\end{Coro}
+
+\begin{Coro}{}{}
+$m\equiv11\pmod{13}$かつ$s\equiv11\pmod{12}$のとき、$m\cdot 2^s+1$は$13$で割り切れる。
+\end{Coro}
+
+\begin{Coro}{}{}
+$m\equiv11\pmod{19}$かつ$s\equiv15\pmod{18}$のとき、$m\cdot 2^s+1$は$19$で割り切れる。
+\end{Coro}
+
+\begin{Coro}{}{}
+$m\equiv9\pmod{73}$かつ$s\equiv3\pmod{9}$のとき、$m\cdot 2^s+1$は$73$で割り切れる。
+\end{Coro}
+
+\begin{Coro}{}{}
+$m\equiv6\pmod{37}$かつ$s\equiv27\pmod{36}$のとき、$m\cdot 2^s+1$は$37$で割り切れる。
+\end{Coro}
+
+正整数$s$は系のいずれかの条件に当てはまり、条件すべてを満たす$m$は、中国の剰余定理より$m\equiv78557\pmod{70050435}$であることが明らかになる。
+このことから、$78557\times 2^s+1$は$3, 5, 7, 13, 19, 37, 73$のいずれかで割り切れるため、素数にはなり得ないことが示される。
 このような奇数に名前を与えよう。
 
 \begin{Defi}{}{Sierpinski_number}
 どんな自然数$s$でも$m2^s+1$が合成数となるとき、奇数$m$を\IND{Sierpiński数}{Sierpińskiすう}(Sierpiński number)と呼ぶ。
 \end{Defi}
 
-そして、Sierpiński数はどのくらい存在するかについても答えが出ている。
+同様の方法で、78557以外のSierpiński数も見つけることができるが、それがSierpiński数のすべてであるかは分からない。
+Sierpiński数の作り方の1つではあるが、他にも方法があるかもしれない。
+作り方から明らかなように、Sierpiński数は無限に存在する。
+しかし、歴史的には無限性の証明の後に78557が発見されたのであって、実際、無限性を証明したWacław Sierpińskiの名が冠されている。
 
 \begin{Theo}{\cite{Sierpinski1960}}{}
 Sierpiński数は無限に存在する。
