@@ -6,7 +6,7 @@ def fermat_test(n: int, *, k: Optional[int] = None, a_list: Optional[List[int]] 
     """ Fermatテストを用いて、n>2が素数かを判定する。
 
     Args:
-        n (int): 素数判定する対象の整数
+        n (int): 素数判定する対象の2より大きい整数
         k (int): 試行回数の指定
         a_list(List[int]): 底の指定
 
