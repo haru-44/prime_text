@@ -42,6 +42,6 @@ def square_forms_factorization_simple(n: int, k: int = 1) -> int:
     while True:
         a = (sq + P) // Q
         P, P_prev = a * Q - P, P
-        if P != P_prev:
+        if P == P_prev:
             return math.gcd(n // k, P)
         Q, Q_prev = Q_prev + a * (P_prev - P), Q

@@ -28,7 +28,8 @@ def mckee_method(n: int) -> int:
     # x0 = int((n - n**(2/3))**(1/2)) と厳密には異なるが特に問題ない
     x0 = sqrt_int(n - nth_root_int(n, 3)**2)
     D = 4 * (n - x0**2)
-    assert ((2 * x0)**2 + D) % (4 * n) == 0
+    if ((2 * x0)**2 + D) % (4 * n) != 0:
+        raise ValueError()
     if math.gcd(n, D) > 1:
         return math.gcd(n, D)
     for a in range(1, sqrt_int(D // 3) + 1):
