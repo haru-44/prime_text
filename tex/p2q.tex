@@ -1,0 +1,41 @@
+\subsubsection{Jacobi signature}
+一般に、$n$の素因数$q$に対して、$x_i \not\equiv x_j \pmod{n}$かつ$x_i \equiv x_j \pmod{q}$なる$x_i,x_j$を見つけることができれば、$\gcd(x_i-x_j, n)$は非自明な因数となる。
+では、次のような素因数分解アルゴリズムを考えてみよう。
+
+\begin{enumerate}
+ \item ランダムに$m$個の$x\in\mathbb{Z}_n^*$をとる。
+ \item この中で、$x_i \not\equiv x_j \pmod{n}$かつ$x_i \equiv x_j \pmod{q}$なる$x_i,x_j$を見つける。
+ \item $\gcd(x_i-x_j, n)$を非自明な因数として答える。
+\end{enumerate}
+
+誕生日のパラドックスより、$m=\sqrt{q}$程度であれば素因数分解が成功すると期待できる。
+しかし、条件に適う$x_i,x_j$のペアを見つけることは容易ではない。
+$m$個の中から2個の組み合わせをすべて調べるというのは現実的ではないし、$x_i \equiv x_j \pmod{q}$であることは傍目からでは分からないからだ。
+けれど、この考え方が全然ダメというわけではない。
+もし、$x_i \equiv x_j \pmod{q}$かどうかを比べられるような量が存在すれば、我々はすべての組み合わせをチェックすることはなくなる。
+そんな都合の良い量が、特に$n=p^2q$型の合成数の場合存在する。
+
+\begin{Defi}{Jacobi signature\cite{PeraltaOkamoto1996}}{jacobi_signature}
+奇素数$p,q$、合成数$n=p^2q$とする。
+長さ$k$のJacobi signature$J^{(k)}(x)$はJacobi記号$\left(\frac{\cdot}{\cdot} \right)$を使って次のように定義される。
+\begin{align*}
+J^{(k)}(x) = \left( \left(\frac{x + 1}{n} \right), \ldots, \left(\frac{x + k}{n} \right) \right)
+\end{align*}
+\end{Defi}
+
+もし、$x_i \equiv x_j \pmod{q}$ならば、$J^{(k)}(x_i)=J^{(k)}(x_j)$である。
+Jacobi記号の性質より、
+\begin{align*}
+\left(\frac{x}{n} \right) = \left(\frac{x}{p^2q} \right) = \left(\frac{x}{p^2} \right)\left(\frac{x}{q} \right) = \left(\frac{x}{q} \right)
+\end{align*}
+となるから当然のことであるが、逆に言えば$p^2q$型のときのみ有効な手法であることも了解できると思う。
+また、長さ$k$を十分大きくとれば$x_i \equiv x_j \pmod{q}$でないときに$J^{(k)}(x_i)=J^{(k)}(x_j)$となる確率は低い。
+
+これで、当初の青写真を実現できる目途が立った。
+実装は次のようになる。
+
+\Algo{Jacobi signature}{JacobiSignature}{c.f., \rAlgo{jacobi_symbol}}
+
+だが、$\mathbb{Z}_n^*$からランダムに$x$を選んだのでは、$O(\sqrt{q})$程度かかってしまい、それではPollardの$\rho$法に劣る。
+Jacobi signatureの真価は、ECM(楕円曲線法)の後段に実行する「部品」とすることができる点にある。
+
