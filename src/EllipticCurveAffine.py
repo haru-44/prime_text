@@ -16,7 +16,8 @@ class EllipticCurveAffine:
         self.p = p
         self.a = a % p
         self.b = b % p
-        assert (4 * self.a**3 + 27 * self.b**2) % p != 0
+        if (4 * self.a**3 + 27 * self.b**2) % p == 0:
+            raise ValueError()
 
     def _discoverd_divisor(self, d: int) -> None:
         """ pを割り切る整数dを発見したとき、例外を発生させる。
@@ -70,23 +71,21 @@ class EllipticCurveAffine:
         Q_x, Q_y, _ = Q
         P_x, P_y = P_x % self.p, P_y % self.p
         Q_x, Q_y = Q_x % self.p, Q_y % self.p
-        if P_x == Q_x and P_y == self.p - Q_y:  # P + (-P) = O
-            return (0, 1, 0)
-        if P_x == Q_x and P_y == Q_y:
+        if P_x == Q_x:
+            if (P_y + Q_y) % self.p == 0:
+                return (0, 1, 0)
             inv = inverse_mod(2 * P_y, self.p)
             if inv is None:  # 逆元なし
                 self._discoverd_divisor(math.gcd(2 * P_y, self.p))
-            beta = (3 * P_x**2 + self.a) * inv
-            x = beta**2 - 2 * P_x
-            y = -P_y + beta * (P_x - x)
+            m = (3 * P_x**2 + self.a) * inv
         else:
             inv = inverse_mod(Q_x - P_x, self.p)
             if inv is None:  # 逆元なし
                 self._discoverd_divisor(abs(math.gcd(Q_x - P_x, self.p)))
-            alpha = (Q_y - P_y) * inv
-            x = alpha**2 - P_x - Q_x
-            y = -P_y + alpha * (P_x - x)
-        return (x % self.p, y % self.p, 1)
+            m = (Q_y - P_y) * inv
+        x = (m**2 - P_x - Q_x) % self.p
+        y = (m * (P_x - x) - P_y) % self.p
+        return (x, y, 1)
 
     def times(self, P: Tuple[int, int, int], n: int) -> Tuple[int, int, int]:
         """ Pのn倍を計算する
