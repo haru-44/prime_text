@@ -13,7 +13,7 @@ class JacobiSignature:
     他手法に対して優位性を持つ。
 
     Notes:
-        René Peralta and Eiji Okamoto. "Faster factoring of integers of a special form",
+        Rene Peralta and Eiji Okamoto. "Faster factoring of integers of a special form",
             IEICE Transactions on Fundamentals of Electronics, Communications, and Computer Sciences,
             Vol.E79-A, No.4, pp.489-493, 1996
     """
