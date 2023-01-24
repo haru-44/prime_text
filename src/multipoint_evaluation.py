@@ -1,10 +1,10 @@
-from typing import Iterable, Iterator, List, Optional, Union
+from typing import Iterable, Iterator
 
 from Polynomial import *
 
 
-def multipoint_evaluation(poly: Union[Polynomial, PolynomialMod],
-                          xs: Iterable[int], delta: int = 4) -> List[int]:
+def multipoint_evaluation(poly: Polynomial | PolynomialMod,
+                          xs: Iterable[int], delta: int = 4) -> list[int]:
     """ 多項式fと (x_0, x_1, ..., x_k)に対して f(x_0), f(x_1), ..., f(x_k) を計算する。
 
     Args:
@@ -46,8 +46,8 @@ def multipoint_evaluation(poly: Union[Polynomial, PolynomialMod],
     return [f(x) for x, f in zip(xs, gs[:len(xs)])]
 
 
-def multipoint_evaluation_ap(poly: Union[Polynomial, PolynomialMod],
-                             a: int, d: int, n: Optional[int]) -> Iterator[int]:
+def multipoint_evaluation_ap(poly: Polynomial | PolynomialMod,
+                             a: int, d: int, n: int | None) -> Iterator[int]:
     """ 多項式fに対して、f(a), f(a + d), f(a + 2d), ..., f(a + (n-1)d) を順次計算する。
 
     Args:

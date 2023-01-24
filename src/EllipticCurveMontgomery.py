@@ -1,5 +1,4 @@
 import random
-from typing import Optional, Tuple
 
 from inverse_mod import inverse_mod
 
@@ -11,7 +10,7 @@ class EllipticCurveMontgomery:
     Montgomery座標は (x,z) の2項組で表され、計算にも一定の制限があるが、その分速い。
     """
 
-    def __init__(self, n: int, sigma: Optional[int] = None) -> None:
+    def __init__(self, n: int, sigma: int | None = None) -> None:
         """ 初期化を行い、パラメータを定めると共に Q に初期点を設定する。
 
         楕円曲線のパラメータ C を直に指定するよりも、sigma から定まる C を使うことによって
@@ -32,7 +31,7 @@ class EllipticCurveMontgomery:
              inverse_mod(4 * u_3 * v, n) - 2) % self._n
         self._a24 = (C + 2) * inverse_mod(4, self._n) % self._n
 
-    def add(self, P: Tuple[int, int], Q: Tuple[int, int], diff: Tuple[int, int]) -> Tuple[int, int]:
+    def add(self, P: tuple[int, int], Q: tuple[int, int], diff: tuple[int, int]) -> tuple[int, int]:
         """ Montgomery座標における加法 P+Q を計算する。ただし、diff=P-Q
         """
         P_x, P_z = P
@@ -45,7 +44,7 @@ class EllipticCurveMontgomery:
         z = (d_x * sub**2) % self._n
         return x, z
 
-    def double(self, P: Tuple[int, int]) -> Tuple[int, int]:
+    def double(self, P: tuple[int, int]) -> tuple[int, int]:
         """ Montgomery座標におけるPの2倍を計算する。
         """
         P_x, P_z = P
@@ -55,7 +54,7 @@ class EllipticCurveMontgomery:
         z = (diff * (sub + self._a24 * diff)) % self._n
         return x, z
 
-    def times(self, P: Tuple[int, int], k: int) -> Tuple[int, int]:
+    def times(self, P: tuple[int, int], k: int) -> tuple[int, int]:
         """ Montgomery座標におけるPのk倍を計算する。
         """
         Q = P

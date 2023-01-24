@@ -1,9 +1,7 @@
-from typing import List
-
 from sqrt_int import sqrt_int
 
 
-def factor_sieve(n: int) -> List[int]:
+def factor_sieve(n: int) -> list[int]:
     """ 素因数を篩う
 
     Args:

@@ -1,10 +1,8 @@
-from typing import Optional
-
 from inverse_mod import inverse_mod
 from sqrt_int import sqrt_int_ceil
 
 
-def baby_step_giant_step(alpha: int, beta: int, n: int) -> Optional[int]:
+def baby_step_giant_step(alpha: int, beta: int, n: int) -> int | None:
     """ alpha^x = beta (mod n) を満たす x を求める。
 
     Examples:

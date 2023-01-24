@@ -1,5 +1,4 @@
 import itertools
-from typing import Dict, List
 
 from chainese_remainder_theorem import chainese_remainder_theorem
 from cipolla_algorithm import cipolla_algorithm
@@ -36,7 +35,7 @@ def sqrt_modulo_pe(a: int, p: int, e: int) -> int:
     return min(x, -x % p**e)
 
 
-def sqrt_modulo_n(a: int, factors: Dict[int, int]) -> List[int]:
+def sqrt_modulo_n(a: int, factors: dict[int, int]) -> list[int]:
     """ x^2 = a (mod n) を満たす x をすべて求める。
 
     ただし、factorsはnの素因数分解とし、nは奇数。

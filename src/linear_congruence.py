@@ -1,9 +1,7 @@
-from typing import List
-
 from extended_gcd import extended_gcd
 
 
-def linear_congruence(a: int, b: int, n: int, all_solutions: bool = False) -> List[int]:
+def linear_congruence(a: int, b: int, n: int, all_solutions: bool = False) -> list[int]:
     """ 1次合同方程式 ax = b (mod n) を解く。
 
     Args:

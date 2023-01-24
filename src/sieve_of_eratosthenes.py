@@ -1,9 +1,7 @@
-from typing import List
-
 from sqrt_int import sqrt_int
 
 
-def sieve_of_eratosthenes(n: int) -> List[bool]:
+def sieve_of_eratosthenes(n: int) -> list[bool]:
     """ 素因数を篩う
 
     Args:

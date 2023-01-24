@@ -1,10 +1,8 @@
-from typing import Optional
-
 from matrix_mul import matrix_mul
 from n_times import n_times
 
 
-def lucas_sequence_matrix_u(n: int, a: int, b: int, mod: Optional[int] = None) -> int:
+def lucas_sequence_matrix_u(n: int, a: int, b: int, mod: int | None = None) -> int:
     """ Lucas数列のn番目U_nを計算する。(行列計算を用いたバージョン)
 
     Args:
@@ -24,7 +22,7 @@ def lucas_sequence_matrix_u(n: int, a: int, b: int, mod: Optional[int] = None) -
         return val % mod
 
 
-def lucas_sequence_matrix_v(n: int, a: int, b: int, mod: Optional[int] = None) -> int:
+def lucas_sequence_matrix_v(n: int, a: int, b: int, mod: int | None = None) -> int:
     """ Lucas数列のn番目V_nを計算する。(行列計算を用いたバージョン)
 
     Args:

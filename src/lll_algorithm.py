@@ -1,9 +1,8 @@
 from copy import copy, deepcopy
 from fractions import Fraction
-from typing import List
 
 
-def lll_algorithm(basis: List[List[int]], delta: float = 3/4) -> List[List[int]]:
+def lll_algorithm(basis: list[list[int]], delta: float = 3/4) -> list[list[int]]:
     """ LLL アルゴリズム で基底を簡約する。
 
     Args:

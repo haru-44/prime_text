@@ -1,12 +1,10 @@
-from typing import Optional, Tuple
-
 from cipolla_algorithm import cipolla_algorithm
 from is_square_number import is_square_number
 from jacobi_symbol import jacobi_symbol
 from sqrt_int import sqrt_int
 
 
-def cornacchia_smith(p: int, d: int) -> Optional[Tuple[int, int]]:
+def cornacchia_smith(p: int, d: int) -> tuple[int, int] | None:
     """ Cornacchia-Smith 法で、p = x^2+dy^2 を満たすx,yを求める。
 
     (x,y)が解なら(-x,y),(x,-y),(-x,-y)も解であるが、(x,y)のみを返す。
@@ -40,7 +38,7 @@ def cornacchia_smith(p: int, d: int) -> Optional[Tuple[int, int]]:
         return None
 
 
-def cornacchia_smith_4p(p: int, d: int) -> Optional[Tuple[int, int]]:
+def cornacchia_smith_4p(p: int, d: int) -> tuple[int, int] | None:
     """ Cornacchia-Smith 法で、4p = x^2+|d|y^2 を満たすx,yを求める。
 
     (x,y)が解なら(-x,y),(x,-y),(-x,-y)も解であるが、(x,y)のみを返す。

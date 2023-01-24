@@ -1,6 +1,5 @@
 import math
 import random
-from typing import Optional
 
 from jacobi_symbol import jacobi_symbol
 
@@ -29,7 +28,7 @@ class JacobiSignature:
         self._k = k
         self._dic = {}
 
-    def set_value(self, x: Optional[int] = None) -> int:
+    def set_value(self, x: int | None = None) -> int:
         """ Z_n^* の元を追加し、発見した場合は n の因数を返す
 
         Args:

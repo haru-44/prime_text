@@ -1,6 +1,4 @@
-from typing import Optional
-
-def matrix_mul(A, B, mod:Optional[int]=None):
+def matrix_mul(A, B, mod: int | None = None):
     """ 行列AとBの積を計算する
 
     Args:

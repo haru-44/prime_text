@@ -1,7 +1,4 @@
-from typing import Tuple
-
-
-def quadratic_form_reduction(a: int, b: int, c: int) -> Tuple[int, int, int]:
+def quadratic_form_reduction(a: int, b: int, c: int) -> tuple[int, int, int]:
     """ 負の判別式を持つ2次形式(a,b,c)の簡約形式を返す。
 
     Args:

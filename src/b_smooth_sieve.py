@@ -1,7 +1,4 @@
-from typing import List
-
-
-def b_smooth_sieve(n: int, B: int) -> List[int]:
+def b_smooth_sieve(n: int, B: int) -> list[int]:
     """ B-smoothな数を篩う
 
     Args:

@@ -1,8 +1,7 @@
 import math
-from typing import List
 
 
-def sieve_of_atkin(n: int) -> List[bool]:
+def sieve_of_atkin(n: int) -> list[bool]:
     """ Atkinの篩によって、nまでの素数リストを生成する
 
     Args:

@@ -1,10 +1,10 @@
 from itertools import count
-from typing import Generator, List, Tuple
+from typing import Generator
 
 from sqrt_int import sqrt_int
 
 
-def continued_fraction(a: List[int]) -> Tuple[int, int]:
+def continued_fraction(a: list[int]) -> tuple[int, int]:
     """ 連分数 a = [a_0; a_1, a_2, ..., a_n] の有理数表示 p_n / q_n を計算する。
 
     Args:
@@ -26,7 +26,7 @@ def continued_fraction(a: List[int]) -> Tuple[int, int]:
     return p, q
 
 
-def continued_fraction_sqrt(N: int) -> Generator[Tuple[int, int, int, int], None, None]:
+def continued_fraction_sqrt(N: int) -> Generator[tuple[int, int, int, int], None, None]:
     """ sqrt(D) の 連分数 [a_0; a_1, a_2, ..., a_n] および有理数近似 p_n / q_n を計算する。
 
     Args:

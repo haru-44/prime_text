@@ -1,10 +1,8 @@
-from typing import Tuple
-
 from extended_gcd import extended_gcd
 from quadratic_form_reduction import quadratic_form_reduction
 
 
-def quadratic_form_composition(a1: int, b1: int, c1: int, a2: int, b2: int, c2: int) -> Tuple[int, int, int]:
+def quadratic_form_composition(a1: int, b1: int, c1: int, a2: int, b2: int, c2: int) -> tuple[int, int, int]:
     """ 2つの2次形式を合成した2次形式を得る。
 
     Args:
@@ -23,7 +21,7 @@ def quadratic_form_composition(a1: int, b1: int, c1: int, a2: int, b2: int, c2: 
     return quadratic_form_reduction(a3, b3, c3)
 
 
-def quadratic_form_composition2(a: int, b: int, c: int) -> Tuple[int, int, int]:
+def quadratic_form_composition2(a: int, b: int, c: int) -> tuple[int, int, int]:
     """ 2次形式(a,b,c)の2乗を計算する。
 
     Args:
@@ -41,7 +39,7 @@ def quadratic_form_composition2(a: int, b: int, c: int) -> Tuple[int, int, int]:
     return quadratic_form_reduction(a_, b_, c_)
 
 
-def quadratic_form_composition3(a: int, b: int, c: int) -> Tuple[int, int, int]:
+def quadratic_form_composition3(a: int, b: int, c: int) -> tuple[int, int, int]:
     """ 2次形式(a,b,c)の3乗を計算する。
 
     Args:

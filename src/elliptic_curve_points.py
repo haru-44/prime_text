@@ -1,10 +1,10 @@
-from typing import Generator, Tuple
+from typing import Generator
 
 from jacobi_symbol import jacobi_symbol
 from tonelli_shanks_algorithm import tonelli_shanks_algorithm
 
 
-def elliptic_curve_points(a: int, b: int, p: int) -> Generator[Tuple[int, int], None, None]:
+def elliptic_curve_points(a: int, b: int, p: int) -> Generator[tuple[int, int], None, None]:
     """ 楕円曲線 y**2 = x**3 + a*x + b (mod p) の点を枚挙する。
 
     Args:

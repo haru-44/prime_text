@@ -3,7 +3,7 @@ import random
 from typing import List, Optional
 
 
-def pocklington_test(n: int, qs: List[int]) -> Optional[str]:
+def pocklington_test(n: int, qs: list[int]) -> str | None:
     """ Pocklingtonの定理を用いて、n>2が素数かを判定する。
 
     n-1は、FRと分解され、Fの素因数はすべて判明しているとする。
@@ -12,7 +12,7 @@ def pocklington_test(n: int, qs: List[int]) -> Optional[str]:
 
     Args:
         n (int): 素数判定する対象の整数
-        qs (List[int]): n-1の素因数リスト
+        qs (list[int]): n-1の素因数リスト
 
     Returns:
         string: 'prime number'       = nは素数

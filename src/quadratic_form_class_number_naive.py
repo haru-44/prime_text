@@ -1,12 +1,12 @@
 import math
-from typing import Generator, Tuple
+from typing import Generator
 
 from sympy.ntheory import sqrt_mod
 
 from sqrt_int import sqrt_int
 
 
-def quadratic_form_class_number_naive(D: int) -> Generator[Tuple[int, int, int], None, None]:
+def quadratic_form_class_number_naive(D: int) -> Generator[tuple[int, int, int], None, None]:
     """ 判別式Dに対するC(D) の元を枚挙する。
 
     Args:

@@ -1,9 +1,7 @@
-from typing import List
-
 from sqrt_int import sqrt_int
 
 
-def sieve_of_sundaram(n: int) -> List[int]:
+def sieve_of_sundaram(n: int) -> list[int]:
     """ Sundaramの篩によって、2<p<=n を満たす素数pのリストを生成する
 
     Args:

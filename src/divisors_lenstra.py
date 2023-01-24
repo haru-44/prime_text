@@ -1,12 +1,11 @@
 import math
-from typing import List
 
 from inverse_mod import inverse_mod
 from is_square_number import is_square_number
 from sqrt_int import sqrt_int
 
 
-def divisors_lenstra(n: int, s: int, r: int) -> List[int]:
+def divisors_lenstra(n: int, s: int, r: int) -> list[int]:
     """ sを法としてrと合同なnの非自明な約数を列挙する
 
     制約条件 0 < r < s < n, gcd(s, r) = 1

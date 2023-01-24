@@ -1,7 +1,4 @@
-from typing import Tuple
-
-
-def extended_gcd(a: int, b: int) -> Tuple[int, int, int]:
+def extended_gcd(a: int, b: int) -> tuple[int, int, int]:
     """ 拡張Euclidの互除法によって、ax + by = gcd(a, b)を満たす整数x,yを求める
 
     Args:

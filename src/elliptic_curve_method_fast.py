@@ -1,5 +1,4 @@
 import math
-from typing import Optional
 
 from sympy.ntheory import primerange
 
@@ -7,8 +6,8 @@ from EllipticCurveMontgomery import EllipticCurveMontgomery
 
 
 def elliptic_curve_method_fast(n: int, *, B1: int,  D: int,
-                               B2: Optional[int] = None,
-                               sigma: Optional[int] = None) -> int:
+                               B2: int | None = None,
+                               sigma: int | None = None) -> int:
     """ 各種の高速化手法を取り入れた楕円曲線法を用いた素因数分解。
 
     Args:
@@ -47,7 +46,7 @@ def elliptic_curve_method_fast(n: int, *, B1: int,  D: int,
     for prime in primerange(2, B1 + 1):
         l = math.floor(math.log(B1) / math.log(prime))
         Q = ec.times(Q, prime**l)
-    assert Q[1] != 0 # Q[1] == 0 は実用上滅多に発生しないが、この場合はB1が大きすぎた
+    assert Q[1] != 0  # Q[1] == 0 は実用上滅多に発生しないが、この場合はB1が大きすぎた
     g = math.gcd(Q[1], n)
     if 1 < g < n:
         return g
@@ -59,7 +58,8 @@ def elliptic_curve_method_fast(n: int, *, B1: int,  D: int,
     beta = [(x * z) % n for x, z in S]
     g = 1
     B = B1 - 1
-    seq = _sequence(s_0=ec.times(Q, B - 2 * D), s_1=ec.times(Q, B), delta=S[D-1])
+    seq = _sequence(s_0=ec.times(Q, B - 2 * D),
+                    s_1=ec.times(Q, B), delta=S[D-1])
     for r in range(B, B2, 2 * D):
         R_x, R_z = next(seq)
         alpha = (R_x * R_z) % n

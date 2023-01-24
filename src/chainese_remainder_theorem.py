@@ -1,10 +1,8 @@
-from typing import List, Optional, Tuple
-
 from extended_gcd import extended_gcd
 
 
-def chainese_remainder_theorem(congruent_exps: List[Tuple[int, int]]) \
-                                    -> Optional[Tuple[int, int]]:
+def chainese_remainder_theorem(congruent_exps: list[tuple[int, int]]) \
+        -> tuple[int, int] | None:
     """ 中国の剰余定理を用いて、連立合同式を解く。
 
     Args:

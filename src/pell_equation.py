@@ -1,9 +1,7 @@
-from typing import Tuple
-
 from continued_fraction import continued_fraction_sqrt
 
 
-def pell_equation(n: int) -> Tuple[int, int]:
+def pell_equation(n: int) -> tuple[int, int]:
     """ Pell方程式 x^2 - ny^2 = 1 を解く。
 
     Args:

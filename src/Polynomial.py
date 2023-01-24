@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-from typing import List, Optional, Tuple
-
 from inverse_mod import inverse_mod
 from n_times import n_times
 
@@ -10,11 +8,11 @@ class Polynomial:
     """ 整数係数多項式を提供する。
     """
 
-    def __init__(self, coef: List[int]) -> None:
+    def __init__(self, coef: list[int]) -> None:
         """ coefを係数とする多項式を生成する。
 
         Args:
-            coef (List[int]): 多項式の係数。coef[i] は x^i の係数
+            coef (list[int]): 多項式の係数。coef[i] は x^i の係数
         """
         self._coef = coef.copy()
         while len(self._coef) > 1 and self._coef[-1] == 0:
@@ -128,12 +126,12 @@ class Polynomial:
         """
         return Polynomial(self._coef)
 
-    def _reverse(self, d: Optional[int] = None) -> Polynomial:
+    def _reverse(self, d: int | None = None) -> Polynomial:
         if d is None:
             d = self.deg
         return Polynomial(self._coef[d::-1])
 
-    def _divmod(poly1: Polynomial, poly2: Polynomial) -> Tuple[Polynomial, Polynomial]:
+    def _divmod(poly1: Polynomial, poly2: Polynomial) -> tuple[Polynomial, Polynomial]:
         """ 2つの多項式の商と剰余を計算する(筆算法による実装)。
 
         Args:
@@ -157,11 +155,11 @@ class PolynomialMod:
     """ Z_nを係数とする多項式を提供する。
     """
 
-    def __init__(self, coef: List[int], mod: int) -> None:
+    def __init__(self, coef: list[int], mod: int) -> None:
         """ coefを係数とする多項式を生成する。
 
         Args:
-            coef (List[int]): 多項式の係数。coef[i] は x^i の係数
+            coef (list[int]): 多項式の係数。coef[i] は x^i の係数
             mod (int): 剰余を取る数
         """
         self._mod = mod
@@ -279,12 +277,12 @@ class PolynomialMod:
         """
         return PolynomialMod(self._coef, self._mod)
 
-    def _reverse(self, d: Optional[int] = None) -> PolynomialMod:
+    def _reverse(self, d: int | None = None) -> PolynomialMod:
         if d is None:
             d = self.deg
         return PolynomialMod(self._coef[d::-1], self._mod)
 
-    def _divmod(poly1: PolynomialMod, poly2: PolynomialMod) -> Tuple[PolynomialMod, PolynomialMod]:
+    def _divmod(poly1: PolynomialMod, poly2: PolynomialMod) -> tuple[PolynomialMod, PolynomialMod]:
         """ 2つの多項式の商と剰余を計算する(筆算法による実装)。
 
             poly1._mod(暗黙の内にpoly2._modと等しい)が素数のとき計算は常に成功するが、

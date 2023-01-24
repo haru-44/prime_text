@@ -1,17 +1,16 @@
 import random
-from typing import List, Optional
 
 from euler_criterion import euler_criterion
 from jacobi_symbol import jacobi_symbol
 
 
-def solovay_strassen_test(n: int, k: Optional[int] = None, a_list: Optional[List[int]] = None) -> str:
+def solovay_strassen_test(n: int, k: int | None = None, a_list: list[int] | None = None) -> str:
     """ Solovay-Strassenテストを用いて、n>2が素数かを判定する。
 
     Args:
         n (int): 素数判定する対象の奇数
         k (int): 試行回数の指定
-        a_list(List[int]): 底の指定
+        a_list(list[int]): 底の指定
 
     Returns:
         string: 'composite number' = nは合成数

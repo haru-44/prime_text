@@ -1,12 +1,11 @@
 import operator
 from functools import reduce
 from itertools import product
-from typing import List
 
 from sympy.ntheory import factorint
 
 
-def divisors(n: int) -> List[int]:
+def divisors(n: int) -> list[int]:
     """ nの約数リストを返す
 
     Args:

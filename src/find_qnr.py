@@ -1,11 +1,11 @@
 import random
-from typing import Callable, Optional, Tuple
+from typing import Callable
 
 
 from jacobi_symbol import jacobi_symbol
 
 
-def find_qnr(p: int, func: Callable[[int], int] = lambda x: x, random_range: Optional[Tuple[int, int]] = None) -> int:
+def find_qnr(p: int, func: Callable[[int], int] = lambda x: x, random_range: tuple[int, int] | None = None) -> int:
     """ pを法とする平方非剰余を探す。
 
     Args:

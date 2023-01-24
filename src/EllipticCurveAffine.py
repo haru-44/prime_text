@@ -1,5 +1,4 @@
 import math
-from typing import Tuple
 
 from inverse_mod import inverse_mod
 from n_times import n_times
@@ -28,7 +27,7 @@ class EllipticCurveAffine:
         raise ValueError(
             f'p is composite number. p={self.p} is divisible by {d}', d)
 
-    def is_zero(self, P: Tuple[int, int, int]) -> bool:
+    def is_zero(self, P: tuple[int, int, int]) -> bool:
         """ 点Pが無限遠点かを判定する。
 
         Args:
@@ -47,7 +46,7 @@ class EllipticCurveAffine:
         y %= self.p
         return x == 0 and (y == 1 or y == self.p - 1) and z == 0
 
-    def add(self, P: Tuple[int, int, int], Q: Tuple[int, int, int]) -> Tuple[int, int, int]:
+    def add(self, P: tuple[int, int, int], Q: tuple[int, int, int]) -> tuple[int, int, int]:
         """ 点PとQの和を計算する。
 
         Args:
@@ -87,7 +86,7 @@ class EllipticCurveAffine:
         y = (m * (P_x - x) - P_y) % self.p
         return (x, y, 1)
 
-    def times(self, P: Tuple[int, int, int], n: int) -> Tuple[int, int, int]:
+    def times(self, P: tuple[int, int, int], n: int) -> tuple[int, int, int]:
         """ Pのn倍を計算する
 
         Args:

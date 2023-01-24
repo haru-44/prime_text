@@ -1,9 +1,7 @@
-from typing import Tuple
-
 from jacobi_symbol import jacobi_symbol
 
 
-def selfridge_method_a(n: int) -> Tuple[int, int]:
+def selfridge_method_a(n: int) -> tuple[int, int]:
     """ Selfridgeの方法Aを用いて、Lucas擬素数テストの適切なパラメータを得る。
 
     Args:

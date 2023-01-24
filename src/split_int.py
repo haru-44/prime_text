@@ -1,7 +1,4 @@
-from typing import Tuple
-
-
-def split_int(n: int, a: int = 2) -> Tuple[int, int]:
+def split_int(n: int, a: int = 2) -> tuple[int, int]:
     """ n = a^s m を満たすs, mを計算する。ただし、m は a で割り切れない
 
     Args:

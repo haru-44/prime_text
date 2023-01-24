@@ -1,8 +1,7 @@
 import random
-from typing import List, Optional
 
 
-def fermat_test(n: int, *, k: Optional[int] = None, a_list: Optional[List[int]] = None) -> str:
+def fermat_test(n: int, *, k: int | None = None, a_list: list[int] | None = None) -> str:
     """ Fermatテストを用いて、n>2が素数かを判定する。
 
     Args:

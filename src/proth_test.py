@@ -1,13 +1,12 @@
 import random
-from typing import List, Optional
 
 from euler_criterion import euler_criterion
 from jacobi_symbol import jacobi_symbol
 
 
 def proth_test(s: int, m: int, *,
-               k: Optional[int] = None,
-               a_list: Optional[List[int]] = None) -> str:
+               k: int | None = None,
+               a_list: list[int] | None = None) -> str:
     """ Prothテストを用いて、n = m * 2**s + 1が素数かを判定する。
 
     Args:

@@ -1,10 +1,9 @@
 import random
-from typing import List, Optional
 
 from split_int import split_int
 
 
-def miller_rabin_test(n: int, k: Optional[int] = None, a_list: Optional[List[int]] = None) -> str:
+def miller_rabin_test(n: int, k: int | None = None, a_list: list[int] | None = None) -> str:
     """ Miller-Rabinテストを用いて、n>2が素数かを判定する。
 
     Args:

@@ -1,7 +1,4 @@
-from typing import Tuple
-
-
-def lucas_sequence_chain(k: int, a: int, b: int, mod: int) -> Tuple[int, int]:
+def lucas_sequence_chain(k: int, a: int, b: int, mod: int) -> tuple[int, int]:
     """ Lucas数列 V_k mod n, V_{k+1} mod nを計算する。
 
     Args:
@@ -25,7 +22,7 @@ def lucas_sequence_chain(k: int, a: int, b: int, mod: int) -> Tuple[int, int]:
     return x, y
 
 
-def lucas_sequence_chain_b(v_j: int, k: int, mod: int) -> Tuple[int, int]:
+def lucas_sequence_chain_b(v_j: int, k: int, mod: int) -> tuple[int, int]:
     """ Lucas数列 V_j mod nから、(V_jk mod n, V_j(k+1) mod n)を計算する。
 
     ここで、V_0 = 2, V_1 = a, V_j = aV_{j-1} - V_{j-2} (注: b=1)

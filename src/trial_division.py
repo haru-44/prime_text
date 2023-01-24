@@ -1,9 +1,7 @@
-from typing import List, Optional
-
 from sqrt_int import sqrt_int
 
 
-def trial_division(n: int, *, upper: Optional[int] = None) -> List[int]:
+def trial_division(n: int, *, upper: int | None = None) -> list[int]:
     """ 試し割によって、nを素因数分解する。
 
     upper に整数を指定した場合、その数までを試し割する。

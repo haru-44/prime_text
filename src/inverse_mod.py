@@ -1,9 +1,7 @@
-from typing import Optional
-
 from extended_gcd import extended_gcd
 
 
-def inverse_mod(a: int, n: int) -> Optional[int]:
+def inverse_mod(a: int, n: int) -> int | None:
     """ 法nにおけるaの逆元xを返す。つまり、xはa * x = 1 (mod n)を満たす。
 
     Args:
