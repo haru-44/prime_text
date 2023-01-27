@@ -27,8 +27,11 @@ class EllipticCurveMontgomery:
         v = (4 * self._sigma) % self._n
         diff = v - u
         self.Q = u_3, _ = pow(u, 3, self._n), pow(v, 3, self._n)
-        C = (pow(diff, 3, n) * (3 * u + v) *
-             inverse_mod(4 * u_3 * v, n) - 2) % self._n
+        inv = inverse_mod(4 * u_3 * v, n)
+        if inv is None:
+            # 実用上無視できるほどの確率だが、理屈上は発生しうる
+            raise ValueError('sigmaの値が不適')
+        C = (pow(diff, 3, n) * (3 * u + v) * inv - 2) % self._n
         self._a24 = (C + 2) * inverse_mod(4, self._n) % self._n
 
     def add(self, P: tuple[int, int], Q: tuple[int, int], diff: tuple[int, int]) -> tuple[int, int]:
