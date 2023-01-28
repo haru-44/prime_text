@@ -25,7 +25,10 @@ def n_order(a: int, n: int) -> int:
         return 1
     group_order = totient_function(n)
     order = group_order
-    for prime in [*factorint(group_order)]:
-        while order % prime == 0 and pow(a, order // prime, n) == 1:
-            order //= prime
+    for p, e in factorint(group_order).items():
+        for _ in range(e):
+            if pow(a, order // p, n) == 1:
+                order //= p
+            else:
+                break
     return order
